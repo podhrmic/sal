@@ -1,0 +1,11 @@
+[package]
+name = "sal-syntax"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Lexer, parser, AST and pretty-printer for the SAL 3.3 language"
+
+[dependencies]
+num-bigint.workspace = true
+
+[dev-dependencies]

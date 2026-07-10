@@ -1,0 +1,802 @@
+800 new cases (of 800 total), timeout=60s, jobs=6
+[1/800]  counterexample  (tests/corpus/dist/BSubSpor) sal-smc BSubSpor78ABS sporulate1
+[2/800]          proved  (tests/corpus/dist/BSubSpor) sal-smc BSubSpor78ABS sporulate2
+[3/800]            path  (tests/corpus/dist/adder) sal-path-finder --module='adder{5}!Nbitadder'
+[4/800]            path  (tests/corpus/dist/adder) sal-path-finder --depth=20 --delta-path --module='adder{3}!Nbitadder'
+[5/800]          proved  (tests/corpus/dist/arbiter) sal-smc --assertion='arbiter{10}!at_most_one_ack'
+[6/800]          proved  (tests/corpus/dist/arbiter) sal-smc --backward --assertion='arbiter{20}!at_most_one_ack'
+[7/800]          proved  (tests/corpus/dist/arbiter) sal-smc --assertion='arbiter{20}!no_ack_without_request'
+[8/800]          proved  (tests/corpus/dist/arbiter) sal-smc --backward --assertion='arbiter{20}!no_ack_without_request'
+[9/800]          proved  (tests/corpus/dist/arbiter) sal-bmc --induction --assertion='arbiter{20}!no_ack_without_request'
+[10/800]          proved  (tests/corpus/dist/arbiter) sal-bmc -i -d 1 --assertion='arbiter{20}!at_most_one_token'
+[11/800]          proved  (tests/corpus/dist/arbiter) sal-bmc -i -d 1 -l at_most_one_token --assertion='arbiter{20}!at_most_one_ack'
+[12/800]          proved  (tests/corpus/dist/arbiter) sal-smc --assertion='arbiter{10}!every_request_is_eventually_acknowledged'
+[13/800]            path  (tests/corpus/dist/arbiter) sal-path-finder --module='arbiter{20}!arbiter'
+[14/800]            path  (tests/corpus/dist/bakery) sal-path-finder --depth=20 --module='bakery{4,15}!system'
+[15/800]            path  (tests/corpus/dist/bakery) sal-path-finder --depth=20 --module='bakery{6,31}!system'
+[16/800]          proved  (tests/corpus/dist/bakery) sal-smc --assertion='bakery{5,15}!mutex'
+[17/800]  counterexample  (tests/corpus/dist/bakery) sal-smc --assertion='bakery_with_bug{5,15}!mutex'
+[18/800]     no_deadlock  (tests/corpus/dist/bakery) sal-deadlock-checker --module='bakery{5,15}!system'
+[19/800]  counterexample  (tests/corpus/dist/bakery) sal-smc --assertion='bakery{3,7}!liveness_bug'
+[20/800]  counterexample  (tests/corpus/dist/bakery) sal-smc --assertion='bakery{5,15}!liveness_bug'
+[21/800]  counterexample  (tests/corpus/dist/bakery) sal-bmc --assertion='bakery{3,7}!liveness_bug'
+[22/800]  counterexample  (tests/corpus/dist/bakery) sal-bmc --iterative --assertion='bakery{5,15}!liveness_bug'
+[23/800]          proved  (tests/corpus/dist/bakery) sal-smc --assertion="bakery{3,7}!liveness"
+[24/800]          proved  (tests/corpus/dist/bakery) sal-smc --assertion="bakery{5,15}!liveness"
+[25/800]          proved  (tests/corpus/dist/bakery) sal-smc --monolithic --assertion="bakery{5,15}!liveness"
+[26/800]           error  (tests/corpus/dist/bakery) sal-smc --cluster-size=8192 --assertion="bakery{5,15}!liveness"
+[27/800]           error  (tests/corpus/dist/bakery) sal-smc --cluster-size=8192 --disable-counter-examples --assertion="bakery{5,15}!liveness"
+[28/800]          proved  (tests/corpus/dist/dme) sal-smc --assertion='dme{;3}!mutex'
+[29/800]          proved  (tests/corpus/dist/dme) sal-smc --assertion='dme{;5}!mutex'
+[30/800]           no_ce  (tests/corpus/dist/fischer) sal-inf-bmc fischer mutual_exclusion
+[31/800]          proved  (tests/corpus/dist/fischer) sal-inf-bmc -i -d 1 fischer time_aux1
+[32/800]          proved  (tests/corpus/dist/fischer) sal-inf-bmc -i -d 1 fischer time_aux2
+[33/800]          proved  (tests/corpus/dist/fischer) sal-inf-bmc -i -d 1 -l time_aux2 fischer time_aux3
+[34/800]          proved  (tests/corpus/dist/fischer) sal-inf-bmc -i -d 1 -l time_aux3 -l time_aux1 fischer logical_aux1
+[35/800]          proved  (tests/corpus/dist/fischer) sal-inf-bmc -i -d 0 -l logical_aux1 fischer mutual_exclusion
+[36/800]         unknown  (tests/corpus/dist/fischer) sal-inf-bmc -i -d 3 -l time_aux2 fischer logical_aux1
+[37/800]         unknown  (tests/corpus/dist/fischer) sal-inf-bmc -i -d 5 -l time_aux2 fischer mutex
+[38/800]          proved  (tests/corpus/dist/fischer) sal-inf-bmc -i -d 0 -l mutex fischer mutual_exclusion
+[39/800]         unknown  (tests/corpus/dist/fischer) sal-inf-bmc -i -d 9 -l time_aux2 fischer mutual_exclusion
+[40/800]           no_ce  (tests/corpus/dist/hybrid) sal-inf-bmc waterlevel prop
+[41/800]           no_ce  (tests/corpus/dist/hybrid) sal-inf-bmc gasburner prop3
+[42/800]           no_ce  (tests/corpus/dist/hybrid) sal-inf-bmc pursuit safety
+[43/800]           no_ce  (tests/corpus/dist/inf-bakery) sal-inf-bmc inf_bakery mutex
+[44/800]  counterexample  (tests/corpus/dist/inf-bakery) sal-inf-bmc inf_bakery invalid
+[45/800]          proved  (tests/corpus/dist/inf-bakery) sal-inf-bmc -d 1 -i inf_bakery aux1
+[46/800]          proved  (tests/corpus/dist/inf-bakery) sal-inf-bmc -d 1 -i inf_bakery aux2
+[47/800]          proved  (tests/corpus/dist/inf-bakery) sal-inf-bmc -d 3 -l aux1 -l aux2 -i inf_bakery mutex
+[48/800]         unknown  (tests/corpus/dist/inf-bakery) sal-inf-bmc -d 7 -i inf_bakery mutex
+[49/800]            path  (tests/corpus/dist/lsal/adder) sal-path-finder --module="(@ adder (adder () (5)))"
+[50/800]           error  (tests/corpus/dist/lsal/adder) sal-path-finder --depth=20 --acyclic --complete-path --module="(@ adder (adder () (3)))"
+[51/800]          proved  (tests/corpus/dist/lsal/arbiter) sal-smc --assertion="(@ at-most-one-ack (arbiter () (10)))"
+[52/800]          proved  (tests/corpus/dist/lsal/arbiter) sal-smc --backward --assertion="(@ at-most-one-ack (arbiter () (20)))"
+[53/800]          proved  (tests/corpus/dist/lsal/arbiter) sal-smc --assertion="(@ no-ack-without-request (arbiter () (20)))"
+[54/800]          proved  (tests/corpus/dist/lsal/arbiter) sal-smc --backward --assertion="(@ no-ack-without-request (arbiter () (20)))"
+[55/800]          proved  (tests/corpus/dist/lsal/arbiter) sal-bmc --induction --assertion="(@ no-ack-without-request (arbiter () (20)))"
+[56/800]          proved  (tests/corpus/dist/lsal/arbiter) sal-bmc -i -d 1 --assertion="(@ at-most-one-token (arbiter () (20)))"
+[57/800]          proved  (tests/corpus/dist/lsal/arbiter) sal-bmc -i -d 1 -l at-most-one-token --assertion="(@ at-most-one-ack (arbiter () (20)))"
+[58/800]          proved  (tests/corpus/dist/lsal/arbiter) sal-smc --assertion="(@ every-request-is-eventually-acknowledged (arbiter () (10)))"
+[59/800]            path  (tests/corpus/dist/lsal/arbiter) sal-path-finder --module="(@ arbiter (arbiter () (20)))"
+[60/800]           error  (tests/corpus/dist/lsal/bakery) sal-path-finder --depth=20 --module="(@ system (bakery () (4 15)))"
+[61/800]           error  (tests/corpus/dist/lsal/bakery) sal-path-finder --depth=20 --module="(@ system (bakery () (6 31)))"
+[62/800]           error  (tests/corpus/dist/lsal/bakery) sal-smc --assertion="(@ mutex (bakery () (5 15)))"
+[63/800]  counterexample  (tests/corpus/dist/lsal/bakery) sal-smc --assertion="(@ mutex (bakery-with-bug () (5 15)))"
+[64/800]           error  (tests/corpus/dist/lsal/bakery) sal-deadlock-checker --module="(@ system (bakery () (5 15)))"
+[65/800]           error  (tests/corpus/dist/lsal/bakery) sal-smc --assertion="(@ liveness-bug (bakery () (3 7)))"
+[66/800]           error  (tests/corpus/dist/lsal/bakery) sal-smc --assertion="(@ liveness-bug (bakery () (5 15)))"
+[67/800]           error  (tests/corpus/dist/lsal/bakery) sal-bmc --assertion="(@ liveness-bug (bakery () (3 7)))"
+[68/800]           error  (tests/corpus/dist/lsal/bakery) sal-bmc --iterative --assertion="(@ liveness-bug (bakery () (5 15)))"
+[69/800]           error  (tests/corpus/dist/lsal/bakery) sal-smc --assertion="(@ liveness (bakery () (3 7)))"
+[70/800]           error  (tests/corpus/dist/lsal/bakery) sal-smc --assertion="(@ liveness (bakery () (5 15)))"
+[71/800]           error  (tests/corpus/dist/lsal/bakery) sal-smc --monolithic --assertion="(@ liveness (bakery () (5 15)))"
+[72/800]           error  (tests/corpus/dist/lsal/bakery) sal-smc --cluster-size=8192 --assertion="(@ liveness (bakery () (5 15)))"
+[73/800]           error  (tests/corpus/dist/lsal/bakery) sal-smc --cluster-size=8192 --disable-counter-examples --assertion="(@ liveness (bakery () (5 15)))"
+[74/800]          proved  (tests/corpus/dist/lsal/dme) sal-smc --assertion="(@ mutex (dme () (3)))"
+[75/800]          proved  (tests/corpus/dist/lsal/dme) sal-smc --assertion="(@ mutex (dme () (5)))"
+[76/800]           no_ce  (tests/corpus/dist/lsal/inf-bakery) sal-inf-bmc inf-bakery mutex
+[77/800]  counterexample  (tests/corpus/dist/lsal/inf-bakery) sal-inf-bmc inf-bakery invalid
+[78/800]          proved  (tests/corpus/dist/lsal/inf-bakery) sal-inf-bmc -d 1 -i inf-bakery aux1
+[79/800]          proved  (tests/corpus/dist/lsal/inf-bakery) sal-inf-bmc -d 1 -i inf-bakery aux2
+[80/800]          proved  (tests/corpus/dist/lsal/inf-bakery) sal-inf-bmc -d 3 -l aux1 -l aux2 -i inf-bakery mutex
+[81/800]         unknown  (tests/corpus/dist/lsal/inf-bakery) sal-inf-bmc -d 7 -i inf-bakery mutex
+[82/800]           error  (tests/corpus/dist/lsal/pcp) sal-path-finder tst-pcp-generic tst-system
+[83/800]           error  (tests/corpus/dist/lsal/pcp) sal-bmc --induction tst-pcp-generic deadlock-free
+[84/800]           error  (tests/corpus/dist/lsal/pcp) sal-smc tst-pcp-generic deadlock-free
+[85/800]           error  (tests/corpus/dist/lsal/pcp) sal-smc --backward tst-pcp-generic deadlock-free
+[86/800]           error  (tests/corpus/dist/lsal/pcp) sal-bmc --induction tst-pcp-generic2 deadlock-free
+[87/800]           error  (tests/corpus/dist/lsal/pcp) sal-smc tst-pcp-generic2 deadlock-free
+[88/800]           error  (tests/corpus/dist/lsal/pcp) sal-smc --backward tst-pcp-generic2 deadlock-free
+[89/800]          proved  (tests/corpus/dist/lsal/peterson) sal-bmc --induction peterson mutex
+[90/800]          proved  (tests/corpus/dist/lsal/peterson) sal-bmc --induction sync-peterson mutex
+[91/800]          proved  (tests/corpus/dist/lsal/peterson) sal-smc peterson mutex
+[92/800]          proved  (tests/corpus/dist/lsal/peterson) sal-smc sync-peterson mutex
+[93/800]  counterexample  (tests/corpus/dist/lsal/peterson) sal-bmc peterson invalid
+[94/800]  counterexample  (tests/corpus/dist/lsal/peterson) sal-smc peterson invalid
+[95/800]  counterexample  (tests/corpus/dist/lsal/peterson) sal-bmc peterson livenessbug1
+[96/800]  counterexample  (tests/corpus/dist/lsal/peterson) sal-smc peterson livenessbug1
+[97/800]          proved  (tests/corpus/dist/lsal/peterson) sal-smc peterson liveness1
+[98/800]          proved  (tests/corpus/dist/lsal/peterson) sal-smc peterson liveness2
+[99/800]          proved  (tests/corpus/dist/lsal/peterson) sal-smc peterson liveness3
+[100/800]          proved  (tests/corpus/dist/lsal/peterson) sal-smc peterson liveness4
+[101/800]           error  (tests/corpus/dist/lsal/queue) sal-inf-bmc -d 6 --enable-ate queue th1
+[102/800]           error  (tests/corpus/dist/lsal/queue) sal-inf-bmc -d 6 --enable-ate queue th2
+[103/800]           error  (tests/corpus/dist/lsal/queue) sal-inf-bmc -d 6 --enable-ate queue invalid
+[104/800]           error  (tests/corpus/dist/lsal/short) sal-smc short th1
+[105/800]           error  (tests/corpus/dist/lsal/short) sal-smc short th2
+[106/800]           error  (tests/corpus/dist/lsal/short) sal-smc short th3
+[107/800]          proved  (tests/corpus/dist/lsal/simpson) sal-smc four-slot mutex
+[108/800]  counterexample  (tests/corpus/dist/lsal/simpson) sal-smc four-slot-with-bug mutex
+[109/800]  counterexample  (tests/corpus/dist/lsal/simpson) sal-bmc four-slot-with-bug mutex
+[110/800]  counterexample  (tests/corpus/dist/lsal/simpson) sal-bmc --iterative four-slot-with-bug mutex
+[111/800]           error  (tests/corpus/dist/lsal/stack) sal-inf-bmc -d 6 --enable-ate stack th1
+[112/800]           error  (tests/corpus/dist/lsal/stack) sal-inf-bmc -d 6 --enable-ate stack th2
+[113/800]           error  (tests/corpus/dist/lsal/stack) sal-inf-bmc -d 6 --enable-ate stack invalid
+[114/800]          proved  (tests/corpus/dist/mcslock) sal-smc --assertion='mcslock{4}!th'
+[115/800]          proved  (tests/corpus/dist/md80) sal-smc md80 no_surprise
+[116/800]          proved  (tests/corpus/dist/md80) sal-bmc --induction md80 no_surprise
+[117/800]        deadlock  (tests/corpus/dist/path-finder) sal-deadlock-checker pathfinder system
+[118/800]            path  (tests/corpus/dist/pcp) sal-path-finder tst_pcp_generic system
+[119/800]          proved  (tests/corpus/dist/pcp) sal-bmc --induction tst_pcp_generic deadlock_free
+[120/800]          proved  (tests/corpus/dist/pcp) sal-smc tst_pcp_generic deadlock_free
+[121/800]          proved  (tests/corpus/dist/pcp) sal-smc --backward tst_pcp_generic deadlock_free
+[122/800]          proved  (tests/corpus/dist/pcp) sal-bmc --induction tst_pcp_generic2 deadlock_free
+[123/800]          proved  (tests/corpus/dist/pcp) sal-smc tst_pcp_generic2 deadlock_free
+[124/800]          proved  (tests/corpus/dist/pcp) sal-smc --backward tst_pcp_generic2 deadlock_free
+[125/800]          proved  (tests/corpus/dist/peterson) sal-bmc --induction peterson mutex
+[126/800]          proved  (tests/corpus/dist/peterson) sal-bmc --induction sync_peterson mutex
+[127/800]          proved  (tests/corpus/dist/peterson) sal-smc peterson mutex
+[128/800]          proved  (tests/corpus/dist/peterson) sal-smc sync_peterson mutex
+[129/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc peterson invalid
+[130/800]  counterexample  (tests/corpus/dist/peterson) sal-smc peterson invalid
+[131/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc peterson livenessbug1
+[132/800]  counterexample  (tests/corpus/dist/peterson) sal-smc peterson livenessbug1
+[133/800]          proved  (tests/corpus/dist/peterson) sal-smc peterson liveness1
+[134/800]          proved  (tests/corpus/dist/peterson) sal-smc peterson liveness2
+[135/800]          proved  (tests/corpus/dist/peterson) sal-smc peterson liveness3
+[136/800]          proved  (tests/corpus/dist/peterson) sal-smc peterson liveness4
+[137/800]          proved  (tests/corpus/dist/phil) sal-smc --assertion='phil{8}!th1'
+[138/800]          proved  (tests/corpus/dist/phil) sal-smc -io p40.ord --assertion='phil{8}!th1'
+[139/800]  counterexample  (tests/corpus/dist/pipeline) sal-inf-bmc --enable-ate -d 4 pipeline equivalent
+[140/800]           error  (tests/corpus/dist/qlock) sal-smc --assertion='qlockX{2,2}!mutex'
+[141/800]           error  (tests/corpus/dist/qlock) sal-deadlock-checker --module='qlockX{2,2}!system'
+[142/800]           error  (tests/corpus/dist/qlock) sal-smc --assertion='qlockX{2,2}!lofree'
+[143/800]           no_ce  (tests/corpus/dist/queue) sal-inf-bmc -d 6 --enable-ate queue th1
+[144/800]           no_ce  (tests/corpus/dist/queue) sal-inf-bmc -d 6 --enable-ate queue th2
+[145/800]  counterexample  (tests/corpus/dist/queue) sal-inf-bmc -d 6 --enable-ate queue invalid
+[146/800]          proved  (tests/corpus/dist/ring) sal-smc --assertion='ring{;10}!only_one_element_is_true'
+[147/800]          proved  (tests/corpus/dist/ring) sal-bmc --induction --assertion='ring{;10}!only_one_element_is_true'
+[148/800]          proved  (tests/corpus/dist/ring) sal-smc --assertion='ring{;20}!every_element_is_eventually_true'
+[149/800]            path  (tests/corpus/dist/ring) sal-path-finder --depth=20 --module='ring{;5}!ring'
+[150/800]            path  (tests/corpus/dist/ring) sal-path-finder --depth=20 --delta-path --module='ring{;5}!ring'
+[151/800]          proved  (tests/corpus/dist/s_qlock) sal-smc --assertion='s_qlock{6}!mutex'
+[152/800]          proved  (tests/corpus/dist/short) sal-smc short th1
+[153/800]          proved  (tests/corpus/dist/short) sal-smc short th2
+[154/800]          proved  (tests/corpus/dist/short) sal-smc short th3
+[155/800]          proved  (tests/corpus/dist/simpson) sal-smc fourslot mutex
+[156/800]  counterexample  (tests/corpus/dist/simpson) sal-smc fourslot_bug mutex
+[157/800]  counterexample  (tests/corpus/dist/simpson) sal-bmc fourslot_bug mutex
+[158/800]  counterexample  (tests/corpus/dist/simpson) sal-bmc --iterative fourslot_bug mutex
+[159/800]          proved  (tests/corpus/dist/skdmxa) sal-smc --assertion='skdmxa{2,2,2}!mutex'
+[160/800]     no_deadlock  (tests/corpus/dist/skdmxa) sal-deadlock-checker --module='skdmxa{2,2,2}!system'
+[161/800]  counterexample  (tests/corpus/dist/skdmxa) sal-smc --assertion='skdmxa{2,2,2}!lofree'
+[162/800]          proved  (tests/corpus/dist/skdmxa) sal-inf-bmc -i -ice -d 1 -l lemma1 -l lemma2 --assertion='inf_skdmxa{2,2}!mutex'
+[163/800]          proved  (tests/corpus/dist/skdmxa) sal-inf-bmc -i -ice -d 1 --assertion='inf_skdmxa{2,2}!lemma1'
+[164/800]          proved  (tests/corpus/dist/skdmxa) sal-inf-bmc -i -ice -d 1 -l lemma1 --assertion='inf_skdmxa{2,2}!lemma2'
+[165/800]           no_ce  (tests/corpus/dist/stack) sal-inf-bmc -d 6 --enable-ate stack th1
+[166/800]           no_ce  (tests/corpus/dist/stack) sal-inf-bmc -d 6 --enable-ate stack th2
+[167/800]  counterexample  (tests/corpus/dist/stack) sal-inf-bmc -d 6 --enable-ate stack invalid
+[168/800]          proved  (tests/corpus/dist/startup) sal-smc startup sync
+[169/800]  counterexample  (tests/corpus/dist/startup) sal-smc startup noflag
+[170/800]  counterexample  (tests/corpus/dist/startup) sal-bmc startup noflag
+[171/800]          proved  (tests/corpus/dist/startup) sal-smc startup fast
+[172/800]          proved  (tests/corpus/dist/startup) sal-smc startup fairlyfast
+[173/800]          proved  (tests/corpus/dist/startup) sal-smc startup ok
+[174/800]          proved  (tests/corpus/dist/startup) sal-smc startup fsync
+[175/800]          proved  (tests/corpus/dist/startup) sal-smc startup fok
+[176/800]          proved  (tests/corpus/dist/startup) sal-smc startup collision
+[177/800]          proved  (tests/corpus/dist/startup) sal-smc startup live
+[178/800]  counterexample  (tests/corpus/dist/startup) sal-smc startup optimism
+[179/800]  counterexample  (tests/corpus/dist/startup) sal-bmc --iterative startup optimism
+[180/800]  counterexample  (tests/corpus/dist/startup) sal-smc startup eh
+[181/800]  counterexample  (tests/corpus/dist/startup) sal-bmc --iterative startup eh
+[182/800]          proved  (tests/corpus/dist/swap) sal-smc --assertion='swap{4}!diff'
+[183/800]          proved  (tests/corpus/dist/swap) sal-bmc -i -d 1 --assertion='swap{4}!all_diff'
+[184/800]          proved  (tests/corpus/dist/swap) sal-bmc -i -d 1 -l all_diff --assertion='swap{4}!diff'
+[185/800]          proved  (tests/corpus/dist/swap) sal-smc --backward --assertion='swap{4}!all_diff'
+[186/800]          proved  (tests/corpus/dist/swap) sal-smc --assertion='swap{8}!diff'
+[187/800]          proved  (tests/corpus/dist/swap) sal-bmc -i -d 1 --assertion='swap{8}!all_diff'
+[188/800]          proved  (tests/corpus/dist/swap) sal-bmc -i -d 1 -l all_diff --assertion='swap{8}!diff'
+[189/800]          proved  (tests/corpus/dist/swap) sal-smc --backward --assertion='swap{8}!all_diff'
+[190/800]            path  (tests/corpus/dist/util) sal-path-finder tst-queue system
+[191/800]           error  (tests/corpus/dist/util) sal-path-finder tst-queue system ../../etc/pp-extra.scm
+[192/800]           error  (tests/corpus/dist/util) sal-path-finder --depth=20 tst-queue system ../../etc/pp-extra.scm
+[193/800]           no_ce  (tests/corpus/web/fischer-sal) sal-inf-bmc fischer mutual_exclusion
+[194/800]          proved  (tests/corpus/web/fischer-sal) sal-inf-bmc -i -d 1 fischer time_aux1
+[195/800]          proved  (tests/corpus/web/fischer-sal) sal-inf-bmc -i -d 1 fischer time_aux2
+[196/800]          proved  (tests/corpus/web/fischer-sal) sal-inf-bmc -i -d 1 -l time_aux2 fischer time_aux3
+[197/800]          proved  (tests/corpus/web/fischer-sal) sal-inf-bmc -i -d 1 -l time_aux3 -l time_aux1 fischer logical_aux1
+[198/800]          proved  (tests/corpus/web/fischer-sal) sal-inf-bmc -i -d 0 -l logical_aux1 fischer mutual_exclusion
+[199/800]           error  (tests/corpus/web/fischer-sal) sal-inf-bmc -d 3 -l time_aux2 fischer logical_aux1
+[200/800]           error  (tests/corpus/web/fischer-sal) sal-inf-bmc -d 0 -l logical_aux1 fischer mutual_exclusion
+[201/800]           error  (tests/corpus/web/fischer-sal) sal-inf-bmc -d 5 -l time_aux2 fischer mutex
+[202/800]           error  (tests/corpus/web/fischer-sal) sal-inf-bmc -d 0 -l mutex fischer mutual_exclusion
+[203/800]           error  (tests/corpus/web/fischer-sal) sal-inf-bmc -d 9 -l time_aux2 fischer mutual_exclusion
+[204/800]           error  (tests/corpus/web/pcp-sal) sal-path-finder tst-pcp-generic tst-system
+[205/800]           error  (tests/corpus/web/pcp-sal) sal-bmc --induction tst-pcp-generic deadlock-free
+[206/800]           error  (tests/corpus/web/pcp-sal) sal-smc tst-pcp-generic deadlock-free
+[207/800]           error  (tests/corpus/web/pcp-sal) sal-smc --backward tst-pcp-generic deadlock-free
+[208/800]           error  (tests/corpus/web/pcp-sal) sal-bmc --induction tst-pcp-generic2 deadlock-free
+[209/800]           error  (tests/corpus/web/pcp-sal) sal-smc tst-pcp-generic2 deadlock-free
+[210/800]           error  (tests/corpus/web/pcp-sal) sal-smc --backward tst-pcp-generic2 deadlock-free
+[211/800]           error  (tests/corpus/web/qlock) sal-smc --assertion='qlockX{;2,2}!mutex'
+[212/800]           error  (tests/corpus/web/qlock) sal-deadlock-checker --module='qlockX{;2,2}!system'
+[213/800]           error  (tests/corpus/web/qlock) sal-smc --assertion='qlockX{;2,2}!lofree'
+[214/800]          proved  (tests/corpus/web/simpson-sal) sal-smc fourslot mutex
+[215/800]           error  (tests/corpus/web/simpson-sal) sal-smc fourslot_bug mutex
+[216/800]           error  (tests/corpus/web/simpson-sal) sal-bmc fourslot_bug mutex
+[217/800]           error  (tests/corpus/web/simpson-sal) sal-bmc --iterative fourslot_bug mutex
+[218/800]          proved  (tests/corpus/web/skdmxa) sal-smc --assertion='skdmxa{;2,2,2}!mutex'
+[219/800]     no_deadlock  (tests/corpus/web/skdmxa) sal-deadlock-checker --module='skdmxa{;2,2,2}!system'
+[220/800]  counterexample  (tests/corpus/web/skdmxa) sal-smc --assertion='skdmxa{;2,2,2}!lofree'
+[221/800]          proved  (tests/corpus/web/skdmxa) sal-inf-bmc -i -ice -d 1 -l lemma1 -l lemma2 --assertion='inf_skdmxa{;2,2}!mutex'
+[222/800]          proved  (tests/corpus/web/skdmxa) sal-inf-bmc -i -ice -d 1 --assertion='inf_skdmxa{;2,2}!lemma1'
+[223/800]          proved  (tests/corpus/web/skdmxa) sal-inf-bmc -i -ice -d 1 -l lemma1 --assertion='inf_skdmxa{;2,2}!lemma2'
+[224/800]           error  (tests/corpus/dist/BSubSpor) sal-wfc BSubSpor78.sal
+[225/800]           error  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78 phosphorelay
+[226/800]           error  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78 SinIR
+[227/800]           error  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78 AbrB
+[228/800]           error  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78 Hpr
+[229/800]           error  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78 SigmaH
+[230/800]           error  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78 Environment
+[231/800]           error  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78 Sporulation
+[232/800]              ok  (tests/corpus/dist/BSubSpor) sal-wfc BSubSpor78ABS.sal
+[233/800]  counterexample  (tests/corpus/dist/BSubSpor) sal-smc BSubSpor78ABS sporulate0
+[234/800]  counterexample  (tests/corpus/dist/BSubSpor) sal-bmc -d 10 BSubSpor78ABS sporulate0
+[235/800]  counterexample  (tests/corpus/dist/BSubSpor) sal-bmc -d 10 BSubSpor78ABS sporulate1
+[236/800]           no_ce  (tests/corpus/dist/BSubSpor) sal-bmc -d 10 BSubSpor78ABS sporulate2
+[237/800]     no_deadlock  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78ABS Environment
+[238/800]        deadlock  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78ABS phosphorelay
+[239/800]     no_deadlock  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78ABS SinIR
+[240/800]     no_deadlock  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78ABS AbrB
+[241/800]     no_deadlock  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78ABS Hpr
+[242/800]     no_deadlock  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78ABS SigmaH
+[243/800]     no_deadlock  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78ABS Sporulation
+[244/800]        deadlock  (tests/corpus/dist/BSubSpor) sal-deadlock-checker BSubSpor78ABS dynamicINV
+[245/800]              ok  (tests/corpus/dist) sal-wfc activeSuspension3.sal
+[246/800]           error  (tests/corpus/dist) sal-smc activeSuspension3 correct
+[247/800]           error  (tests/corpus/dist) sal-bmc -d 10 activeSuspension3 correct
+[248/800]           error  (tests/corpus/dist) sal-smc activeSuspension3 reachable
+[249/800]           error  (tests/corpus/dist) sal-bmc -d 10 activeSuspension3 reachable
+[250/800]           error  (tests/corpus/dist) sal-smc activeSuspension3 reachable1
+[251/800]           error  (tests/corpus/dist) sal-bmc -d 10 activeSuspension3 reachable1
+[252/800]           error  (tests/corpus/dist) sal-smc activeSuspension3 reachable2
+[253/800]           error  (tests/corpus/dist) sal-bmc -d 10 activeSuspension3 reachable2
+[254/800]           error  (tests/corpus/dist) sal-deadlock-checker activeSuspension3 plant
+[255/800]           error  (tests/corpus/dist) sal-deadlock-checker activeSuspension3 controller
+[256/800]           error  (tests/corpus/dist) sal-deadlock-checker activeSuspension3 contextModel
+[257/800]           error  (tests/corpus/dist) sal-deadlock-checker activeSuspension3 system
+[258/800]              ok  (tests/corpus/dist/adder) sal-wfc adder.sal
+[259/800]              ok  (tests/corpus/dist/arbiter) sal-wfc arbiter.sal
+[260/800]              ok  (tests/corpus/dist/bakery) sal-wfc bakery.sal
+[261/800]              ok  (tests/corpus/dist/bakery) sal-wfc bakery_with_bug.sal
+[262/800]              ok  (tests/corpus/dist/bakery) sal-wfc bakery_with_bug2.sal
+[263/800]              ok  (tests/corpus/dist/bakery) sal-wfc bakery_with_bug3.sal
+[264/800]              ok  (tests/corpus/dist/bakery) sal-wfc s_bakery.sal
+[265/800]              ok  (tests/corpus/dist/fischer) sal-wfc fischer.sal
+[266/800]           error  (tests/corpus/dist/fischer) sal-smc fischer time_aux1
+[267/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer time_aux1
+[268/800]           error  (tests/corpus/dist/fischer) sal-smc fischer time_aux2
+[269/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer time_aux2
+[270/800]           error  (tests/corpus/dist/fischer) sal-smc fischer time_aux3
+[271/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer time_aux3
+[272/800]           error  (tests/corpus/dist/fischer) sal-smc fischer logical_aux1
+[273/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer logical_aux1
+[274/800]           error  (tests/corpus/dist/fischer) sal-smc fischer mutex
+[275/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer mutex
+[276/800]           error  (tests/corpus/dist/fischer) sal-smc fischer mutual_exclusion
+[277/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer mutual_exclusion
+[278/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer clock
+[279/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer processes
+[280/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer system
+[281/800]              ok  (tests/corpus/dist/fischer) sal-wfc fischer2.sal
+[282/800]           error  (tests/corpus/dist/fischer) sal-smc fischer2 time_aux0
+[283/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer2 time_aux0
+[284/800]           error  (tests/corpus/dist/fischer) sal-smc fischer2 time_aux1
+[285/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer2 time_aux1
+[286/800]           error  (tests/corpus/dist/fischer) sal-smc fischer2 time_aux2
+[287/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer2 time_aux2
+[288/800]           error  (tests/corpus/dist/fischer) sal-smc fischer2 time_aux3
+[289/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer2 time_aux3
+[290/800]           error  (tests/corpus/dist/fischer) sal-smc fischer2 logical_aux1
+[291/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer2 logical_aux1
+[292/800]           error  (tests/corpus/dist/fischer) sal-smc fischer2 mutex
+[293/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer2 mutex
+[294/800]           error  (tests/corpus/dist/fischer) sal-smc fischer2 mutual_exclusion
+[295/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer2 mutual_exclusion
+[296/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer2 clock
+[297/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer2 processes
+[298/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer2 system
+[299/800]              ok  (tests/corpus/dist/fischer) sal-wfc fischer_revised.sal
+[300/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_revised time_aux0
+[301/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_revised time_aux0
+[302/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_revised time_aux1
+[303/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_revised time_aux1
+[304/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_revised time_aux2
+[305/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_revised time_aux2
+[306/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_revised time_aux3
+[307/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_revised time_aux3
+[308/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_revised logical_aux1
+[309/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_revised logical_aux1
+[310/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_revised mutex
+[311/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_revised mutex
+[312/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_revised mutual_exclusion
+[313/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_revised mutual_exclusion
+[314/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_revised clock
+[315/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_revised processes
+[316/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_revised system
+[317/800]              ok  (tests/corpus/dist/fischer) sal-wfc fischer_var1.sal
+[318/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var1 time_aux0
+[319/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var1 time_aux0
+[320/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var1 time_aux1
+[321/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var1 time_aux1
+[322/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var1 time_aux2
+[323/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var1 time_aux2
+[324/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var1 time_aux3
+[325/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var1 time_aux3
+[326/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var1 logical_aux1
+[327/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var1 logical_aux1
+[328/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var1 mutex
+[329/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var1 mutex
+[330/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var1 mutual_exclusion
+[331/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var1 mutual_exclusion
+[332/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var1 clock
+[333/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var1 processes
+[334/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var1 system
+[335/800]              ok  (tests/corpus/dist/fischer) sal-wfc fischer_var2.sal
+[336/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var2 time_aux1
+[337/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var2 time_aux1
+[338/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var2 time_aux2
+[339/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var2 time_aux2
+[340/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var2 time_aux3
+[341/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var2 time_aux3
+[342/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var2 logical_aux1
+[343/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var2 logical_aux1
+[344/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var2 mutex
+[345/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var2 mutex
+[346/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var2 mutual_exclusion
+[347/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var2 mutual_exclusion
+[348/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var2 clock
+[349/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var2 processes
+[350/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var2 system
+[351/800]              ok  (tests/corpus/dist/fischer) sal-wfc fischer_var3.sal
+[352/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var3 time_aux1
+[353/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var3 time_aux1
+[354/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var3 time_aux2
+[355/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var3 time_aux2
+[356/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var3 time_aux3
+[357/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var3 time_aux3
+[358/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var3 logical_aux1
+[359/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var3 logical_aux1
+[360/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var3 mutex
+[361/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var3 mutex
+[362/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var3 mutual_exclusion
+[363/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var3 mutual_exclusion
+[364/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var3 clock
+[365/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var3 processes
+[366/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var3 system
+[367/800]              ok  (tests/corpus/dist/fischer) sal-wfc fischer_var4.sal
+[368/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var4 time_aux1
+[369/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var4 time_aux1
+[370/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var4 time_aux2
+[371/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var4 time_aux2
+[372/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var4 time_aux3
+[373/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var4 time_aux3
+[374/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var4 logical_aux1
+[375/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var4 logical_aux1
+[376/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var4 mutex
+[377/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var4 mutex
+[378/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var4 mutual_exclusion
+[379/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var4 mutual_exclusion
+[380/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var4 clock
+[381/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var4 processes
+[382/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var4 system
+[383/800]              ok  (tests/corpus/dist/fischer) sal-wfc fischer_var5.sal
+[384/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var5 time_aux1
+[385/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var5 time_aux1
+[386/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var5 time_aux2
+[387/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var5 time_aux2
+[388/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var5 time_aux3
+[389/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var5 time_aux3
+[390/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var5 logical_aux1
+[391/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var5 logical_aux1
+[392/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var5 mutex
+[393/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var5 mutex
+[394/800]           error  (tests/corpus/dist/fischer) sal-smc fischer_var5 mutual_exclusion
+[395/800]           error  (tests/corpus/dist/fischer) sal-bmc -d 10 fischer_var5 mutual_exclusion
+[396/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var5 clock
+[397/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var5 processes
+[398/800]           error  (tests/corpus/dist/fischer) sal-deadlock-checker fischer_var5 system
+[399/800]              ok  (tests/corpus/dist/hanoi) sal-wfc hanoi.sal
+[400/800]              ok  (tests/corpus/dist/hybrid) sal-wfc gasburner.sal
+[401/800]           error  (tests/corpus/dist/hybrid) sal-smc gasburner prop3
+[402/800]           error  (tests/corpus/dist/hybrid) sal-bmc -d 10 gasburner prop3
+[403/800]           error  (tests/corpus/dist/hybrid) sal-smc gasburner prop1
+[404/800]           error  (tests/corpus/dist/hybrid) sal-bmc -d 10 gasburner prop1
+[405/800]           error  (tests/corpus/dist/hybrid) sal-smc gasburner prop2
+[406/800]           error  (tests/corpus/dist/hybrid) sal-bmc -d 10 gasburner prop2
+[407/800]           error  (tests/corpus/dist/hybrid) sal-smc gasburner prop22
+[408/800]           error  (tests/corpus/dist/hybrid) sal-bmc -d 10 gasburner prop22
+[409/800]           error  (tests/corpus/dist/hybrid) sal-smc gasburner prop21
+[410/800]           error  (tests/corpus/dist/hybrid) sal-bmc -d 10 gasburner prop21
+[411/800]           error  (tests/corpus/dist/hybrid) sal-deadlock-checker gasburner transition_module
+[412/800]           error  (tests/corpus/dist/hybrid) sal-deadlock-checker gasburner lgb
+[413/800]           error  (tests/corpus/dist/hybrid) sal-deadlock-checker gasburner system
+[414/800]              ok  (tests/corpus/dist/hybrid) sal-wfc pursuit.sal
+[415/800]           error  (tests/corpus/dist/hybrid) sal-smc pursuit safety
+[416/800]           error  (tests/corpus/dist/hybrid) sal-bmc -d 10 pursuit safety
+[417/800]           error  (tests/corpus/dist/hybrid) sal-smc pursuit wrong
+[418/800]           error  (tests/corpus/dist/hybrid) sal-bmc -d 10 pursuit wrong
+[419/800]           error  (tests/corpus/dist/hybrid) sal-deadlock-checker pursuit transition_module
+[420/800]           error  (tests/corpus/dist/hybrid) sal-deadlock-checker pursuit game
+[421/800]           error  (tests/corpus/dist/hybrid) sal-deadlock-checker pursuit system
+[422/800]              ok  (tests/corpus/dist/hybrid) sal-wfc waterlevel.sal
+[423/800]           error  (tests/corpus/dist/hybrid) sal-smc waterlevel prop
+[424/800]           error  (tests/corpus/dist/hybrid) sal-bmc -d 10 waterlevel prop
+[425/800]           error  (tests/corpus/dist/hybrid) sal-deadlock-checker waterlevel transition_module
+[426/800]           error  (tests/corpus/dist/hybrid) sal-deadlock-checker waterlevel wlm
+[427/800]           error  (tests/corpus/dist/hybrid) sal-deadlock-checker waterlevel system
+[428/800]              ok  (tests/corpus/dist/inf-bakery) sal-wfc inf_bakery.sal
+[429/800]           error  (tests/corpus/dist/inf-bakery) sal-smc inf_bakery mutex
+[430/800]           error  (tests/corpus/dist/inf-bakery) sal-bmc -d 10 inf_bakery mutex
+[431/800]           error  (tests/corpus/dist/inf-bakery) sal-smc inf_bakery invalid
+[432/800]           error  (tests/corpus/dist/inf-bakery) sal-bmc -d 10 inf_bakery invalid
+[433/800]           error  (tests/corpus/dist/inf-bakery) sal-smc inf_bakery aux1
+[434/800]           error  (tests/corpus/dist/inf-bakery) sal-bmc -d 10 inf_bakery aux1
+[435/800]           error  (tests/corpus/dist/inf-bakery) sal-smc inf_bakery aux2
+[436/800]           error  (tests/corpus/dist/inf-bakery) sal-bmc -d 10 inf_bakery aux2
+[437/800]           error  (tests/corpus/dist/inf-bakery) sal-deadlock-checker inf_bakery job
+[438/800]           error  (tests/corpus/dist/inf-bakery) sal-deadlock-checker inf_bakery system
+[439/800]              ok  (tests/corpus/dist/mcslock) sal-wfc mcslock.sal
+[440/800]              ok  (tests/corpus/dist/md80) sal-wfc md80.sal
+[441/800]           no_ce  (tests/corpus/dist/md80) sal-bmc -d 10 md80 no_surprise
+[442/800]     no_deadlock  (tests/corpus/dist/md80) sal-deadlock-checker md80 env
+[443/800]        deadlock  (tests/corpus/dist/md80) sal-deadlock-checker md80 md80
+[444/800]        deadlock  (tests/corpus/dist/md80) sal-deadlock-checker md80 mental
+[445/800]        deadlock  (tests/corpus/dist/md80) sal-deadlock-checker md80 system
+[446/800]              ok  (tests/corpus/dist/n_peterson) sal-wfc n_peterson.sal
+[447/800]              ok  (tests/corpus/dist/needham) sal-wfc needhamschroeder.sal
+[448/800]  counterexample  (tests/corpus/dist/needham) sal-smc needhamschroeder prop
+[449/800]  counterexample  (tests/corpus/dist/needham) sal-bmc -d 10 needhamschroeder prop
+[450/800]     no_deadlock  (tests/corpus/dist/needham) sal-deadlock-checker needhamschroeder system
+[451/800]              ok  (tests/corpus/dist/needham) sal-wfc network.sal
+[452/800]              ok  (tests/corpus/dist/path-finder) sal-wfc pathfinder.sal
+[453/800]     no_deadlock  (tests/corpus/dist/path-finder) sal-deadlock-checker pathfinder scheduler
+[454/800]        deadlock  (tests/corpus/dist/path-finder) sal-deadlock-checker pathfinder low_priority_process
+[455/800]        deadlock  (tests/corpus/dist/path-finder) sal-deadlock-checker pathfinder high_priority_process
+[456/800]              ok  (tests/corpus/dist/pcp) sal-wfc math.sal
+[457/800]              ok  (tests/corpus/dist/pcp) sal-wfc pcp_rsrc.sal
+[458/800]              ok  (tests/corpus/dist/pcp) sal-wfc pcp_scheduler.sal
+[459/800]           error  (tests/corpus/dist/pcp) sal-deadlock-checker pcp_scheduler scheduler
+[460/800]              ok  (tests/corpus/dist/pcp) sal-wfc pcp_task.sal
+[461/800]              ok  (tests/corpus/dist/pcp) sal-wfc set.sal
+[462/800]              ok  (tests/corpus/dist/pcp) sal-wfc tst_pcp.sal
+[463/800]          proved  (tests/corpus/dist/pcp) sal-smc tst_pcp deadlock_free
+[464/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp deadlock_free
+[465/800]          proved  (tests/corpus/dist/pcp) sal-smc tst_pcp ok1
+[466/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp ok1
+[467/800]  counterexample  (tests/corpus/dist/pcp) sal-smc tst_pcp deadline_missed
+[468/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp deadline_missed
+[469/800]     no_deadlock  (tests/corpus/dist/pcp) sal-deadlock-checker tst_pcp system
+[470/800]              ok  (tests/corpus/dist/pcp) sal-wfc tst_pcp2.sal
+[471/800]          proved  (tests/corpus/dist/pcp) sal-smc tst_pcp2 deadlock_free
+[472/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp2 deadlock_free
+[473/800]          proved  (tests/corpus/dist/pcp) sal-smc tst_pcp2 ok1
+[474/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp2 ok1
+[475/800]          proved  (tests/corpus/dist/pcp) sal-smc tst_pcp2 deadline_missed
+[476/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp2 deadline_missed
+[477/800]     no_deadlock  (tests/corpus/dist/pcp) sal-deadlock-checker tst_pcp2 system
+[478/800]              ok  (tests/corpus/dist/pcp) sal-wfc tst_pcp3.sal
+[479/800]           error  (tests/corpus/dist/pcp) sal-smc tst_pcp3 deadlock_free
+[480/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp3 deadlock_free
+[481/800]           error  (tests/corpus/dist/pcp) sal-smc tst_pcp3 ok1
+[482/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp3 ok1
+[483/800]  counterexample  (tests/corpus/dist/pcp) sal-smc tst_pcp3 deadline_missed
+[484/800]  counterexample  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp3 deadline_missed
+[485/800]           error  (tests/corpus/dist/pcp) sal-deadlock-checker tst_pcp3 system
+[486/800]              ok  (tests/corpus/dist/pcp) sal-wfc tst_pcp_generic.sal
+[487/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp_generic deadlock_free
+[488/800]          proved  (tests/corpus/dist/pcp) sal-smc tst_pcp_generic ok1
+[489/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp_generic ok1
+[490/800]  counterexample  (tests/corpus/dist/pcp) sal-smc tst_pcp_generic deadline_missed
+[491/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp_generic deadline_missed
+[492/800]     no_deadlock  (tests/corpus/dist/pcp) sal-deadlock-checker tst_pcp_generic system
+[493/800]              ok  (tests/corpus/dist/pcp) sal-wfc tst_pcp_generic2.sal
+[494/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp_generic2 deadlock_free
+[495/800]          proved  (tests/corpus/dist/pcp) sal-smc tst_pcp_generic2 ok1
+[496/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp_generic2 ok1
+[497/800]  counterexample  (tests/corpus/dist/pcp) sal-smc tst_pcp_generic2 deadline_missed
+[498/800]           no_ce  (tests/corpus/dist/pcp) sal-bmc -d 10 tst_pcp_generic2 deadline_missed
+[499/800]     no_deadlock  (tests/corpus/dist/pcp) sal-deadlock-checker tst_pcp_generic2 system
+[500/800]              ok  (tests/corpus/dist/peterson) sal-wfc peterson.sal
+[501/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson mutex
+[502/800]          proved  (tests/corpus/dist/peterson) sal-smc peterson mutex_ctl
+[503/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson mutex_ctl
+[504/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson invalid
+[505/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson livenessbug1
+[506/800]  counterexample  (tests/corpus/dist/peterson) sal-smc peterson livenessbug2
+[507/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson livenessbug2
+[508/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson liveness1
+[509/800]          proved  (tests/corpus/dist/peterson) sal-smc peterson liveness1_ctl
+[510/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson liveness1_ctl
+[511/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson liveness2
+[512/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson liveness3
+[513/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 peterson liveness4
+[514/800]     no_deadlock  (tests/corpus/dist/peterson) sal-deadlock-checker peterson system
+[515/800]              ok  (tests/corpus/dist/peterson) sal-wfc sync_peterson.sal
+[516/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson mutex
+[517/800]  counterexample  (tests/corpus/dist/peterson) sal-smc sync_peterson invalid
+[518/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson invalid
+[519/800]  counterexample  (tests/corpus/dist/peterson) sal-smc sync_peterson livenessbug1
+[520/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson livenessbug1
+[521/800]  counterexample  (tests/corpus/dist/peterson) sal-smc sync_peterson livenessbug2
+[522/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson livenessbug2
+[523/800]  counterexample  (tests/corpus/dist/peterson) sal-smc sync_peterson livenessbug3
+[524/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson livenessbug3
+[525/800]  counterexample  (tests/corpus/dist/peterson) sal-smc sync_peterson livenessbug4
+[526/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson livenessbug4
+[527/800]  counterexample  (tests/corpus/dist/peterson) sal-smc sync_peterson livenessbug5
+[528/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson livenessbug5
+[529/800]  counterexample  (tests/corpus/dist/peterson) sal-smc sync_peterson livenessbug6
+[530/800]  counterexample  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson livenessbug6
+[531/800]          proved  (tests/corpus/dist/peterson) sal-smc sync_peterson liveness1
+[532/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson liveness1
+[533/800]          proved  (tests/corpus/dist/peterson) sal-smc sync_peterson liveness2
+[534/800]           no_ce  (tests/corpus/dist/peterson) sal-bmc -d 10 sync_peterson liveness2
+[535/800]     no_deadlock  (tests/corpus/dist/peterson) sal-deadlock-checker sync_peterson system
+[536/800]              ok  (tests/corpus/dist/phil) sal-wfc phil.sal
+[537/800]              ok  (tests/corpus/dist/pipeline) sal-wfc pipeline.sal
+[538/800]           error  (tests/corpus/dist/pipeline) sal-smc pipeline equivalent
+[539/800]           error  (tests/corpus/dist/pipeline) sal-bmc -d 10 pipeline equivalent
+[540/800]           error  (tests/corpus/dist/pipeline) sal-deadlock-checker pipeline spec
+[541/800]           error  (tests/corpus/dist/pipeline) sal-deadlock-checker pipeline impl
+[542/800]           error  (tests/corpus/dist/pipeline) sal-deadlock-checker pipeline step
+[543/800]           error  (tests/corpus/dist/pipeline) sal-deadlock-checker pipeline part1
+[544/800]           error  (tests/corpus/dist/pipeline) sal-deadlock-checker pipeline part2
+[545/800]           error  (tests/corpus/dist/pipeline) sal-deadlock-checker pipeline system
+[546/800]              ok  (tests/corpus/dist/qlock) sal-wfc qlock1.sal
+[547/800]              ok  (tests/corpus/dist/qlock) sal-wfc qlock2.sal
+[548/800]              ok  (tests/corpus/dist/qlock) sal-wfc qlock3.sal
+[549/800]              ok  (tests/corpus/dist/queue) sal-wfc queue.sal
+[550/800]           error  (tests/corpus/dist/queue) sal-smc queue th1
+[551/800]           error  (tests/corpus/dist/queue) sal-bmc -d 10 queue th1
+[552/800]           error  (tests/corpus/dist/queue) sal-smc queue th2
+[553/800]           error  (tests/corpus/dist/queue) sal-bmc -d 10 queue th2
+[554/800]           error  (tests/corpus/dist/queue) sal-smc queue invalid
+[555/800]           error  (tests/corpus/dist/queue) sal-bmc -d 10 queue invalid
+[556/800]           error  (tests/corpus/dist/queue) sal-deadlock-checker queue Q
+[557/800]           error  (tests/corpus/dist/queue) sal-deadlock-checker queue test_bench1
+[558/800]           error  (tests/corpus/dist/queue) sal-deadlock-checker queue system1
+[559/800]              ok  (tests/corpus/dist/ring) sal-wfc ring.sal
+[560/800]              ok  (tests/corpus/dist/s_qlock) sal-wfc s_qlock.sal
+[561/800]              ok  (tests/corpus/dist/sats) sal-wfc sats.sal
+[562/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness
+[563/800]           error  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness
+[564/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness1
+[565/800]           error  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness1
+[566/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness2
+[567/800]           error  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness2
+[568/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness3
+[569/800]           error  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness3
+[570/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness4
+[571/800]           error  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness4
+[572/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness5
+[573/800]           error  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness5
+[574/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness6
+[575/800]           error  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness6
+[576/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness7
+[577/800]           error  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness7
+[578/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness8
+[579/800]           error  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness8
+[580/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness9
+[581/800]           no_ce  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness9
+[582/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness10
+[583/800]           no_ce  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness10
+[584/800]           error  (tests/corpus/dist/sats) sal-smc sats correctness11
+[585/800]           no_ce  (tests/corpus/dist/sats) sal-bmc -d 10 sats correctness11
+[586/800]     no_deadlock  (tests/corpus/dist/sats) sal-deadlock-checker sats InitialTransition
+[587/800]           error  (tests/corpus/dist/sats) sal-deadlock-checker sats RightTransition
+[588/800]           error  (tests/corpus/dist/sats) sal-deadlock-checker sats LeftTransition
+[589/800]        deadlock  (tests/corpus/dist/sats) sal-deadlock-checker sats FinalTransition
+[590/800]           error  (tests/corpus/dist/sats) sal-deadlock-checker sats main
+[591/800]              ok  (tests/corpus/dist/sats) sal-wfc satsdefs.sal
+[592/800]              ok  (tests/corpus/dist/sats) sal-wfc satsprops.sal
+[593/800]              ok  (tests/corpus/dist/short) sal-wfc short.sal
+[594/800]              ok  (tests/corpus/dist/simpson) sal-wfc fourslot.sal
+[595/800]           no_ce  (tests/corpus/dist/simpson) sal-bmc -d 10 fourslot mutex
+[596/800]     no_deadlock  (tests/corpus/dist/simpson) sal-deadlock-checker fourslot reader
+[597/800]     no_deadlock  (tests/corpus/dist/simpson) sal-deadlock-checker fourslot writer
+[598/800]     no_deadlock  (tests/corpus/dist/simpson) sal-deadlock-checker fourslot system
+[599/800]              ok  (tests/corpus/dist/simpson) sal-wfc fourslot_bug.sal
+[600/800]  counterexample  (tests/corpus/dist/simpson) sal-bmc -d 10 fourslot_bug mutex
+[601/800]     no_deadlock  (tests/corpus/dist/simpson) sal-deadlock-checker fourslot_bug reader
+[602/800]     no_deadlock  (tests/corpus/dist/simpson) sal-deadlock-checker fourslot_bug writer
+[603/800]     no_deadlock  (tests/corpus/dist/simpson) sal-deadlock-checker fourslot_bug system
+[604/800]              ok  (tests/corpus/dist/skdmxa) sal-wfc fix_skdmxa.sal
+[605/800]              ok  (tests/corpus/dist/skdmxa) sal-wfc inf_skdmxa.sal
+[606/800]              ok  (tests/corpus/dist/skdmxa) sal-wfc skdmxa.sal
+[607/800]              ok  (tests/corpus/dist/stack) sal-wfc stack.sal
+[608/800]           error  (tests/corpus/dist/stack) sal-smc stack th1
+[609/800]           error  (tests/corpus/dist/stack) sal-bmc -d 10 stack th1
+[610/800]           error  (tests/corpus/dist/stack) sal-smc stack th2
+[611/800]           error  (tests/corpus/dist/stack) sal-bmc -d 10 stack th2
+[612/800]           error  (tests/corpus/dist/stack) sal-smc stack invalid
+[613/800]           error  (tests/corpus/dist/stack) sal-bmc -d 10 stack invalid
+[614/800]           error  (tests/corpus/dist/stack) sal-deadlock-checker stack S
+[615/800]           error  (tests/corpus/dist/stack) sal-deadlock-checker stack test_bench1
+[616/800]           error  (tests/corpus/dist/stack) sal-deadlock-checker stack system1
+[617/800]              ok  (tests/corpus/dist/startup) sal-wfc startup.sal
+[618/800]           no_ce  (tests/corpus/dist/startup) sal-bmc -d 10 startup sync
+[619/800]  counterexample  (tests/corpus/dist/startup) sal-bmc -d 10 startup noflag
+[620/800]           no_ce  (tests/corpus/dist/startup) sal-bmc -d 10 startup fast
+[621/800]           no_ce  (tests/corpus/dist/startup) sal-bmc -d 10 startup fairlyfast
+[622/800]           no_ce  (tests/corpus/dist/startup) sal-bmc -d 10 startup ok
+[623/800]           no_ce  (tests/corpus/dist/startup) sal-bmc -d 10 startup fsync
+[624/800]           no_ce  (tests/corpus/dist/startup) sal-bmc -d 10 startup fok
+[625/800]  counterexample  (tests/corpus/dist/startup) sal-bmc -d 10 startup optimism
+[626/800]           no_ce  (tests/corpus/dist/startup) sal-bmc -d 10 startup collision
+[627/800]           no_ce  (tests/corpus/dist/startup) sal-bmc -d 10 startup live
+[628/800]  counterexample  (tests/corpus/dist/startup) sal-bmc -d 10 startup eh
+[629/800]     no_deadlock  (tests/corpus/dist/startup) sal-deadlock-checker startup hub
+[630/800]     no_deadlock  (tests/corpus/dist/startup) sal-deadlock-checker startup system
+[631/800]              ok  (tests/corpus/dist/swap) sal-wfc swap.sal
+[632/800]           error  (tests/corpus/dist/tta-startup/faulty-hub) sal-wfc startup-faulty-guardian.sal
+[633/800]           error  (tests/corpus/dist/tta-startup/faulty-node) sal-wfc startup-skel.sal
+[634/800]              ok  (tests/corpus/dist/ultralog) sal-wfc ultralog.sal
+[635/800]           error  (tests/corpus/dist/ultralog) sal-smc ultralog prop_1
+[636/800]           no_ce  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog prop_1
+[637/800]  counterexample  (tests/corpus/dist/ultralog) sal-smc ultralog prop_2
+[638/800]  counterexample  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog prop_2
+[639/800]        deadlock  (tests/corpus/dist/ultralog) sal-deadlock-checker ultralog MThreat
+[640/800]        deadlock  (tests/corpus/dist/ultralog) sal-deadlock-checker ultralog Robustness
+[641/800]           error  (tests/corpus/dist/ultralog) sal-deadlock-checker ultralog society
+[642/800]              ok  (tests/corpus/dist/ultralog) sal-wfc ultralog_light.sal
+[643/800]  counterexample  (tests/corpus/dist/ultralog) sal-smc ultralog_light prop_0
+[644/800]  counterexample  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog_light prop_0
+[645/800]  counterexample  (tests/corpus/dist/ultralog) sal-smc ultralog_light prop_1
+[646/800]  counterexample  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog_light prop_1
+[647/800]  counterexample  (tests/corpus/dist/ultralog) sal-smc ultralog_light prop_3
+[648/800]  counterexample  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog_light prop_3
+[649/800]  counterexample  (tests/corpus/dist/ultralog) sal-smc ultralog_light prop_4
+[650/800]  counterexample  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog_light prop_4
+[651/800]  counterexample  (tests/corpus/dist/ultralog) sal-smc ultralog_light prop_5
+[652/800]  counterexample  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog_light prop_5
+[653/800]  counterexample  (tests/corpus/dist/ultralog) sal-smc ultralog_light prop_6
+[654/800]  counterexample  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog_light prop_6
+[655/800]  counterexample  (tests/corpus/dist/ultralog) sal-smc ultralog_light prop_7
+[656/800]  counterexample  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog_light prop_7
+[657/800]          proved  (tests/corpus/dist/ultralog) sal-smc ultralog_light prop_8
+[658/800]           no_ce  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog_light prop_8
+[659/800]  counterexample  (tests/corpus/dist/ultralog) sal-smc ultralog_light prop_9
+[660/800]  counterexample  (tests/corpus/dist/ultralog) sal-bmc -d 10 ultralog_light prop_9
+[661/800]        deadlock  (tests/corpus/dist/ultralog) sal-deadlock-checker ultralog_light MThreat
+[662/800]        deadlock  (tests/corpus/dist/ultralog) sal-deadlock-checker ultralog_light society
+[663/800]           error  (tests/corpus/web/arbiter-sal) sal-wfc arbiter.sal
+[664/800]              ok  (tests/corpus/web/bakery-sal) sal-wfc bakery.sal
+[665/800]              ok  (tests/corpus/web/fischer-sal) sal-wfc fischer.sal
+[666/800]           error  (tests/corpus/web/fischer-sal) sal-smc fischer time_aux1
+[667/800]           error  (tests/corpus/web/fischer-sal) sal-bmc -d 10 fischer time_aux1
+[668/800]           error  (tests/corpus/web/fischer-sal) sal-smc fischer time_aux2
+[669/800]           error  (tests/corpus/web/fischer-sal) sal-bmc -d 10 fischer time_aux2
+[670/800]           error  (tests/corpus/web/fischer-sal) sal-smc fischer time_aux3
+[671/800]           error  (tests/corpus/web/fischer-sal) sal-bmc -d 10 fischer time_aux3
+[672/800]           error  (tests/corpus/web/fischer-sal) sal-smc fischer logical_aux1
+[673/800]           error  (tests/corpus/web/fischer-sal) sal-bmc -d 10 fischer logical_aux1
+[674/800]           error  (tests/corpus/web/fischer-sal) sal-smc fischer mutex
+[675/800]           error  (tests/corpus/web/fischer-sal) sal-bmc -d 10 fischer mutex
+[676/800]           error  (tests/corpus/web/fischer-sal) sal-smc fischer mutual_exclusion
+[677/800]           error  (tests/corpus/web/fischer-sal) sal-bmc -d 10 fischer mutual_exclusion
+[678/800]           error  (tests/corpus/web/fischer-sal) sal-deadlock-checker fischer clock
+[679/800]           error  (tests/corpus/web/fischer-sal) sal-deadlock-checker fischer processes
+[680/800]           error  (tests/corpus/web/fischer-sal) sal-deadlock-checker fischer system
+[681/800]              ok  (tests/corpus/web/inf-bakery-sal) sal-wfc inf_bakery.sal
+[682/800]           error  (tests/corpus/web/inf-bakery-sal) sal-smc inf_bakery mutex
+[683/800]           error  (tests/corpus/web/inf-bakery-sal) sal-bmc -d 10 inf_bakery mutex
+[684/800]           error  (tests/corpus/web/inf-bakery-sal) sal-smc inf_bakery invalid
+[685/800]           error  (tests/corpus/web/inf-bakery-sal) sal-bmc -d 10 inf_bakery invalid
+[686/800]           error  (tests/corpus/web/inf-bakery-sal) sal-smc inf_bakery aux1
+[687/800]           error  (tests/corpus/web/inf-bakery-sal) sal-bmc -d 10 inf_bakery aux1
+[688/800]           error  (tests/corpus/web/inf-bakery-sal) sal-smc inf_bakery aux2
+[689/800]           error  (tests/corpus/web/inf-bakery-sal) sal-bmc -d 10 inf_bakery aux2
+[690/800]           error  (tests/corpus/web/inf-bakery-sal) sal-deadlock-checker inf_bakery job
+[691/800]           error  (tests/corpus/web/inf-bakery-sal) sal-deadlock-checker inf_bakery system
+[692/800]              ok  (tests/corpus/web/needham) sal-wfc needhamschroeder.sal
+[693/800]  counterexample  (tests/corpus/web/needham) sal-smc needhamschroeder prop
+[694/800]  counterexample  (tests/corpus/web/needham) sal-bmc -d 10 needhamschroeder prop
+[695/800]  counterexample  (tests/corpus/web/needham) sal-smc needhamschroeder test
+[696/800]  counterexample  (tests/corpus/web/needham) sal-bmc -d 10 needhamschroeder test
+[697/800]          proved  (tests/corpus/web/needham) sal-smc needhamschroeder test2
+[698/800]           no_ce  (tests/corpus/web/needham) sal-bmc -d 10 needhamschroeder test2
+[699/800]     no_deadlock  (tests/corpus/web/needham) sal-deadlock-checker needhamschroeder system
+[700/800]              ok  (tests/corpus/web/needham) sal-wfc network.sal
+[701/800]              ok  (tests/corpus/web/pcp-sal) sal-wfc math.sal
+[702/800]           error  (tests/corpus/web/pcp-sal) sal-wfc pcp_generic.sal
+[703/800]           error  (tests/corpus/web/pcp-sal) sal-deadlock-checker pcp_generic system
+[704/800]              ok  (tests/corpus/web/pcp-sal) sal-wfc pcp_rsrc.sal
+[705/800]              ok  (tests/corpus/web/pcp-sal) sal-wfc pcp_scheduler.sal
+[706/800]           error  (tests/corpus/web/pcp-sal) sal-deadlock-checker pcp_scheduler scheduler
+[707/800]              ok  (tests/corpus/web/pcp-sal) sal-wfc pcp_task.sal
+[708/800]              ok  (tests/corpus/web/pcp-sal) sal-wfc set.sal
+[709/800]              ok  (tests/corpus/web/pcp-sal) sal-wfc tst_pcp_generic.sal
+[710/800]          proved  (tests/corpus/web/pcp-sal) sal-smc tst_pcp_generic deadlock_free
+[711/800]           no_ce  (tests/corpus/web/pcp-sal) sal-bmc -d 10 tst_pcp_generic deadlock_free
+[712/800]          proved  (tests/corpus/web/pcp-sal) sal-smc tst_pcp_generic ok1
+[713/800]           no_ce  (tests/corpus/web/pcp-sal) sal-bmc -d 10 tst_pcp_generic ok1
+[714/800]  counterexample  (tests/corpus/web/pcp-sal) sal-smc tst_pcp_generic deadline_missed
+[715/800]           no_ce  (tests/corpus/web/pcp-sal) sal-bmc -d 10 tst_pcp_generic deadline_missed
+[716/800]     no_deadlock  (tests/corpus/web/pcp-sal) sal-deadlock-checker tst_pcp_generic system
+[717/800]           error  (tests/corpus/web/pcp-sal) sal-wfc tst_pcp_generic2.sal
+[718/800]           error  (tests/corpus/web/pcp-sal) sal-smc tst_pcp_generic2 deadlock_free
+[719/800]           error  (tests/corpus/web/pcp-sal) sal-bmc -d 10 tst_pcp_generic2 deadlock_free
+[720/800]           error  (tests/corpus/web/pcp-sal) sal-smc tst_pcp_generic2 ok1
+[721/800]           error  (tests/corpus/web/pcp-sal) sal-bmc -d 10 tst_pcp_generic2 ok1
+[722/800]           error  (tests/corpus/web/pcp-sal) sal-smc tst_pcp_generic2 deadline_missed
+[723/800]           error  (tests/corpus/web/pcp-sal) sal-bmc -d 10 tst_pcp_generic2 deadline_missed
+[724/800]           error  (tests/corpus/web/pcp-sal) sal-deadlock-checker tst_pcp_generic2 system
+[725/800]              ok  (tests/corpus/web/peterson-sal) sal-wfc peterson.sal
+[726/800]          proved  (tests/corpus/web/peterson-sal) sal-smc peterson mutex
+[727/800]           no_ce  (tests/corpus/web/peterson-sal) sal-bmc -d 10 peterson mutex
+[728/800]  counterexample  (tests/corpus/web/peterson-sal) sal-smc peterson invalid
+[729/800]  counterexample  (tests/corpus/web/peterson-sal) sal-bmc -d 10 peterson invalid
+[730/800]  counterexample  (tests/corpus/web/peterson-sal) sal-smc peterson livenessbug1
+[731/800]  counterexample  (tests/corpus/web/peterson-sal) sal-bmc -d 10 peterson livenessbug1
+[732/800]  counterexample  (tests/corpus/web/peterson-sal) sal-smc peterson livenessbug2
+[733/800]  counterexample  (tests/corpus/web/peterson-sal) sal-bmc -d 10 peterson livenessbug2
+[734/800]          proved  (tests/corpus/web/peterson-sal) sal-smc peterson liveness1
+[735/800]           no_ce  (tests/corpus/web/peterson-sal) sal-bmc -d 10 peterson liveness1
+[736/800]          proved  (tests/corpus/web/peterson-sal) sal-smc peterson liveness2
+[737/800]           no_ce  (tests/corpus/web/peterson-sal) sal-bmc -d 10 peterson liveness2
+[738/800]          proved  (tests/corpus/web/peterson-sal) sal-smc peterson liveness3
+[739/800]           no_ce  (tests/corpus/web/peterson-sal) sal-bmc -d 10 peterson liveness3
+[740/800]          proved  (tests/corpus/web/peterson-sal) sal-smc peterson liveness4
+[741/800]           no_ce  (tests/corpus/web/peterson-sal) sal-bmc -d 10 peterson liveness4
+[742/800]     no_deadlock  (tests/corpus/web/peterson-sal) sal-deadlock-checker peterson system
+[743/800]              ok  (tests/corpus/web/qlock) sal-wfc qlock1.sal
+[744/800]           error  (tests/corpus/web/qlock) sal-wfc qlock2.sal
+[745/800]              ok  (tests/corpus/web/qlock) sal-wfc qlock3.sal
+[746/800]              ok  (tests/corpus/web/short-sal) sal-wfc short.sal
+[747/800]          proved  (tests/corpus/web/short-sal) sal-smc short th1
+[748/800]           no_ce  (tests/corpus/web/short-sal) sal-bmc -d 10 short th1
+[749/800]          proved  (tests/corpus/web/short-sal) sal-smc short th2
+[750/800]           no_ce  (tests/corpus/web/short-sal) sal-bmc -d 10 short th2
+[751/800]          proved  (tests/corpus/web/short-sal) sal-smc short th3
+[752/800]           no_ce  (tests/corpus/web/short-sal) sal-bmc -d 10 short th3
+[753/800]     no_deadlock  (tests/corpus/web/short-sal) sal-deadlock-checker short main
+[754/800]              ok  (tests/corpus/web/simpson-sal) sal-wfc fourslot.sal
+[755/800]           no_ce  (tests/corpus/web/simpson-sal) sal-bmc -d 10 fourslot mutex
+[756/800]     no_deadlock  (tests/corpus/web/simpson-sal) sal-deadlock-checker fourslot reader
+[757/800]     no_deadlock  (tests/corpus/web/simpson-sal) sal-deadlock-checker fourslot writer
+[758/800]     no_deadlock  (tests/corpus/web/simpson-sal) sal-deadlock-checker fourslot system
+[759/800]              ok  (tests/corpus/web/skdmxa) sal-wfc fix_skdmxa.sal
+[760/800]              ok  (tests/corpus/web/skdmxa) sal-wfc inf_skdmxa.sal
+[761/800]              ok  (tests/corpus/web/skdmxa) sal-wfc skdmxa.sal
+[762/800]              ok  (tests/corpus/web/stack-sal) sal-wfc stack.sal
+[763/800]           error  (tests/corpus/web/stack-sal) sal-smc stack th1
+[764/800]           error  (tests/corpus/web/stack-sal) sal-bmc -d 10 stack th1
+[765/800]           error  (tests/corpus/web/stack-sal) sal-smc stack th2
+[766/800]           error  (tests/corpus/web/stack-sal) sal-bmc -d 10 stack th2
+[767/800]           error  (tests/corpus/web/stack-sal) sal-smc stack invalid
+[768/800]           error  (tests/corpus/web/stack-sal) sal-bmc -d 10 stack invalid
+[769/800]           error  (tests/corpus/web/stack-sal) sal-deadlock-checker stack S
+[770/800]           error  (tests/corpus/web/stack-sal) sal-deadlock-checker stack test_bench1
+[771/800]           error  (tests/corpus/web/stack-sal) sal-deadlock-checker stack system1
+[772/800]              ok  (tests/corpus/web/ultralog) sal-wfc ultralog.sal
+[773/800]           error  (tests/corpus/web/ultralog) sal-smc ultralog prop_1
+[774/800]           no_ce  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog prop_1
+[775/800]  counterexample  (tests/corpus/web/ultralog) sal-smc ultralog prop_2
+[776/800]  counterexample  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog prop_2
+[777/800]        deadlock  (tests/corpus/web/ultralog) sal-deadlock-checker ultralog MThreat
+[778/800]        deadlock  (tests/corpus/web/ultralog) sal-deadlock-checker ultralog Robustness
+[779/800]           error  (tests/corpus/web/ultralog) sal-deadlock-checker ultralog society
+[780/800]              ok  (tests/corpus/web/ultralog) sal-wfc ultralog_light.sal
+[781/800]  counterexample  (tests/corpus/web/ultralog) sal-smc ultralog_light prop_0
+[782/800]  counterexample  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog_light prop_0
+[783/800]  counterexample  (tests/corpus/web/ultralog) sal-smc ultralog_light prop_1
+[784/800]  counterexample  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog_light prop_1
+[785/800]  counterexample  (tests/corpus/web/ultralog) sal-smc ultralog_light prop_3
+[786/800]  counterexample  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog_light prop_3
+[787/800]  counterexample  (tests/corpus/web/ultralog) sal-smc ultralog_light prop_4
+[788/800]  counterexample  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog_light prop_4
+[789/800]  counterexample  (tests/corpus/web/ultralog) sal-smc ultralog_light prop_5
+[790/800]  counterexample  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog_light prop_5
+[791/800]  counterexample  (tests/corpus/web/ultralog) sal-smc ultralog_light prop_6
+[792/800]  counterexample  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog_light prop_6
+[793/800]  counterexample  (tests/corpus/web/ultralog) sal-smc ultralog_light prop_7
+[794/800]  counterexample  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog_light prop_7
+[795/800]          proved  (tests/corpus/web/ultralog) sal-smc ultralog_light prop_8
+[796/800]           no_ce  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog_light prop_8
+[797/800]  counterexample  (tests/corpus/web/ultralog) sal-smc ultralog_light prop_9
+[798/800]  counterexample  (tests/corpus/web/ultralog) sal-bmc -d 10 ultralog_light prop_9
+[799/800]        deadlock  (tests/corpus/web/ultralog) sal-deadlock-checker ultralog_light MThreat
+[800/800]        deadlock  (tests/corpus/web/ultralog) sal-deadlock-checker ultralog_light society
+done
