@@ -2,11 +2,11 @@
 
 use std::process::ExitCode;
 
-use sal_cli::common::{parse_args, print_path, resolve_context, resolve_qualified};
+use sal_cli::common::{parse_args, print_states, resolve_context, resolve_qualified};
 use sal_core::env::Entry;
 use sal_core::wfc::Checker;
 use sal_core::SalEnv;
-use sal_engine::explicit::{CheckResult, Explicit};
+use sal_engine::symbolic::Symbolic;
 use sal_flat::sval::EvalCtx;
 use sal_flat::Flattener;
 use sal_syntax::ast::{Module, ModuleKind, Name};
@@ -77,7 +77,7 @@ fn main() -> ExitCode {
         }
     };
 
-    let engine = match Explicit::new(&flat) {
+    let mut engine = match Symbolic::new(&flat) {
         Ok(e) => e,
         Err(e) => {
             eprintln!("Error: {}", e);
@@ -85,16 +85,15 @@ fn main() -> ExitCode {
         }
     };
     match engine.check_deadlock() {
-        Ok(CheckResult::Ok) => {
+        Ok(None) => {
             println!("ok (module does NOT contain deadlock states).");
             ExitCode::SUCCESS
         }
-        Ok(CheckResult::Deadlock(path)) => {
+        Ok(Some(path)) => {
             println!("The module contains deadlock states...");
-            print_path(&flat, &path, "Deadlock:");
+            print_states(&flat, &path, "Deadlock:");
             ExitCode::SUCCESS
         }
-        Ok(_) => unreachable!(),
         Err(e) => {
             eprintln!("Error: {}", e);
             ExitCode::from(255)

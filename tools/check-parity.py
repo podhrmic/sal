@@ -11,8 +11,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-BIN = ROOT / "target" / "debug"
+ROOT = Path(os.environ.get("SAL_RS_ROOT", Path(__file__).resolve().parent.parent))
+BIN = ROOT / "target" / os.environ.get("SAL_RS_PROFILE", "debug")
 MANIFEST = ROOT / "tests" / "golden" / "manifest.jsonl"
 
 IMPLEMENTED = ["sal-wfc", "sal-smc", "sal-deadlock-checker"]

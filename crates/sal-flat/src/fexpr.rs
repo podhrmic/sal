@@ -13,7 +13,7 @@ use crate::value::Value;
 pub type LeafId = u32;
 
 /// The scalar type of a leaf variable.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum LeafType {
     Bool,
     Range(num_bigint::BigInt, num_bigint::BigInt),
@@ -81,7 +81,7 @@ pub struct LeafInfo {
     pub class: sal_syntax::ast::VarClass,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum FExpr {
     Const(Value),
     /// Leaf variable; `primed` = next-state.

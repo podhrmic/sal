@@ -319,13 +319,23 @@ impl<'e> Checker<'e> {
                     };
                     SemType::Fun(Box::new(dom), Box::new(rng.clone()))
                 };
-                // pre-insert to allow recursive definitions
+                // pre-insert to allow recursive definitions; function
+                // declarations store their value as an explicit lambda so
+                // evaluation binds the parameters
+                let stored_value = match value {
+                    Some(v) if !args.is_empty() => Some(Expr {
+                        span: v.span,
+                        parens: 0,
+                        kind: ExprKind::Lambda(args.clone(), Box::new(v.clone())),
+                    }),
+                    other => other.clone(),
+                };
                 self.insert(
                     inst,
                     &name.name,
                     Entry::Const {
                         sem: sem.clone(),
-                        value: value.clone(),
+                        value: stored_value,
                     },
                 );
                 if let Some(v) = value {

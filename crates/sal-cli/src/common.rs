@@ -126,6 +126,23 @@ pub fn resolve_qualified(
     }
 }
 
+/// Print a path of decoded states (from the symbolic engine).
+pub fn print_states(flat: &FlatModule, states: &[Vec<Value>], header: &str) {
+    println!("{}", header);
+    println!("========================");
+    println!("Path");
+    println!("========================");
+    for (i, state) in states.iter().enumerate() {
+        println!("Step {}:", i);
+        println!("--- System Variables (assignments) ---");
+        for (li, v) in state.iter().enumerate() {
+            let leaf = &flat.leaves[li];
+            println!("{} = {}", leaf.name, display_leaf(leaf, v));
+        }
+        println!("------------------------");
+    }
+}
+
 /// Print a counterexample path in the oracle's general shape.
 pub fn print_path(flat: &FlatModule, path: &CePath, header: &str) {
     println!("{}", header);

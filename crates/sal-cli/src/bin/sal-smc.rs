@@ -4,12 +4,11 @@
 //! properties; LTL with fairness and the BDD engine are in progress.
 
 use std::process::ExitCode;
-use std::rc::Rc;
 
-use sal_cli::common::{parse_args, print_path, resolve_context, resolve_qualified};
+use sal_cli::common::{parse_args, print_states, resolve_context, resolve_qualified};
 use sal_core::wfc::Checker;
 use sal_core::SalEnv;
-use sal_engine::explicit::{CheckResult, Explicit};
+use sal_engine::symbolic::Symbolic;
 use sal_flat::formula::TFormula;
 use sal_flat::Flattener;
 
@@ -47,7 +46,7 @@ fn main() -> ExitCode {
         }
     };
 
-    let engine = match Explicit::new(&flat) {
+    let mut engine = match Symbolic::new(&flat) {
         Ok(e) => e,
         Err(e) => {
             eprintln!("Error: {}", e);
@@ -55,50 +54,44 @@ fn main() -> ExitCode {
         }
     };
 
-    // supported: pure-propositional and G/AG invariants
-    let prop = match &formula {
-        TFormula::Atom(e) => Some((e.clone(), true)),
-        TFormula::G(inner) | TFormula::AG(inner) => {
-            inner.as_atom().map(|e| (e.clone(), false))
+    // dispatch: propositional / invariant properties use plain
+    // reachability (shortest counterexamples); CTL uses fixpoints; LTL
+    // uses the Büchi product.
+    enum Kind {
+        Initial(sal_flat::FExpr),
+        Invariant(sal_flat::FExpr),
+        Ctl,
+        Ltl,
+    }
+    let kind = match &formula {
+        TFormula::Atom(e) => Kind::Initial(e.clone()),
+        TFormula::G(inner) | TFormula::AG(inner) if inner.as_atom().is_some() => {
+            Kind::Invariant(inner.as_atom().unwrap().clone())
         }
-        _ => None,
-    };
-    let Some((prop, init_only)) = prop else {
-        eprintln!(
-            "Error: this LTL/CTL formula is not yet supported by the Rust sal-smc \
-             (invariant properties only)."
-        );
-        return ExitCode::from(255);
+        f if f.is_ctl() && f.has_ltl() => {
+            eprintln!("Error: formula mixes CTL and LTL operators.");
+            return ExitCode::from(255);
+        }
+        f if f.is_ctl() => Kind::Ctl,
+        _ => Kind::Ltl,
     };
 
-    let outcome = if init_only {
-        // property must hold in the initial states
-        (|| {
-            for s in engine.initial_states()? {
-                if !engine.holds(&prop, &s)? {
-                    return Ok(CheckResult::Counterexample(
-                        sal_engine::explicit::Path {
-                            steps: vec![(Rc::clone(&s), None)],
-                        },
-                    ));
-                }
-            }
-            Ok(CheckResult::Proved)
-        })()
-    } else {
-        engine.check_invariant(&prop)
+    let outcome = match kind {
+        Kind::Initial(p) => engine.check_initial(&p),
+        Kind::Invariant(p) => engine.check_invariant(&p),
+        Kind::Ctl => engine.check_ctl(&formula),
+        Kind::Ltl => engine.check_ltl(&formula),
     };
 
     match outcome {
-        Ok(CheckResult::Proved) => {
+        Ok(None) => {
             println!("proved.");
             ExitCode::SUCCESS
         }
-        Ok(CheckResult::Counterexample(path)) => {
-            print_path(&flat, &path, "Counterexample:");
+        Ok(Some(path)) => {
+            print_states(&flat, &path, "Counterexample:");
             ExitCode::SUCCESS
         }
-        Ok(_) => unreachable!(),
         Err(e) => {
             eprintln!("Error: {}", e);
             ExitCode::from(255)
