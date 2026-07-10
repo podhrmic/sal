@@ -906,18 +906,35 @@ impl Parser {
         }
     }
 
+    fn at_module_prefix(&self) -> bool {
+        matches!(
+            self.peek().tok,
+            Tok::Local | Tok::Output | Tok::Rename | Tok::With | Tok::Observe
+        )
+    }
+
     /// `m1 || m2` binds tighter than `m1 [] m2`; both left-associative.
+    /// A prefix form (`RENAME … IN m`, `LOCAL … IN m`, …) as a right
+    /// operand extends maximally to the right (its trailing module has the
+    /// lowest precedence in the LALR grammar).
     fn module_binary(&mut self) -> PResult<Module> {
         let start = self.peek().span.start;
         let mut m = self.module_sync()?;
         while self.at(Tok::Async) {
             self.bump();
-            let rhs = self.module_sync()?;
+            let (rhs, last) = if self.at_module_prefix() {
+                (self.module()?, true)
+            } else {
+                (self.module_sync()?, false)
+            };
             m = Module {
                 span: self.span_from(start),
                 kind: ModuleKind::Async(Box::new(m), Box::new(rhs)),
                 parens: 0,
             };
+            if last {
+                break;
+            }
         }
         Ok(m)
     }
@@ -927,12 +944,19 @@ impl Parser {
         let mut m = self.module_primary()?;
         while self.at(Tok::Sync) {
             self.bump();
-            let rhs = self.module_primary()?;
+            let (rhs, last) = if self.at_module_prefix() {
+                (self.module()?, true)
+            } else {
+                (self.module_primary()?, false)
+            };
             m = Module {
                 span: self.span_from(start),
                 kind: ModuleKind::Sync(Box::new(m), Box::new(rhs)),
                 parens: 0,
             };
+            if last {
+                break;
+            }
         }
         Ok(m)
     }
