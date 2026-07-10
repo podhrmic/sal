@@ -15,7 +15,7 @@ ROOT = Path(os.environ.get("SAL_RS_ROOT", Path(__file__).resolve().parent.parent
 BIN = ROOT / "target" / os.environ.get("SAL_RS_PROFILE", "debug")
 MANIFEST = ROOT / "tests" / "golden" / "manifest.jsonl"
 
-IMPLEMENTED = ["sal-wfc", "sal-smc", "sal-deadlock-checker", "sal-bmc", "sal-inf-bmc"]
+IMPLEMENTED = ["sal-wfc", "sal-smc", "sal-deadlock-checker", "sal-bmc", "sal-inf-bmc", "sal-path-finder"]
 TIMEOUT = int(os.environ.get("PARITY_TIMEOUT", "60"))
 
 
@@ -48,33 +48,41 @@ def classify(tool: str, rc: int, out: str) -> dict:
     return v
 
 
+def run_case(r):
+    tool = r["cmd"].split()[0]
+    argv = r["cmd"].split(None, 1)
+    cmd = f"{BIN}/{argv[0]} {argv[1] if len(argv) > 1 else ''}"
+    try:
+        p = subprocess.run(
+            ["timeout", "-k", "5", str(TIMEOUT), "bash", "-c", cmd],
+            cwd=ROOT / r["cwd"],
+            capture_output=True,
+            text=True,
+            timeout=TIMEOUT + 30,
+        )
+        rc, out = p.returncode, p.stdout + "\n" + p.stderr
+    except subprocess.TimeoutExpired:
+        rc, out = 124, ""
+    return r, classify(tool, rc, out), out
+
+
 def main() -> int:
+    from concurrent.futures import ThreadPoolExecutor
     tools = sys.argv[1:] or IMPLEMENTED
     recs = [json.loads(l) for l in MANIFEST.read_text().splitlines()]
+    cases = [
+        r
+        for r in recs
+        if r["cmd"].split()[0] in tools and "lsal" not in r["cwd"]
+    ]
     total = ok = 0
     mismatches = []
     soft = []
-    for r in recs:
-        tool = r["cmd"].split()[0]
-        if tool not in tools:
-            continue
-        if "lsal" in r["cwd"]:
-            continue  # lsal front-end is out of scope for now
+    jobs = int(os.environ.get("PARITY_JOBS", "8"))
+    with ThreadPoolExecutor(jobs) as ex:
+        results = list(ex.map(run_case, cases))
+    for r, ours, out in results:
         total += 1
-        argv = r["cmd"].split(None, 1)
-        cmd = f"{BIN}/{argv[0]} {argv[1] if len(argv) > 1 else ''}"
-        try:
-            p = subprocess.run(
-                ["timeout", "-k", "5", str(TIMEOUT), "bash", "-c", cmd],
-                cwd=ROOT / r["cwd"],
-                capture_output=True,
-                text=True,
-                timeout=TIMEOUT + 30,
-            )
-            rc, out = p.returncode, p.stdout + "\n" + p.stderr
-        except subprocess.TimeoutExpired:
-            rc, out = 124, ""
-        ours = classify(tool, rc, out)
         want = r["verdict"]
         got = ours["verdict"]
         match = got == want

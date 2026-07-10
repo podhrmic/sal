@@ -527,6 +527,29 @@ impl<'m> Symbolic<'m> {
         }
     }
 
+    /// Generate an execution path of up to `depth` steps (fewer only if a
+    /// deadlock is reached).
+    pub fn random_path(&mut self, depth: usize) -> EResult<Vec<Vec<Value>>> {
+        if self.init == F {
+            return Err(EngineError::Eval(
+                "the module has no initial states".into(),
+            ));
+        }
+        let mut out = Vec::new();
+        let mut cube = self.state_cube(self.init);
+        out.push(self.decode_state(&cube));
+        for _ in 0..depth {
+            let sb = self.assignment_bdd(&cube);
+            let succ = self.image(sb);
+            if succ == F {
+                break;
+            }
+            cube = self.state_cube(succ);
+            out.push(self.decode_state(&cube));
+        }
+        Ok(out)
+    }
+
     /// Check that `prop` holds in every initial state.
     pub fn check_initial(&mut self, prop: &FExpr) -> EResult<Option<Vec<Vec<Value>>>> {
         let p = self.enc_bool(prop)?;
