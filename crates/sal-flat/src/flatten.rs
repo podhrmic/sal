@@ -283,11 +283,16 @@ impl<'e> Flattener<'e> {
                 let vals = cty.enumerate().unwrap();
                 let elems: Vec<String> =
                     vals.iter().map(|v| self.display_value(v)).collect();
-                let pseudo = LeafType::Scalar(tid.clone(), Rc::new(elems.clone()));
+                let elems_rc = Rc::new(elems);
+                let pseudo = LeafType::Scalar(tid.clone(), elems_rc.clone());
+                self.datatype_enums
+                    .borrow_mut()
+                    .entry(tid.clone())
+                    .or_insert_with(|| Rc::new(vals.clone()));
                 self.scalars
                     .borrow_mut()
                     .entry(tid.clone())
-                    .or_insert_with(|| (Rc::new(elems), false));
+                    .or_insert_with(|| (elems_rc, false));
                 let mut leaves = self.leaves.borrow_mut();
                 let id = leaves.len() as LeafId;
                 leaves.push(LeafInfo {
@@ -1162,28 +1167,132 @@ impl<'e> Flattener<'e> {
                 Ok((FExpr::and(cs), all_next))
             }
             Definition::Simple(s) => {
-                let lhs_sv = self.eval_lhs(sctx, e, &s.lhs)?;
-                let mut assigned = BTreeSet::new();
-                Self::skel_leaves(&lhs_sv, &mut assigned);
-                match &s.rhs {
-                    Rhs::Expr(rhs) => {
-                        let rv = self.eval(sctx, rhs)?;
-                        let c = lhs_sv
-                            .eq_sval(&rv)
-                            .map_err(|m| self.err(sctx, s.span, m))?;
-                        Ok((c, assigned))
+                match self.eval_lhs(sctx, e, &s.lhs) {
+                    Ok(lhs_sv) => {
+                        let mut assigned = BTreeSet::new();
+                        Self::skel_leaves(&lhs_sv, &mut assigned);
+                        match &s.rhs {
+                            Rhs::Expr(rhs) => {
+                                let rv = self.eval(sctx, rhs)?;
+                                let c = self.eq_vals(sctx, &lhs_sv, &rv, s.span)?;
+                                Ok((c, assigned))
+                            }
+                            Rhs::Selection(rhs) => {
+                                let rv = self.eval(sctx, rhs)?;
+                                let applied =
+                                    self.apply(sctx, rv, vec![lhs_sv], s.span)?;
+                                let c = applied
+                                    .to_bool_fexpr()
+                                    .map_err(|m| self.err(sctx, s.span, m))?;
+                                Ok((c, assigned))
+                            }
+                        }
                     }
-                    Rhs::Selection(rhs) => {
-                        let rv = self.eval(sctx, rhs)?;
-                        let applied =
-                            self.apply(sctx, rv, vec![lhs_sv], s.span)?;
-                        let c = applied
-                            .to_bool_fexpr()
-                            .map_err(|m| self.err(sctx, s.span, m))?;
-                        Ok((c, assigned))
-                    }
+                    Err(_) => self.elab_symbolic_lhs(sctx, e, s, allow_next),
                 }
             }
+        }
+    }
+
+    /// Assignment whose LHS has a state-dependent index:
+    /// `x'[i] = e` (with `i` symbolic) means `x' = x WITH [i] := e`
+    /// (unspecified components unchanged) in transition position, and a
+    /// component-only constraint `x[i] = e` in initialization position.
+    fn elab_symbolic_lhs(
+        &self,
+        sctx: &EvalCtx,
+        e: &Elab,
+        s: &SimpleDefinition,
+        allow_next: bool,
+    ) -> FResult<(FExpr, BTreeSet<LeafId>)> {
+        let base_cur = sctx.lookup(&s.lhs.base.name).ok_or_else(|| {
+            self.err(
+                sctx,
+                s.lhs.span,
+                format!("Undeclared state variable \"{}\".", s.lhs.base.name),
+            )
+        })?;
+        let _ = e;
+        let rv = match &s.rhs {
+            Rhs::Expr(rhs) => self.eval(sctx, rhs)?,
+            Rhs::Selection(_) => {
+                return Err(self.err(
+                    sctx,
+                    s.span,
+                    "IN selection with a state-dependent index is not supported.",
+                ))
+            }
+        };
+        if s.lhs.next && allow_next {
+            // full-variable update semantics
+            let primed = sctx
+                .lookup(&format!("{}'", s.lhs.base.name))
+                .ok_or_else(|| {
+                    self.err(
+                        sctx,
+                        s.lhs.span,
+                        format!("Undeclared state variable \"{}\".", s.lhs.base.name),
+                    )
+                })?;
+            let updated = self.update_pub(sctx, base_cur, &s.lhs.accesses, rv, s.span)?;
+            let c = self.eq_vals(sctx, &primed, &updated, s.span)?;
+            let mut assigned = BTreeSet::new();
+            Self::skel_leaves(&primed, &mut assigned);
+            Ok((c, assigned))
+        } else {
+            // component-only constraint via symbolic selection
+            let base = if s.lhs.next {
+                sctx.lookup(&format!("{}'", s.lhs.base.name)).unwrap()
+            } else {
+                base_cur
+            };
+            let mut cur = base;
+            for a in &s.lhs.accesses {
+                cur = match a {
+                    Access::Array(ie) => {
+                        let iv = self.eval(sctx, ie)?;
+                        self.select(sctx, cur, iv, s.span)?
+                    }
+                    Access::Record(f) => match cur {
+                        SVal::Record(fs) => fs
+                            .iter()
+                            .find(|(n, _)| n == &f.name)
+                            .map(|(_, v)| v.clone())
+                            .ok_or_else(|| {
+                                self.err(sctx, f.span, "Unknown record field.")
+                            })?,
+                        other => {
+                            return Err(self.err(
+                                sctx,
+                                s.span,
+                                format!("Invalid record access on {:?}.", other),
+                            ))
+                        }
+                    },
+                    Access::Tuple(i) => match cur {
+                        SVal::Tuple(vs) => vs
+                            .get(*i as usize - 1)
+                            .cloned()
+                            .ok_or_else(|| {
+                                self.err(sctx, s.span, "Tuple index out of bounds.")
+                            })?,
+                        other => {
+                            return Err(self.err(
+                                sctx,
+                                s.span,
+                                format!("Invalid tuple access on {:?}.", other),
+                            ))
+                        }
+                    },
+                    Access::Args(_) => {
+                        return Err(self.err(sctx, s.span, "Invalid LHS access."))
+                    }
+                };
+            }
+            let c = self.eq_vals(sctx, &cur, &rv, s.span)?;
+            let mut assigned = BTreeSet::new();
+            Self::skel_leaves(&cur, &mut assigned);
+            Ok((c, assigned))
         }
     }
 
@@ -1206,8 +1315,19 @@ impl<'e> Flattener<'e> {
                 Ok(())
             }
             Definition::Simple(s) => {
-                let lhs_sv = self.eval_lhs(sctx, e, &s.lhs)?;
-                Self::skel_leaves(&lhs_sv, out);
+                match self.eval_lhs(sctx, e, &s.lhs) {
+                    Ok(lhs_sv) => Self::skel_leaves(&lhs_sv, out),
+                    Err(_) => {
+                        let name = if s.lhs.next {
+                            format!("{}'", s.lhs.base.name)
+                        } else {
+                            s.lhs.base.name.clone()
+                        };
+                        if let Some(sv) = sctx.lookup(&name) {
+                            Self::skel_leaves(&sv, out);
+                        }
+                    }
+                }
                 Ok(())
             }
         }

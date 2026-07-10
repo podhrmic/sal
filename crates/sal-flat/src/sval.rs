@@ -103,6 +103,8 @@ pub enum Closure {
     RingOp { succ: bool },
     /// Prelude builtin identified by name (min, max, G, F, ...).
     Builtin(String),
+    /// Conditional function (from IF-THEN-ELSE over functions).
+    Ite(FExpr, Rc<Closure>, Rc<Closure>),
     /// An explicit finite map (used when a ground function value is
     /// applied symbolically).
     Table {
@@ -143,6 +145,8 @@ pub enum SetRepr {
     List(Vec<SVal>),
     /// `up_to(n)` / `below(n)` / `above(n)` from the prelude.
     Bound { kind: BoundKind, bound: FExpr },
+    /// Conditional set (from IF-THEN-ELSE over sets).
+    Ite(FExpr, Rc<SetRepr>, Rc<SetRepr>),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -305,6 +309,16 @@ impl SVal {
                 a.clone(),
                 b.clone(),
             ))),
+            (SVal::Set(a), SVal::Set(b)) => Ok(SVal::Set(Rc::new(SetRepr::Ite(
+                cond.clone(),
+                a.clone(),
+                b.clone(),
+            )))),
+            (SVal::Fun(a), SVal::Fun(b)) => Ok(SVal::Fun(Rc::new(Closure::Ite(
+                cond.clone(),
+                a.clone(),
+                b.clone(),
+            )))),
             _ => {
                 let (ta, tta) = t
                     .to_scalar_fexpr()

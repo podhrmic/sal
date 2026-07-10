@@ -31,6 +31,8 @@ pub struct Flattener<'e> {
     pub scalars: RefCell<HashMap<TypeId, (Rc<Vec<String>>, bool)>>,
     /// Cache of resolved ctypes per (instance key, printed type).
     ctype_cache: RefCell<HashMap<(String, String), CType>>,
+    /// Enumerations of finite datatypes encoded as pseudo-scalars.
+    pub datatype_enums: RefCell<HashMap<TypeId, Rc<Vec<Value>>>>,
     depth: Cell<u32>,
 }
 
@@ -46,6 +48,7 @@ impl<'e> Flattener<'e> {
             leaves: RefCell::new(Vec::new()),
             scalars: RefCell::new(HashMap::new()),
             ctype_cache: RefCell::new(HashMap::new()),
+            datatype_enums: RefCell::new(HashMap::new()),
             depth: Cell::new(0),
         }
     }
@@ -431,7 +434,7 @@ impl<'e> Flattener<'e> {
                                 fe,
                             )));
                         }
-                        SVal::ite(&fc, &vt, &ve).map_err(|m| self.err(ctx, e.span, m))
+                        self.ite_vals(ctx, &fc, &vt, &ve, e.span)
                     }
                 }
             }
@@ -446,12 +449,26 @@ impl<'e> Flattener<'e> {
             if let Some(v) = ctx.lookup(&n.id.name) {
                 return Ok(v);
             }
-            // prelude builtins that are functions/temporal ops
+        }
+        // context declarations shadow prelude builtins (e.g. a scalar
+        // element named `X` wins over the LTL operator)
+        let looked = self.lookup(ctx, n, span);
+        let (def_inst, entry) = match looked {
+            Ok(r) => r,
+            Err(e) => {
+                if n.ctx.is_none() {
+                    if let Some(b) = builtin(&n.id.name) {
+                        return Ok(b);
+                    }
+                }
+                return Err(e);
+            }
+        };
+        if n.ctx.is_none() && Rc::ptr_eq(&def_inst, &self.env.prelude) {
             if let Some(b) = builtin(&n.id.name) {
                 return Ok(b);
             }
         }
-        let (def_inst, entry) = self.lookup(ctx, n, span)?;
         match entry {
             Entry::Const { value, sem } => {
                 // context parameter?
@@ -620,23 +637,74 @@ impl<'e> Flattener<'e> {
                         }
                     }
                     let mut ground = Vec::new();
+                    let mut all_ground = true;
                     for a in &args {
                         match a {
                             SVal::Ground(v) => ground.push(v.clone()),
                             _ => {
-                                return Err(self.err(
-                                    ctx,
-                                    span,
-                                    "Symbolic datatype construction is not supported.",
-                                ))
+                                all_ground = false;
+                                break;
                             }
                         }
                     }
-                    Ok(SVal::Ground(Value::Data(ty.clone(), name.clone(), ground)))
+                    if all_ground {
+                        return Ok(SVal::Ground(Value::Data(
+                            ty.clone(),
+                            name.clone(),
+                            ground,
+                        )));
+                    }
+                    // symbolic construction: encode over the datatype's
+                    // enumeration as a pseudo-scalar ITE chain
+                    let (vals, elems) = self.datatype_enum(ctx, ty, span)?;
+                    let lt = LeafType::Scalar(ty.clone(), elems);
+                    let mut result: Option<FExpr> = None;
+                    for (i, w) in vals.iter().enumerate().rev() {
+                        let Value::Data(_, cname, fields) = w else { continue };
+                        if cname != name || fields.len() != args.len() {
+                            continue;
+                        }
+                        let mut conds = Vec::new();
+                        for (arg, fv) in args.iter().zip(fields) {
+                            conds.push(self.eq_vals(
+                                ctx,
+                                arg,
+                                &SVal::Ground(fv.clone()),
+                                span,
+                            )?);
+                        }
+                        let cond = FExpr::and(conds);
+                        let this_val = FExpr::Const(Value::Scalar(ty.clone(), i));
+                        result = Some(match result {
+                            None => this_val,
+                            Some(rest) => FExpr::ite(cond, this_val, rest),
+                        });
+                    }
+                    match result {
+                        Some(e) => Ok(SVal::Sym(e, lt)),
+                        None => Err(self.err(
+                            ctx,
+                            span,
+                            "Datatype constructor has no enumerated values.",
+                        )),
+                    }
                 }
                 Closure::Recognizer { ctor, .. } => match &args[0] {
                     SVal::Ground(Value::Data(_, c, _)) => {
                         Ok(SVal::Ground(Value::Bool(c == ctor)))
+                    }
+                    SVal::Sym(e, LeafType::Scalar(tid, _)) => {
+                        let (vals, _) = self.datatype_enum(ctx, tid, span)?;
+                        let mut alts = Vec::new();
+                        for (i, w) in vals.iter().enumerate() {
+                            if matches!(w, Value::Data(_, c, _) if c == ctor) {
+                                alts.push(FExpr::eq(
+                                    e.clone(),
+                                    FExpr::Const(Value::Scalar(tid.clone(), i)),
+                                ));
+                            }
+                        }
+                        Ok(SVal::from_bool_expr(FExpr::or(alts)))
                     }
                     other => Err(self.err(
                         ctx,
@@ -650,6 +718,32 @@ impl<'e> Flattener<'e> {
                     SVal::Ground(Value::Data(_, c, fields)) if c == ctor => {
                         Ok(SVal::Ground(fields[*field_idx].clone()))
                     }
+                    SVal::Sym(e, LeafType::Scalar(tid, _)) => {
+                        // merge field values over matching enumeration
+                        // entries with an ITE chain
+                        let (vals, _) = self.datatype_enum(ctx, tid, span)?;
+                        let mut acc: Option<SVal> = None;
+                        for (i, w) in vals.iter().enumerate().rev() {
+                            let Value::Data(_, c, fields) = w else { continue };
+                            if c != ctor || *field_idx >= fields.len() {
+                                continue;
+                            }
+                            let fv = SVal::Ground(fields[*field_idx].clone());
+                            acc = Some(match acc {
+                                None => fv,
+                                Some(rest) => {
+                                    let cond = FExpr::eq(
+                                        e.clone(),
+                                        FExpr::Const(Value::Scalar(tid.clone(), i)),
+                                    );
+                                    self.ite_vals(ctx, &cond, &fv, &rest, span)?
+                                }
+                            });
+                        }
+                        acc.ok_or_else(|| {
+                            self.err(ctx, span, "Accessor applied to impossible value.")
+                        })
+                    }
                     other => Err(self.err(
                         ctx,
                         span,
@@ -657,6 +751,11 @@ impl<'e> Flattener<'e> {
                     )),
                 },
                 Closure::RingOp { succ } => self.ring_op(ctx, *succ, &args[0], span),
+                Closure::Ite(cond, a, b) => {
+                    let va = self.apply(ctx, SVal::Fun(a.clone()), args.clone(), span)?;
+                    let vb = self.apply(ctx, SVal::Fun(b.clone()), args, span)?;
+                    self.ite_vals(ctx, cond, &va, &vb, span)
+                }
                 Closure::Table { index, elems } => {
                     let idx = if args.len() == 1 {
                         args.remove(0)
@@ -724,7 +823,234 @@ impl<'e> Flattener<'e> {
                 };
                 Ok(SVal::from_bool_expr(e))
             }
+            SetRepr::Ite(cond, a, b) => {
+                let ma = self.set_member(ctx, a, v, span)?;
+                let mb = self.set_member(ctx, b, v, span)?;
+                let fa = ma.to_bool_fexpr().map_err(|m| self.err(ctx, span, m))?;
+                let fb = mb.to_bool_fexpr().map_err(|m| self.err(ctx, span, m))?;
+                Ok(SVal::from_bool_expr(FExpr::ite(cond.clone(), fa, fb)))
+            }
         }
+    }
+
+    /// Pseudo-scalar index of a ground datatype value.
+    pub fn data_index(&self, ctx: &EvalCtx, tid: &TypeId, v: &Value, span: Span) -> FResult<usize> {
+        let enums = self.datatype_enums.borrow();
+        let Some(vals) = enums.get(tid) else {
+            return Err(self.err(ctx, span, format!("Unknown datatype enumeration for {}.", tid)));
+        };
+        vals.iter().position(|x| x == v).ok_or_else(|| {
+            self.err(ctx, span, format!("Datatype value out of enumeration: {}.", v))
+        })
+    }
+
+    /// Convert a ground aggregate value into structural SVal form guided
+    /// by a shape partner (another SVal with the same structure).
+    fn ground_like(&self, ctx: &EvalCtx, v: &Value, like: &SVal, span: Span) -> FResult<SVal> {
+        Ok(match (v, like) {
+            (Value::Tuple(vs), SVal::Tuple(ls)) if vs.len() == ls.len() => SVal::Tuple(
+                vs.iter()
+                    .zip(ls)
+                    .map(|(x, l)| self.ground_like(ctx, x, l, span))
+                    .collect::<FResult<_>>()?,
+            ),
+            (Value::Record(fs), SVal::Record(ls)) if fs.len() == ls.len() => SVal::Record(
+                fs.iter()
+                    .zip(ls)
+                    .map(|((n, x), (_, l))| Ok((n.clone(), self.ground_like(ctx, x, l, span)?)))
+                    .collect::<FResult<_>>()?,
+            ),
+            (Value::Array(vs), SVal::Array(it, ls)) if vs.len() == ls.len() => SVal::Array(
+                it.clone(),
+                vs.iter()
+                    .zip(ls)
+                    .map(|(x, l)| self.ground_like(ctx, x, l, span))
+                    .collect::<FResult<_>>()?,
+            ),
+            (Value::Data(tid, ..), SVal::Sym(_, LeafType::Scalar(stid, _))) if tid == stid => {
+                let idx = self.data_index(ctx, tid, v, span)?;
+                SVal::Ground(Value::Scalar(tid.clone(), idx))
+            }
+            _ => SVal::Ground(v.clone()),
+        })
+    }
+
+    /// Normalize a value against a structural partner: tabulate function
+    /// closures and sets over the partner's index domain, lift ground
+    /// aggregates, map datatype values to their pseudo-scalar encoding.
+    fn normalize_like(&self, ctx: &EvalCtx, v: &SVal, like: &SVal, span: Span) -> FResult<SVal> {
+        match (v, like) {
+            (SVal::Fun(_), SVal::Array(it, elems)) | (SVal::Set(_), SVal::Array(it, elems)) => {
+                let vals = it.enumerate().ok_or_else(|| {
+                    self.err(ctx, span, "Finite index type expected.")
+                })?;
+                let mut out = Vec::new();
+                for (val, l) in vals.iter().zip(elems) {
+                    let applied =
+                        self.apply(ctx, v.clone(), vec![SVal::Ground(val.clone())], span)?;
+                    out.push(self.normalize_like(ctx, &applied, l, span)?);
+                }
+                Ok(SVal::Array(it.clone(), out))
+            }
+            (SVal::Ground(g), _) => self.ground_like(ctx, g, like, span),
+            (SVal::Tuple(vs), SVal::Tuple(ls)) if vs.len() == ls.len() => Ok(SVal::Tuple(
+                vs.iter()
+                    .zip(ls)
+                    .map(|(x, l)| self.normalize_like(ctx, x, l, span))
+                    .collect::<FResult<_>>()?,
+            )),
+            (SVal::Record(vs), SVal::Record(ls)) if vs.len() == ls.len() => Ok(SVal::Record(
+                vs.iter()
+                    .zip(ls)
+                    .map(|((n, x), (_, l))| {
+                        Ok((n.clone(), self.normalize_like(ctx, x, l, span)?))
+                    })
+                    .collect::<FResult<_>>()?,
+            )),
+            (SVal::Array(it, vs), SVal::Array(_, ls)) if vs.len() == ls.len() => Ok(SVal::Array(
+                it.clone(),
+                vs.iter()
+                    .zip(ls)
+                    .map(|(x, l)| self.normalize_like(ctx, x, l, span))
+                    .collect::<FResult<_>>()?,
+            )),
+            _ => Ok(v.clone()),
+        }
+    }
+
+    /// Structural equality with closure tabulation and datatype encoding
+    /// (richer than SVal::eq_sval).
+    pub fn eq_vals(&self, ctx: &EvalCtx, a: &SVal, b: &SVal, span: Span) -> FResult<FExpr> {
+        let a2 = self.normalize_like(ctx, a, b, span)?;
+        let b2 = self.normalize_like(ctx, b, &a2, span)?;
+        let a3 = self.normalize_like(ctx, &a2, &b2, span)?;
+        a3.eq_sval(&b2).map_err(|m| self.err(ctx, span, m))
+    }
+
+    /// Fully lift a ground value into structural form: tuples/records
+    /// decompose, datatype values map to their pseudo-scalar encoding.
+    fn lift_ground_full(&self, ctx: &EvalCtx, v: &Value, span: Span) -> FResult<SVal> {
+        Ok(match v {
+            Value::Tuple(vs) => SVal::Tuple(
+                vs.iter()
+                    .map(|x| self.lift_ground_full(ctx, x, span))
+                    .collect::<FResult<_>>()?,
+            ),
+            Value::Record(fs) => SVal::Record(
+                fs.iter()
+                    .map(|(n, x)| Ok((n.clone(), self.lift_ground_full(ctx, x, span)?)))
+                    .collect::<FResult<_>>()?,
+            ),
+            Value::Data(tid, ..) => {
+                let idx = self.data_index(ctx, tid, v, span)?;
+                SVal::Ground(Value::Scalar(tid.clone(), idx))
+            }
+            other => SVal::Ground(other.clone()),
+        })
+    }
+
+    /// ITE merge with normalization (closure tabulation, ground lifting).
+    pub fn ite_vals(
+        &self,
+        ctx: &EvalCtx,
+        cond: &FExpr,
+        t: &SVal,
+        e: &SVal,
+        span: Span,
+    ) -> FResult<SVal> {
+        if cond.is_true() {
+            return Ok(t.clone());
+        }
+        if cond.is_false() {
+            return Ok(e.clone());
+        }
+        // lift ground aggregates so structural merge can proceed
+        let t = match t {
+            SVal::Ground(v @ (Value::Tuple(_) | Value::Record(_) | Value::Data(..))) => {
+                self.lift_ground_full(ctx, v, span)?
+            }
+            other => other.clone(),
+        };
+        let e = match e {
+            SVal::Ground(v @ (Value::Tuple(_) | Value::Record(_) | Value::Data(..))) => {
+                self.lift_ground_full(ctx, v, span)?
+            }
+            other => other.clone(),
+        };
+        let t2 = self.normalize_like(ctx, &t, &e, span)?;
+        let e2 = self.normalize_like(ctx, &e, &t2, span)?;
+        let t3 = self.normalize_like(ctx, &t2, &e2, span)?;
+        match (&t3, &e2) {
+            // recurse structurally so nested aggregates get the same
+            // normalization
+            (SVal::Tuple(a), SVal::Tuple(b)) if a.len() == b.len() => Ok(SVal::Tuple(
+                a.iter()
+                    .zip(b)
+                    .map(|(x, y)| self.ite_vals(ctx, cond, x, y, span))
+                    .collect::<FResult<_>>()?,
+            )),
+            (SVal::Record(a), SVal::Record(b)) if a.len() == b.len() => Ok(SVal::Record(
+                a.iter()
+                    .zip(b)
+                    .map(|((n, x), (_, y))| {
+                        Ok((n.clone(), self.ite_vals(ctx, cond, x, y, span)?))
+                    })
+                    .collect::<FResult<_>>()?,
+            )),
+            (SVal::Array(it, a), SVal::Array(_, b)) if a.len() == b.len() => {
+                Ok(SVal::Array(
+                    it.clone(),
+                    a.iter()
+                        .zip(b)
+                        .map(|(x, y)| self.ite_vals(ctx, cond, x, y, span))
+                        .collect::<FResult<_>>()?,
+                ))
+            }
+            _ => SVal::ite(cond, &t3, &e2).map_err(|m| self.err(ctx, span, m)),
+        }
+    }
+
+    /// Enumeration + display names of a finite datatype (cached).
+    pub fn datatype_enum(
+        &self,
+        ctx: &EvalCtx,
+        tid: &TypeId,
+        span: Span,
+    ) -> FResult<(Rc<Vec<Value>>, Rc<Vec<String>>)> {
+        if let Some(vals) = self.datatype_enums.borrow().get(tid) {
+            if let Some((elems, _)) = self.scalars.borrow().get(tid) {
+                return Ok((vals.clone(), elems.clone()));
+            }
+        }
+        // resolve the datatype's ctype from its defining instance
+        let cty = {
+            let cache = self.ctype_cache.borrow();
+            cache.get(&(tid.ctx.clone(), tid.name.clone())).cloned()
+        };
+        let cty = match cty {
+            Some(c) => c,
+            None => {
+                return Err(self.err(
+                    ctx,
+                    span,
+                    format!("Unknown datatype {} (not yet resolved).", tid),
+                ))
+            }
+        };
+        let vals = cty.enumerate().ok_or_else(|| {
+            self.err(ctx, span, format!("Finite type expected ({}).", tid))
+        })?;
+        let elems: Vec<String> = vals.iter().map(|v| self.display_value(v)).collect();
+        let vals = Rc::new(vals);
+        let elems = Rc::new(elems);
+        self.datatype_enums
+            .borrow_mut()
+            .insert(tid.clone(), vals.clone());
+        self.scalars
+            .borrow_mut()
+            .entry(tid.clone())
+            .or_insert_with(|| (elems.clone(), false));
+        Ok((vals, elems))
     }
 
     fn ring_op(&self, ctx: &EvalCtx, succ: bool, v: &SVal, span: Span) -> FResult<SVal> {
@@ -798,11 +1124,13 @@ impl<'e> Flattener<'e> {
                 }
                 let mut result = elems[elems.len() - 1].clone();
                 for i in (0..elems.len() - 1).rev() {
-                    let cond = idx
-                        .eq_sval(&SVal::Ground(vals[i].clone()))
-                        .map_err(|m| self.err(ctx, span, m))?;
-                    result = SVal::ite(&cond, &elems[i], &result)
-                        .map_err(|m| self.err(ctx, span, m))?;
+                    let cond = self.eq_vals(
+                        ctx,
+                        idx,
+                        &SVal::Ground(vals[i].clone()),
+                        span,
+                    )?;
+                    result = self.ite_vals(ctx, &cond, &elems[i], &result, span)?;
                 }
                 Ok(result)
             }
@@ -825,6 +1153,18 @@ impl<'e> Flattener<'e> {
                 format!("Function (array) type expected, found {:?}.", other),
             )),
         }
+    }
+
+    /// Public wrapper for the flattener's symbolic-LHS handling.
+    pub fn update_pub(
+        &self,
+        ctx: &EvalCtx,
+        target: SVal,
+        accesses: &[Access],
+        value: SVal,
+        span: Span,
+    ) -> FResult<SVal> {
+        self.update(ctx, target, accesses, value, span)
     }
 
     fn update(
@@ -857,13 +1197,16 @@ impl<'e> Flattener<'e> {
                             self.err(ctx, span, "Finite index type expected.")
                         })?;
                         for (i, v) in vals.iter().enumerate() {
-                            let cond = iv
-                                .eq_sval(&SVal::Ground(v.clone()))
-                                .map_err(|m| self.err(ctx, span, m))?;
+                            let cond = self.eq_vals(
+                                ctx,
+                                &iv,
+                                &SVal::Ground(v.clone()),
+                                span,
+                            )?;
                             let updated =
                                 self.update(ctx, elems[i].clone(), rest, value.clone(), span)?;
-                            elems[i] = SVal::ite(&cond, &updated, &elems[i])
-                                .map_err(|m| self.err(ctx, span, m))?;
+                            elems[i] =
+                                self.ite_vals(ctx, &cond, &updated, &elems[i], span)?;
                         }
                         Ok(SVal::Array(it, elems))
                     }
@@ -900,13 +1243,16 @@ impl<'e> Flattener<'e> {
                             self.err(ctx, span, "Finite index type expected.")
                         })?;
                         for (i, v) in vals.iter().enumerate() {
-                            let cond = idx
-                                .eq_sval(&SVal::Ground(v.clone()))
-                                .map_err(|m| self.err(ctx, span, m))?;
+                            let cond = self.eq_vals(
+                                ctx,
+                                &idx,
+                                &SVal::Ground(v.clone()),
+                                span,
+                            )?;
                             let updated =
                                 self.update(ctx, elems[i].clone(), rest, value.clone(), span)?;
-                            elems[i] = SVal::ite(&cond, &updated, &elems[i])
-                                .map_err(|m| self.err(ctx, span, m))?;
+                            elems[i] =
+                                self.ite_vals(ctx, &cond, &updated, &elems[i], span)?;
                         }
                         let _ = acc;
                         Ok(SVal::Array(it, elems))
@@ -1054,8 +1400,7 @@ impl<'e> Flattener<'e> {
         match op {
             And | Or | Xor | Implies | Iff => self.eval_bool_op(ctx, op, va, vb, span),
             Eq | Neq => {
-                // set membership-style equality is still structural equality
-                let eq = va.eq_sval(&vb).map_err(|m| self.err(ctx, span, m))?;
+                let eq = self.eq_vals(ctx, &va, &vb, span)?;
                 Ok(SVal::from_bool_expr(if op == Neq {
                     FExpr::not(eq)
                 } else {
