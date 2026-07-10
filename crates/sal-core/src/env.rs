@@ -18,7 +18,9 @@ use crate::types::{SemType, TypeId};
 /// A binding for a context parameter in an instance.
 #[derive(Debug, Clone)]
 pub enum Binding {
-    Type(SemType),
+    /// Type actual: semantic type plus the defining (instance, AST) pair —
+    /// the flattener needs the syntax to recover concrete bounds.
+    Type(SemType, Option<(Rc<Instance>, Type)>),
     /// Expression actual: kept as a closure (defining instance + AST) so
     /// it can be typed and, later, evaluated.
     Expr(Rc<Instance>, Expr, SemType),
@@ -220,7 +222,7 @@ pub fn instance_key(name: &str, def: &SalContext, bindings: &HashMap<String, Bin
         match p {
             CtxParam::Types(ids) => {
                 for id in ids {
-                    if let Some(Binding::Type(t)) = bindings.get(&id.name) {
+                    if let Some(Binding::Type(t, _)) = bindings.get(&id.name) {
                         parts.push(format!("{}", t));
                     }
                 }

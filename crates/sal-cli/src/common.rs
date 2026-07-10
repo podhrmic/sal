@@ -1,0 +1,168 @@
+//! Shared plumbing for the CLI tools: argument handling, context/assertion
+//! resolution, and counterexample printing.
+
+use std::path::Path;
+use std::rc::Rc;
+
+use sal_core::env::Instance;
+use sal_core::wfc::Checker;
+use sal_core::{SalEnv, SalError};
+use sal_engine::explicit::Path as CePath;
+use sal_flat::fexpr::LeafType;
+use sal_flat::flatten::FlatModule;
+use sal_flat::value::Value;
+use sal_syntax::ast::{ExprKind, Name};
+
+/// Minimal option scanner: collects positional args and recognized
+/// `--opt=value` / `--opt value` options, ignoring verbosity.
+pub struct Args {
+    pub positional: Vec<String>,
+    pub options: Vec<(String, Option<String>)>,
+}
+
+pub fn parse_args(value_opts: &[&str]) -> Args {
+    let mut positional = Vec::new();
+    let mut options = Vec::new();
+    let mut args = std::env::args().skip(1).peekable();
+    while let Some(a) = args.next() {
+        if a == "-v" || a == "--verbose" {
+            let _ = args.next();
+        } else if let Some(rest) = a.strip_prefix("--") {
+            if let Some((k, v)) = rest.split_once('=') {
+                options.push((k.to_string(), Some(v.to_string())));
+            } else if value_opts.contains(&rest) {
+                options.push((rest.to_string(), args.next()));
+            } else {
+                options.push((rest.to_string(), None));
+            }
+        } else if let Some(rest) = a.strip_prefix('-') {
+            // short options with a value (-d 10, -l lemma, -s solver)
+            if ["d", "l", "s", "i"].contains(&rest) && rest != "i" {
+                options.push((rest.to_string(), args.next()));
+            } else {
+                options.push((rest.to_string(), None));
+            }
+        } else {
+            positional.push(a);
+        }
+    }
+    Args {
+        positional,
+        options,
+    }
+}
+
+impl Args {
+    pub fn opt(&self, name: &str) -> Option<&str> {
+        self.options
+            .iter()
+            .rev()
+            .find(|(k, _)| k == name)
+            .and_then(|(_, v)| v.as_deref())
+    }
+
+    pub fn flag(&self, name: &str) -> bool {
+        self.options.iter().any(|(k, _)| k == name)
+    }
+}
+
+/// Resolve `ctx` / `ctx.sal` / `ctx{actuals}` (as a parsed Name) into an
+/// instance.
+pub fn resolve_context(
+    env: &SalEnv,
+    checker: &Checker,
+    name: &str,
+) -> Result<Rc<Instance>, SalError> {
+    if name.contains('/') || name.ends_with(".sal") {
+        let def = env.parse_file(Path::new(name))?;
+        let inst = env.plain_instance(def);
+        checker.check_instance(&inst)?;
+        return Ok(inst);
+    }
+    // possibly parameterized: parse as an expression fragment
+    if name.contains('{') {
+        let e = sal_syntax::parse_expr(&format!("{}!__x", name)).map_err(|pe| {
+            SalError::global(format!("Invalid context reference \"{}\": {}", name, pe))
+        })?;
+        if let ExprKind::Name(Name { ctx: Some(cn), .. }) = &e.kind {
+            return checker.resolve_context_name_pub(&env.prelude, cn);
+        }
+        return Err(SalError::global(format!(
+            "Invalid context reference \"{}\".",
+            name
+        )));
+    }
+    let def = env.load_context(name)?;
+    let inst = env.plain_instance(def);
+    checker.check_instance(&inst)?;
+    Ok(inst)
+}
+
+/// Resolve an assertion reference: either `name` within `default_ctx`, or a
+/// qualified `ctx{...}!name`.
+pub fn resolve_qualified(
+    env: &SalEnv,
+    checker: &Checker,
+    reference: &str,
+) -> Result<(Rc<Instance>, String), SalError> {
+    let e = sal_syntax::parse_expr(reference).map_err(|pe| {
+        SalError::global(format!("Invalid reference \"{}\": {}", reference, pe))
+    })?;
+    let ExprKind::Name(n) = &e.kind else {
+        return Err(SalError::global(format!(
+            "Invalid reference \"{}\".",
+            reference
+        )));
+    };
+    match &n.ctx {
+        Some(cn) => {
+            let inst = checker.resolve_context_name_pub(&env.prelude, cn)?;
+            Ok((inst, n.id.name.clone()))
+        }
+        None => Err(SalError::global(format!(
+            "Reference \"{}\" must be qualified with a context.",
+            reference
+        ))),
+    }
+}
+
+/// Print a counterexample path in the oracle's general shape.
+pub fn print_path(flat: &FlatModule, path: &CePath, header: &str) {
+    println!("{}", header);
+    println!("========================");
+    println!("Path");
+    println!("========================");
+    for (i, (state, prov)) in path.steps.iter().enumerate() {
+        println!("Step {}:", i);
+        println!("--- System Variables (assignments) ---");
+        for (li, v) in state.iter().enumerate() {
+            let leaf = &flat.leaves[li];
+            println!("{} = {}", leaf.name, display_leaf(leaf, v));
+        }
+        println!("------------------------");
+        if let Some(p) = prov {
+            if !p.is_empty() {
+                println!("Transition Information: ");
+                println!("(label {})", p);
+                println!("------------------------");
+            }
+        }
+    }
+}
+
+pub fn display_leaf(leaf: &sal_flat::fexpr::LeafInfo, v: &Value) -> String {
+    match (v, &leaf.ty) {
+        (Value::Scalar(_, i), LeafType::Scalar(_, elems)) if *i < elems.len() => {
+            elems[*i].clone()
+        }
+        (Value::Bool(b), _) => b.to_string(),
+        (Value::Num(n), _) => {
+            if n.is_integer() {
+                n.to_integer().to_string()
+            } else {
+                format!("{}/{}", n.numer(), n.denom())
+            }
+        }
+        (other, _) => format!("{}", other),
+    }
+}

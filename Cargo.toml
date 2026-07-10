@@ -1,6 +1,8 @@
 [workspace]
 resolver = "2"
 members = [
+    "crates/sal-flat",
+    "crates/sal-engine",
     "crates/sal-syntax",
     "crates/sal-core",
     "crates/sal-cli",

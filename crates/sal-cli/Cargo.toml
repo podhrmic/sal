@@ -8,7 +8,21 @@ description = "Command-line tools of the SAL 3.3 suite, reimplemented in Rust"
 [dependencies]
 sal-syntax = { path = "../sal-syntax" }
 sal-core = { path = "../sal-core" }
+sal-flat = { path = "../sal-flat" }
+sal-engine = { path = "../sal-engine" }
 
 [[bin]]
 name = "sal-wfc"
 path = "src/bin/sal-wfc.rs"
+
+[[bin]]
+name = "sal-smc"
+path = "src/bin/sal-smc.rs"
+
+[[bin]]
+name = "sal-deadlock-checker"
+path = "src/bin/sal-deadlock-checker.rs"
+
+[lib]
+name = "sal_cli"
+path = "src/lib.rs"

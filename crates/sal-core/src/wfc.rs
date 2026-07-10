@@ -29,7 +29,7 @@ enum FrameKind {
 }
 
 #[derive(Default)]
-struct Scope {
+pub struct Scope {
     frames: Vec<(FrameKind, HashMap<String, SemType>)>,
 }
 
@@ -105,7 +105,7 @@ impl<'e> Checker<'e> {
                 CtxParam::Types(ids) => {
                     for id in ids {
                         let sem = match inst.bindings.get(&id.name) {
-                            Some(Binding::Type(t)) => t.clone(),
+                            Some(Binding::Type(t, _)) => t.clone(),
                             _ => SemType::Uninterp(type_id(inst, &id.name)),
                         };
                         self.insert(
@@ -424,6 +424,17 @@ impl<'e> Checker<'e> {
     // Names & context references
     // ------------------------------------------------------------------
 
+    /// Public wrapper used by the CLI tools to resolve qualified names
+    /// like `bakery{5,15}`.
+    pub fn resolve_context_name_pub(
+        &self,
+        inst: &Rc<Instance>,
+        cn: &ContextName,
+    ) -> CResult<Rc<Instance>> {
+        let mut scope = Scope::default();
+        self.resolve_context_name(inst, cn, &mut scope)
+    }
+
     fn resolve_context_name(
         &self,
         inst: &Rc<Instance>,
@@ -461,7 +472,10 @@ impl<'e> Checker<'e> {
             match (fty, actual) {
                 (None, Actual::Type(t)) => {
                     let sem = self.resolve_type(inst, t, scope)?;
-                    bindings.insert(fname.clone(), Binding::Type(sem));
+                    bindings.insert(
+                        fname.clone(),
+                        Binding::Type(sem, Some((inst.clone(), t.clone()))),
+                    );
                 }
                 (None, Actual::Expr(e)) => {
                     // a plain name used as a type actual
@@ -471,7 +485,10 @@ impl<'e> Checker<'e> {
                             span: e.span,
                         };
                         let sem = self.resolve_type(inst, &t, scope)?;
-                        bindings.insert(fname.clone(), Binding::Type(sem));
+                        bindings.insert(
+                            fname.clone(),
+                            Binding::Type(sem, Some((inst.clone(), t.clone()))),
+                        );
                     } else {
                         return Err(self.err(inst, e.span, "Type expected."));
                     }
@@ -507,6 +524,17 @@ impl<'e> Checker<'e> {
             }
         }
         Ok(target)
+    }
+
+    /// Public entry-point for downstream crates (the flattener) that need
+    /// the same name-resolution rules.
+    pub fn lookup_entry_pub(
+        &self,
+        inst: &Rc<Instance>,
+        name: &Name,
+        scope: &mut Scope,
+    ) -> CResult<(Rc<Instance>, Entry)> {
+        self.lookup_entry(inst, name, scope)
     }
 
     fn lookup_entry(
