@@ -17,7 +17,11 @@ pub type LeafId = u32;
 pub enum LeafType {
     Bool,
     Range(num_bigint::BigInt, num_bigint::BigInt),
-    Int,
+    /// Unbounded integers, possibly with one-sided bounds (NATURAL etc.).
+    Int {
+        min: Option<num_bigint::BigInt>,
+        max: Option<num_bigint::BigInt>,
+    },
     Real,
     Scalar(TypeId, Rc<Vec<String>>),
 }
@@ -27,7 +31,10 @@ impl LeafType {
         Some(match t {
             CType::Bool => LeafType::Bool,
             CType::Range(lo, hi) => LeafType::Range(lo.clone(), hi.clone()),
-            CType::Int { .. } => LeafType::Int,
+            CType::Int { min, max } => LeafType::Int {
+                min: min.clone(),
+                max: max.clone(),
+            },
             CType::Real => LeafType::Real,
             CType::Scalar(id, elems) => LeafType::Scalar(id.clone(), elems.clone()),
             _ => return None,

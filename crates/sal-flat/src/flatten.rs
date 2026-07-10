@@ -127,6 +127,33 @@ impl<'e> Flattener<'e> {
         Ok((flat, f))
     }
 
+    /// Lower another assertion's formula against an existing flat module
+    /// (used for `-l` lemmas: the lemma must range over the same state
+    /// variables).
+    pub fn lower_assertion_in(
+        &self,
+        inst: &Rc<Instance>,
+        assertion: &str,
+        flat: &FlatModule,
+    ) -> FResult<TFormula> {
+        let entry = inst.symbols.borrow().get(assertion).cloned();
+        let Some(Entry::Assertion { body, .. }) = entry else {
+            return Err(SalError::global(format!(
+                "Assertion \"{}\" was not found in context \"{}\".",
+                assertion, inst.name
+            )));
+        };
+        let AssertionExpr::Models { formula, .. } = &body else {
+            return Err(SalError::global(
+                "IMPLEMENTS assertions are not supported.".to_string(),
+            ));
+        };
+        let ctx = EvalCtx::new(inst.clone());
+        let fctx = self.state_ctx(&ctx, flat);
+        let v = self.eval(&fctx, formula)?;
+        self.to_formula(&fctx, v, formula.span)
+    }
+
     /// Flatten a module expression (used by the deadlock checker &c).
     pub fn flatten_module(&self, ctx: &EvalCtx, m: &Module) -> FResult<FlatModule> {
         self.checker.check_instance(&ctx.inst)?;

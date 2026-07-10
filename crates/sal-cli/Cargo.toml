@@ -26,3 +26,11 @@ path = "src/bin/sal-deadlock-checker.rs"
 [lib]
 name = "sal_cli"
 path = "src/lib.rs"
+
+[[bin]]
+name = "sal-bmc"
+path = "src/bin/sal-bmc.rs"
+
+[[bin]]
+name = "sal-inf-bmc"
+path = "src/bin/sal-inf-bmc.rs"

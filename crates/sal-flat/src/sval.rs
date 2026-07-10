@@ -198,7 +198,10 @@ impl SVal {
             SVal::Ground(Value::Bool(_)) => {
                 Some((self.as_fexpr_const()?, LeafType::Bool))
             }
-            SVal::Ground(Value::Num(_)) => Some((self.as_fexpr_const()?, LeafType::Int)),
+            SVal::Ground(Value::Num(_)) => Some((
+                self.as_fexpr_const()?,
+                LeafType::Int { min: None, max: None },
+            )),
             SVal::Ground(Value::Scalar(id, _)) => Some((
                 self.as_fexpr_const()?,
                 // element list unknown here; callers only need the id for

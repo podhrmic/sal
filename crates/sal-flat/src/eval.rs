@@ -1195,12 +1195,15 @@ impl<'e> Flattener<'e> {
     ) -> FResult<(FExpr, LeafType)> {
         match v {
             SVal::Ground(Value::Num(n)) => {
-                Ok((FExpr::Const(Value::Num(n.clone())), LeafType::Int))
+                Ok((
+                    FExpr::Const(Value::Num(n.clone())),
+                    LeafType::Int { min: None, max: None },
+                ))
             }
             SVal::Sym(e, t)
                 if matches!(
                     t,
-                    LeafType::Int | LeafType::Real | LeafType::Range(..)
+                    LeafType::Int { .. } | LeafType::Real | LeafType::Range(..)
                 ) =>
             {
                 Ok((e.clone(), t.clone()))
