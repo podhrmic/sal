@@ -37,6 +37,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "sal-cli"
+version = "0.1.0"
+dependencies = [
+ "sal-core",
+ "sal-syntax",
+]
+
+[[package]]
+name = "sal-core"
+version = "0.1.0"
+dependencies = [
+ "num-bigint",
+ "num-traits",
+ "sal-syntax",
+]
+
+[[package]]
 name = "sal-syntax"
 version = "0.1.0"
 dependencies = [

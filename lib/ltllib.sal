@@ -1,0 +1,75 @@
+% LTL pattern library — a SAL-concrete-syntax rendering of the ltllib.lsal
+% context shipped with SAL 3.3 (only the names reachable from the SAL
+% concrete syntax, i.e. the underscore variants).
+ltllib: CONTEXT =
+BEGIN
+  BF(p: BOOLEAN, n: NATURAL): BOOLEAN =
+    n > 0 AND (p OR X(BF(p, n - 1)));
+
+  BU(p: BOOLEAN, q: BOOLEAN, n: NATURAL): BOOLEAN =
+    n > 0 AND (q OR (p AND X(BU(p, q, n - 1))));
+
+  always(p: BOOLEAN): BOOLEAN = G(p);
+
+  infinitely_often(p: BOOLEAN): BOOLEAN = G(F(p));
+
+  always_before(p: BOOLEAN, r: BOOLEAN): BOOLEAN = F(r) => U(p, r);
+
+  always_after(p: BOOLEAN, q: BOOLEAN): BOOLEAN = G(q => G(p));
+
+  always_between(p: BOOLEAN, q: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    G((q AND NOT r AND F(r)) => U(p, r));
+
+  always_after_until(p: BOOLEAN, q: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    G((q AND NOT r) => W(p, r));
+
+  eventually(p: BOOLEAN): BOOLEAN = F(p);
+
+  bounded_eventually(p: BOOLEAN, n: NATURAL): BOOLEAN = BF(p, n);
+
+  eventually_before(p: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    W(NOT r, p AND NOT r);
+
+  eventually_after(p: BOOLEAN, q: BOOLEAN): BOOLEAN =
+    G(NOT q OR F(q AND F(p)));
+
+  eventually_between(p: BOOLEAN, q: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    G((q AND NOT r) => W(NOT r, p AND NOT r));
+
+  eventually_after_until(p: BOOLEAN, q: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    G((q AND NOT r) => U(NOT r, p AND NOT r));
+
+  never(p: BOOLEAN): BOOLEAN = always(NOT p);
+
+  never_before(p: BOOLEAN, r: BOOLEAN): BOOLEAN = always_before(NOT p, r);
+
+  never_after(p: BOOLEAN, q: BOOLEAN): BOOLEAN = always_after(NOT p, q);
+
+  never_between(p: BOOLEAN, q: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    always_between(NOT p, q, r);
+
+  never_after_until(p: BOOLEAN, q: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    always_after_until(NOT p, q, r);
+
+  precedes(s: BOOLEAN, p: BOOLEAN): BOOLEAN = W(NOT p, s);
+
+  precedes_before(s: BOOLEAN, p: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    F(r) => U(NOT p, s OR r);
+
+  precedes_after(s: BOOLEAN, p: BOOLEAN, q: BOOLEAN): BOOLEAN =
+    G(NOT q) OR F(q AND W(NOT p, s));
+
+  responds_to(s: BOOLEAN, p: BOOLEAN): BOOLEAN = G(p => F(s));
+
+  responds_to_before(s: BOOLEAN, p: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    F(r) => U(p => U(NOT r, s AND NOT r), r);
+
+  responds_to_after(s: BOOLEAN, p: BOOLEAN, q: BOOLEAN): BOOLEAN =
+    G(q => G(p => F(s)));
+
+  responds_to_between(s: BOOLEAN, p: BOOLEAN, q: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    G((q AND NOT r AND F(r)) => U(p => U(NOT r, s AND NOT r), r));
+
+  responds_to_after_until(s: BOOLEAN, p: BOOLEAN, q: BOOLEAN, r: BOOLEAN): BOOLEAN =
+    G((q AND NOT r) => W(p => U(NOT r, s AND NOT r), r));
+END

@@ -2,6 +2,8 @@
 resolver = "2"
 members = [
     "crates/sal-syntax",
+    "crates/sal-core",
+    "crates/sal-cli",
 ]
 
 [workspace.package]
