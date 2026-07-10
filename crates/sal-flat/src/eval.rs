@@ -464,6 +464,30 @@ impl<'e> Flattener<'e> {
                 return Err(e);
             }
         };
+        // declaration-order visibility: names declared after the current
+        // body are not in scope (fall back to the prelude)
+        if n.ctx.is_none() && Rc::ptr_eq(&def_inst, &ctx.inst) {
+            if let Some(limit) = ctx.visible {
+                let pos = ctx
+                    .inst
+                    .order
+                    .borrow()
+                    .iter()
+                    .position(|x| x == &n.id.name);
+                if let Some(p) = pos {
+                    if p >= limit {
+                        if let Some(b) = builtin(&n.id.name) {
+                            return Ok(b);
+                        }
+                        return Err(self.err(
+                            ctx,
+                            span,
+                            format!("Unknown variable \"{}\".", n.id.name),
+                        ));
+                    }
+                }
+            }
+        }
         if n.ctx.is_none() && Rc::ptr_eq(&def_inst, &self.env.prelude) {
             if let Some(b) = builtin(&n.id.name) {
                 return Ok(b);
@@ -482,7 +506,9 @@ impl<'e> Flattener<'e> {
                     }
                 }
                 if let Some(v) = value {
-                    let c2 = ctx.with_inst(def_inst.clone());
+                    let c2 = ctx
+                        .with_inst(def_inst.clone())
+                        .visible_through(&n.id.name);
                     return self.eval(&c2, &v);
                 }
                 // scalar element?

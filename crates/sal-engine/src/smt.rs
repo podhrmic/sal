@@ -496,10 +496,12 @@ pub fn smt_bmc_search(
     formula: &sal_flat::formula::TFormula,
     depth: usize,
     lemmas: &[FExpr],
+    iterative: bool,
 ) -> EResult<SmtResult> {
     let neg = crate::ltl::to_nnf(formula, true).map_err(EngineError::Eval)?;
     let neg = std::rc::Rc::new(neg);
-    for k in 0..=depth {
+    let start = if iterative { 0 } else { depth };
+    for k in start..=depth {
         let mut enc = SmtEnc::new(flat);
         let mut cs = vec![enc.init()?];
         for t in 0..k {

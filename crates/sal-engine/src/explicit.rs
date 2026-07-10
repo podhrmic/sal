@@ -607,3 +607,19 @@ fn flatten_conj<'a>(e: &'a FExpr, out: &mut Vec<&'a FExpr>) {
         out.push(e);
     }
 }
+
+/// Evaluate a boolean state predicate on a decoded state (per-leaf
+/// values); returns None on evaluation failure.
+pub fn holds_atom(
+    flat: &FlatModule,
+    prop: &FExpr,
+    state: &[Value],
+) -> Option<bool> {
+    let _ = flat;
+    let cur: Vec<Option<Value>> = state.iter().cloned().map(Some).collect();
+    let env = PartialEnv { cur: &cur, next: &[] };
+    match peval(prop, &env) {
+        Ok(Some(Value::Bool(b))) => Some(b),
+        _ => None,
+    }
+}

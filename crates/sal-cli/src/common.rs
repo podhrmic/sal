@@ -20,6 +20,17 @@ pub struct Args {
     pub options: Vec<(String, Option<String>)>,
 }
 
+/// Long options accepted (and ignored where semantics-neutral) by every
+/// tool; unknown options are rejected like the oracle does.
+const COMMON_FLAGS: &[&str] = &[
+    "assertion", "module", "depth", "verbose", "backward", "forward",
+    "iterative", "induction", "delta-path", "acyclic", "complete-path",
+    "disable-traceability", "enable-ate", "disable-ate",
+    "uppercase-keywords", "help", "version", "enable-dynamic-reorder",
+    "disable-dynamic-reorder", "enable-slicer", "disable-slicer",
+    "solver", "lemma",
+];
+
 pub fn parse_args(value_opts: &[&str]) -> Args {
     let mut positional = Vec::new();
     let mut options = Vec::new();
@@ -29,18 +40,27 @@ pub fn parse_args(value_opts: &[&str]) -> Args {
             let _ = args.next();
         } else if let Some(rest) = a.strip_prefix("--") {
             if let Some((k, v)) = rest.split_once('=') {
+                if !COMMON_FLAGS.contains(&k) && !value_opts.contains(&k) {
+                    reject_option(&a);
+                }
                 options.push((k.to_string(), Some(v.to_string())));
             } else if value_opts.contains(&rest) {
                 options.push((rest.to_string(), args.next()));
             } else {
+                if !COMMON_FLAGS.contains(&rest) {
+                    reject_option(&a);
+                }
                 options.push((rest.to_string(), None));
             }
         } else if let Some(rest) = a.strip_prefix('-') {
-            // short options with a value (-d 10, -l lemma, -s solver)
-            if ["d", "l", "s", "i"].contains(&rest) && rest != "i" {
+            // short options with a value (-d 10, -l lemma, -s solver,
+            // -io orderfile)
+            if ["d", "l", "s", "io"].contains(&rest) {
                 options.push((rest.to_string(), args.next()));
-            } else {
+            } else if ["i", "ei", "ea"].contains(&rest) {
                 options.push((rest.to_string(), None));
+            } else {
+                reject_option(&a);
             }
         } else {
             positional.push(a);
@@ -50,6 +70,11 @@ pub fn parse_args(value_opts: &[&str]) -> Args {
         positional,
         options,
     }
+}
+
+fn reject_option(opt: &str) -> ! {
+    eprintln!("Illegal option `{}'. Try `--help' for more information.", opt);
+    std::process::exit(255)
 }
 
 impl Args {

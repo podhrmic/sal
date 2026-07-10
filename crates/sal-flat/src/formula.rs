@@ -99,3 +99,24 @@ impl TFormula {
         }
     }
 }
+
+/// Map universal CTL operators to their LTL counterparts (AG -> G, ...),
+/// as the bounded model checkers do. Returns None when an existential
+/// operator makes the formula unsupported.
+pub fn universal_to_ltl(f: &TFormula) -> Option<TFormula> {
+    use TFormula::*;
+    Some(match f {
+        Atom(e) => Atom(e.clone()),
+        Not(a) => Not(Rc::new(universal_to_ltl(a)?)),
+        And(a, b) => And(Rc::new(universal_to_ltl(a)?), Rc::new(universal_to_ltl(b)?)),
+        Or(a, b) => Or(Rc::new(universal_to_ltl(a)?), Rc::new(universal_to_ltl(b)?)),
+        X(a) | AX(a) => X(Rc::new(universal_to_ltl(a)?)),
+        G(a) | AG(a) => G(Rc::new(universal_to_ltl(a)?)),
+        F(a) | AF(a) => F(Rc::new(universal_to_ltl(a)?)),
+        U(a, b) | AU(a, b) => U(Rc::new(universal_to_ltl(a)?), Rc::new(universal_to_ltl(b)?)),
+        R(a, b) | AR(a, b) => R(Rc::new(universal_to_ltl(a)?), Rc::new(universal_to_ltl(b)?)),
+        W(a, b) => W(Rc::new(universal_to_ltl(a)?), Rc::new(universal_to_ltl(b)?)),
+        M(a, b) => M(Rc::new(universal_to_ltl(a)?), Rc::new(universal_to_ltl(b)?)),
+        EX(_) | EG(_) | EF(_) | EU(..) | ER(..) => return None,
+    })
+}

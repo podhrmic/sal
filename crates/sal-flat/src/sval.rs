@@ -18,6 +18,10 @@ use crate::value::Value;
 pub struct EvalCtx {
     pub inst: Rc<Instance>,
     pub locals: Rc<Frame>,
+    /// Declaration-order visibility bound: when `Some(k)`, only the first
+    /// `k` declarations of `inst` are in scope (SAL is declare-before-use;
+    /// a later `min` must not shadow the prelude `min` in earlier bodies).
+    pub visible: Option<usize>,
 }
 
 /// Immutable linked frames so closures can capture cheaply.
@@ -31,6 +35,7 @@ impl EvalCtx {
         EvalCtx {
             inst,
             locals: Rc::new(Frame::Nil),
+            visible: None,
         }
     }
 
@@ -38,6 +43,7 @@ impl EvalCtx {
         EvalCtx {
             inst: self.inst.clone(),
             locals: Rc::new(Frame::Cons(vars, self.locals.clone())),
+            visible: self.visible,
         }
     }
 
@@ -66,6 +72,23 @@ impl EvalCtx {
         EvalCtx {
             inst,
             locals: Rc::new(Frame::Nil),
+            visible: None,
+        }
+    }
+
+    /// Restrict visibility to declarations up to (and including) `name`.
+    pub fn visible_through(&self, name: &str) -> EvalCtx {
+        let pos = self
+            .inst
+            .order
+            .borrow()
+            .iter()
+            .position(|n| n == name)
+            .map(|p| p + 1);
+        EvalCtx {
+            inst: self.inst.clone(),
+            locals: self.locals.clone(),
+            visible: pos,
         }
     }
 }

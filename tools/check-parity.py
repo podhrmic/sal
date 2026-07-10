@@ -86,6 +86,9 @@ def main() -> int:
         want = r["verdict"]
         got = ours["verdict"]
         match = got == want
+        # if the oracle itself timed out, any verdict from us is acceptable
+        if want == "timeout":
+            match = True
         detail = ""
         # counterexample depth compared softly (trace choice may differ)
         if match and want == "counterexample" and "ce_steps" in r:

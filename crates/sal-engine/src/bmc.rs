@@ -619,10 +619,14 @@ pub fn bmc_search(
     formula: &sal_flat::formula::TFormula,
     depth: usize,
     lemmas: &[FExpr],
+    iterative: bool,
 ) -> EResult<BmcResult> {
     let neg = crate::ltl::to_nnf(formula, true).map_err(EngineError::Eval)?;
     let neg = std::rc::Rc::new(neg);
-    for k in 0..=depth {
+    // the oracle checks a single path of length exactly `depth` by
+    // default; --iterative walks the depths upward
+    let start = if iterative { 0 } else { depth };
+    for k in start..=depth {
         let mut enc = BmcEnc::new(flat)?;
         let mut constraints = vec![enc.init()?];
         for t in 0..k {

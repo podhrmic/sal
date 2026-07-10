@@ -87,6 +87,14 @@ fn main() -> ExitCode {
         matches!(e, Entry::Assertion { .. })
     });
 
+    // bounded checking treats universal CTL operators as LTL
+    let formula = match sal_flat::formula::universal_to_ltl(&formula) {
+        Some(f) => f,
+        None => {
+            eprintln!("Error: existential CTL operators are not supported by bounded model checking.");
+            return ExitCode::from(255);
+        }
+    };
     let result = if induction {
         let atom = match &formula {
             TFormula::G(inner) | TFormula::AG(inner) => inner.as_atom().cloned(),
@@ -99,7 +107,7 @@ fn main() -> ExitCode {
         };
         k_induction(&flat, &prop, depth, &lemmas)
     } else {
-        bmc_search(&flat, &formula, depth, &lemmas)
+        bmc_search(&flat, &formula, depth, &lemmas, args.flag("iterative"))
     };
 
     match result {
@@ -115,7 +123,17 @@ fn main() -> ExitCode {
             println!("no counterexample between depths: [0, {}].", k);
             ExitCode::SUCCESS
         }
-        Ok(BmcResult::Counterexample(states)) => {
+        Ok(BmcResult::Counterexample(mut states)) => {
+            // for invariant properties, print only up to the violation
+            if let TFormula::G(inner) | TFormula::AG(inner) = &formula {
+                if let Some(atom) = inner.as_atom() {
+                    if let Some(pos) = states.iter().position(|s| {
+                        sal_engine::explicit::holds_atom(&flat, atom, s) == Some(false)
+                    }) {
+                        states.truncate(pos + 1);
+                    }
+                }
+            }
             print_states(&flat, &states, "Counterexample:");
             ExitCode::SUCCESS
         }

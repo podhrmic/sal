@@ -1107,6 +1107,28 @@ impl<'e> Flattener<'e> {
                 }
             }
         }
+        // A base module without a TRANSITION section stutters: its step
+        // keeps its controlled variables unchanged (except those already
+        // constrained by definitions). Verified against the oracle.
+        if !b
+            .decls
+            .iter()
+            .any(|d| matches!(d, BaseDecl::Transition(_)))
+        {
+            let mut frames = Vec::new();
+            for &l in &e.controlled {
+                if e.def_next.contains(&l) {
+                    continue;
+                }
+                frames.push(FExpr::eq(FExpr::Var(l, true), FExpr::Var(l, false)));
+            }
+            e.trans = TransNode::Cmds(vec![FlatCmd {
+                label: None,
+                provenance: format!("(stutter at [Context: {}])", ctx.inst.name),
+                guard: FExpr::tt(),
+                constraint: FExpr::and(frames),
+            }]);
+        }
         Ok(e)
     }
 
@@ -1476,10 +1498,10 @@ impl<'e> Flattener<'e> {
         for c in cmds {
             self.expand_command(sctx, e, c, prov, is_trans, &mut flat, &mut else_cmds)?;
         }
-        // ELSE guard: negation of all other guards
+        // ELSE commands: always enabled in SAL 3.3 (the implementation
+        // treats ELSE as `true -->`, verified against the oracle).
         if !else_cmds.is_empty() {
-            let others: Vec<FExpr> = flat.iter().map(|c| c.guard.clone()).collect();
-            let neg = FExpr::not(FExpr::or(others));
+            let neg = FExpr::tt();
             for (g, prov2) in else_cmds {
                 let mut constraint = Vec::new();
                 for a in &g.assignments {
