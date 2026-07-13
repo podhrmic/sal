@@ -81,7 +81,7 @@ fn main() -> ExitCode {
             return ExitCode::from(255);
         }
     };
-    let mut engine = match Symbolic::new(&flat) {
+    let mut engine = match sal_cli::common::build_symbolic(&flat, &args) {
         Ok(e) => e,
         Err(e) => {
             eprintln!("Error: {}", e);

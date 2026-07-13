@@ -19,6 +19,6 @@ pub mod value;
 pub use ctype::CType;
 pub use eval::Flattener;
 pub use fexpr::{FExpr, LeafId, LeafInfo, LeafType};
-pub use flatten::{FlatCmd, FlatModule, TransNode};
+pub use flatten::{FlatCmd, FlatComponent, FlatModule, TransNode};
 pub use formula::TFormula;
 pub use value::Value;

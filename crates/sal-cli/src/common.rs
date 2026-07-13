@@ -30,7 +30,7 @@ const COMMON_FLAGS: &[&str] = &[
     "disable-dynamic-reorder", "enable-slicer", "disable-slicer",
     "solver", "lemma", "monolithic", "smcinit", "branch", "noprune",
     "fullpath", "latching", "incremental", "incrinit", "incrext", "noslice",
-    "innerslice", "testpurpose", "id", "ed", "md",
+    "innerslice", "testpurpose", "id", "ed", "md", "static-order",
 ];
 
 pub fn parse_args(value_opts: &[&str]) -> Args {
@@ -209,4 +209,26 @@ pub fn display_leaf(leaf: &sal_flat::fexpr::LeafInfo, v: &Value) -> String {
         }
         (other, _) => format!("{}", other),
     }
+}
+
+/// Build the symbolic engine honoring --static-order=<name> and
+/// -io <order-file>.
+pub fn build_symbolic<'m>(
+    flat: &'m sal_flat::flatten::FlatModule,
+    args: &Args,
+) -> Result<sal_engine::symbolic::Symbolic<'m>, String> {
+    use sal_engine::ordering;
+    let order = if let Some(path) = args.opt("io") {
+        let text = std::fs::read_to_string(path)
+            .map_err(|e| format!("cannot read order file \"{}\": {}", path, e))?;
+        ordering::order_from_file(flat, &text)?
+    } else {
+        let strategy = match args.opt("static-order") {
+            Some(name) => ordering::StaticOrder::parse(name)
+                .ok_or_else(|| format!("unknown static order strategy \"{}\"", name))?,
+            None => ordering::StaticOrder::MinSupp,
+        };
+        ordering::compute_order(flat, strategy)
+    };
+    sal_engine::symbolic::Symbolic::with_order(flat, &order).map_err(|e| e.to_string())
 }

@@ -42,6 +42,18 @@ pub enum TransNode {
     Interleave(Vec<(TransNode, FExpr)>),
 }
 
+/// One base-module instance in the composition: the unit of the static
+/// variable-ordering heuristics (mirrors the oracle's component-info).
+#[derive(Debug, Clone)]
+pub struct FlatComponent {
+    /// Context instance the base module was elaborated in.
+    pub name: String,
+    /// Leaves controlled (written) by this component.
+    pub owned: std::collections::BTreeSet<LeafId>,
+    /// Current-state leaves read by this component's transitions.
+    pub reads: std::collections::BTreeSet<LeafId>,
+}
+
 #[derive(Debug, Clone)]
 pub struct TopVar {
     pub name: String,
@@ -65,6 +77,8 @@ pub struct FlatModule {
     pub trans: TransNode,
     /// Leaves controlled by the module (local/output/global).
     pub controlled: BTreeSet<LeafId>,
+    /// Composition structure for variable-ordering heuristics.
+    pub components: Vec<FlatComponent>,
 }
 
 #[derive(Clone)]
@@ -85,6 +99,7 @@ struct Elab {
     controlled: BTreeSet<LeafId>,
     /// Next-state leaves constrained by definitions (excluded from frames).
     def_next: BTreeSet<LeafId>,
+    components: Vec<FlatComponent>,
 }
 
 impl Default for TransNode {
@@ -177,6 +192,7 @@ impl<'e> Flattener<'e> {
             trans_defs: e.trans_defs,
             trans: e.trans,
             controlled: e.controlled,
+            components: e.components,
         })
     }
 
@@ -788,6 +804,8 @@ impl<'e> Flattener<'e> {
         let mut trans_defs = ea.trans_defs;
         trans_defs.extend(eb.trans_defs);
 
+        let mut components = ea.components;
+        components.extend(eb.components);
         Ok(Elab {
             vars,
             invariants,
@@ -797,6 +815,7 @@ impl<'e> Flattener<'e> {
             trans,
             controlled,
             def_next,
+            components,
         })
     }
 
@@ -898,11 +917,13 @@ impl<'e> Flattener<'e> {
         let mut init_defs = Vec::new();
         let mut init_choices = Vec::new();
         let mut trans_defs = Vec::new();
+        let mut components = Vec::new();
         for e in elabs {
             invariants.extend(e.invariants);
             init_defs.extend(e.init_defs);
             init_choices.extend(e.init_choices);
             trans_defs.extend(e.trans_defs);
+            components.extend(e.components);
         }
 
         Ok(Elab {
@@ -914,6 +935,7 @@ impl<'e> Flattener<'e> {
             trans,
             controlled,
             def_next,
+            components,
         })
     }
 
@@ -1128,6 +1150,49 @@ impl<'e> Flattener<'e> {
                 guard: FExpr::tt(),
                 constraint: FExpr::and(frames),
             }]);
+        }
+        // record this base module as a component for the variable-ordering
+        // heuristics: reads = current-state leaves of its transition
+        // constraints that it does not own
+        {
+            let mut cur = BTreeSet::new();
+            let mut next = BTreeSet::new();
+            fn walk(n: &TransNode, cur: &mut BTreeSet<LeafId>, next: &mut BTreeSet<LeafId>) {
+                match n {
+                    TransNode::True => {}
+                    TransNode::Cmds(cmds) => {
+                        for c in cmds {
+                            c.guard.leaves(cur, next);
+                            c.constraint.leaves(cur, next);
+                        }
+                    }
+                    TransNode::All(ns) => {
+                        for x in ns {
+                            walk(x, cur, next);
+                        }
+                    }
+                    TransNode::Interleave(bs) => {
+                        for (x, f) in bs {
+                            walk(x, cur, next);
+                            f.leaves(cur, next);
+                        }
+                    }
+                }
+            }
+            walk(&e.trans, &mut cur, &mut next);
+            for d in &e.trans_defs {
+                d.leaves(&mut cur, &mut next);
+            }
+            for d in &e.invariants {
+                d.leaves(&mut cur, &mut next);
+            }
+            let reads: BTreeSet<LeafId> =
+                cur.difference(&e.controlled).cloned().collect();
+            e.components.push(FlatComponent {
+                name: ctx.inst.name.clone(),
+                owned: e.controlled.clone(),
+                reads,
+            });
         }
         Ok(e)
     }

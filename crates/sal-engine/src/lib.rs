@@ -5,6 +5,7 @@ pub mod bmc;
 pub mod bounded;
 pub mod explicit;
 pub mod ltl;
+pub mod ordering;
 pub mod smt;
 pub mod symbolic;
 

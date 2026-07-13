@@ -45,22 +45,48 @@ fn bits_for(card: u64) -> u32 {
 }
 
 impl<'m> Symbolic<'m> {
+    /// Build with the default static variable order (min-supp heuristics,
+    /// like the oracle).
     pub fn new(flat: &'m FlatModule) -> EResult<Self> {
+        let order = crate::ordering::compute_order(flat, crate::ordering::StaticOrder::MinSupp);
+        Self::with_order(flat, &order)
+    }
+
+    /// Build with an explicit leaf order (a permutation of the leaf ids).
+    pub fn with_order(flat: &'m FlatModule, order: &[u32]) -> EResult<Self> {
         let mut mgr = Mgr::new();
+        // position of each leaf in the order
+        let mut pos = vec![0usize; flat.leaves.len()];
+        for (p, &l) in order.iter().enumerate() {
+            pos[l as usize] = p;
+        }
+        // bases assigned by order position
+        let mut bases = vec![0u32; flat.leaves.len()];
+        {
+            let mut base = 0u32;
+            for &l in order {
+                let leaf = &flat.leaves[l as usize];
+                let card = leaf
+                    .ty
+                    .cardinality()
+                    .unwrap_or(2);
+                bases[l as usize] = base;
+                base += 2 * bits_for(card);
+            }
+        }
         let mut leaves = Vec::new();
-        let mut base = 0u32;
-        for l in &flat.leaves {
+        for (i, l) in flat.leaves.iter().enumerate() {
             let values = l.ty.values().ok_or_else(|| {
                 EngineError::InfiniteType(l.name.clone())
             })?;
             let bits = bits_for(values.len() as u64);
             leaves.push(LeafEnc {
-                base,
+                base: bases[i],
                 bits,
                 values,
             });
-            base += 2 * bits;
         }
+        let _ = pos;
         let mut s = Symbolic {
             flat,
             mgr,
