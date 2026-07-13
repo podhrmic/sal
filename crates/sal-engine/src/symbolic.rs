@@ -593,6 +593,65 @@ impl<'m> Symbolic<'m> {
         }
     }
 
+    /// BDD for one concrete state (over current vars).
+    pub fn state_bdd(&mut self, state: &[Value]) -> NodeId {
+        let mut r = T;
+        for (l, v) in state.iter().enumerate() {
+            let i = self.leaves[l]
+                .values
+                .iter()
+                .position(|x| x == v)
+                .unwrap_or(0);
+            let c = self.leaf_eq_index(l, false, i);
+            r = self.mgr.and(r, c);
+        }
+        r
+    }
+
+    /// Shortest path (as concrete states) from a state in `start` to a
+    /// state in `target`, with ring index in [min_depth, max_depth].
+    /// Returns None when unreachable within the bound.
+    pub fn find_path(
+        &mut self,
+        start: NodeId,
+        target: NodeId,
+        min_depth: usize,
+        max_depth: Option<usize>,
+    ) -> Option<Vec<Vec<Value>>> {
+        let mut rings = vec![start];
+        let mut reach = start;
+        let mut frontier = start;
+        let mut k = 0usize;
+        loop {
+            if k >= min_depth {
+                let hit = self.mgr.and(frontier, target);
+                if hit != F {
+                    return Some(self.extract_path(&rings, hit));
+                }
+            }
+            if let Some(max) = max_depth {
+                if k >= max {
+                    return None;
+                }
+            }
+            let img = self.image(frontier);
+            let nreach = self.mgr.or(reach, img);
+            if nreach == reach {
+                return None;
+            }
+            let nr = self.mgr.not(reach);
+            frontier = self.mgr.and(img, nr);
+            rings.push(frontier);
+            reach = nreach;
+            k += 1;
+        }
+    }
+
+    /// Names/classes of the leaves (for ATG output).
+    pub fn leaf_count(&self) -> usize {
+        self.leaves.len()
+    }
+
     /// Generate an execution path of up to `depth` steps (fewer only if a
     /// deadlock is reached).
     pub fn random_path(&mut self, depth: usize) -> EResult<Vec<Vec<Value>>> {

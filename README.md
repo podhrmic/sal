@@ -15,7 +15,8 @@ concrete-syntax facts extracted from the original implementation.
 | `sal-bmc` | SAT (varisat), bounded LTL lasso semantics, k-induction with `-l` lemmas | golden parity |
 | `sal-inf-bmc` | SMT-LIB2 → yices-smt2 / z3 / cvc5, same bounded semantics | golden parity except `--enable-ate` |
 | `sal-path-finder` | BDD image walk | golden parity |
-| `sal-sim`, `sal-atg`, `sal-wmc`, `sal-emc`, lsal front-end | — | not implemented (P1/P2 in PLAN.md) |
+| `sal-atg` | BDD segment search over trap variables (tests/atg examples + oracle goldens) | matches oracle test counts & goal sets; shorter tests (shortest-segment search) |
+| `sal-sim`, `sal-wmc`, `sal-emc`, lsal front-end | — | not implemented (P1/P2 in PLAN.md) |
 
 **Overall: 687/735 (93.5%) of the golden verdict manifest matches** (lsal-syntax
 cases excluded as out of scope). The 48 remaining mismatches:

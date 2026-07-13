@@ -1,0 +1,84 @@
+% The stopwatch example from "Automated Test Generation with SAL"
+% (Hamon, de Moura, Rushby; SRI CSL Technical Note, January 2005),
+% Figures 2 and 3. Trap variables: s1-s3 (state coverage),
+% t0-t10 (transition coverage).
+stopwatch: CONTEXT =
+BEGIN
+  ncount: NATURAL = 99;
+  nsec: NATURAL = 59;
+  counts: TYPE = [0..ncount];
+  secs: TYPE = [0..nsec];
+  states: TYPE = {running, lap, reset, lap_stop};
+  event: TYPE = {TIC, LAP, START};
+
+clock: MODULE =
+BEGIN
+INPUT
+  ev: event
+LOCAL
+  cent, min: counts,
+  sec: secs,
+  pc: states,
+  s1, s2, s3: BOOLEAN,
+  t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10: BOOLEAN
+OUTPUT
+  disp_cent, disp_min: counts,
+  disp_sec: secs
+INITIALIZATION
+  cent = 0;
+  sec = 0;
+  min = 0;
+  disp_cent = 0;
+  disp_sec = 0;
+  disp_min = 0;
+  pc = reset;
+  s1 = FALSE;  s2 = FALSE;  s3 = FALSE;
+
+  t0 = FALSE;  t1 = FALSE;  t2 = FALSE;  t3 = FALSE;  t4 = FALSE;
+  t5 = FALSE;  t6 = FALSE;  t7 = FALSE;  t8 = FALSE;  t9 = FALSE;
+  t10 = FALSE;
+TRANSITION
+[
+  pc = reset AND ev = LAP -->
+    disp_cent' = 0; disp_sec' = 0;  disp_min' = 0;
+    pc' = pc;  t0' = TRUE;
+[]
+  pc = reset AND ev = START -->
+    pc' = running;  s1' = TRUE; t1' = TRUE;
+[]
+  pc = running AND ev = LAP -->
+    pc' = lap;  s2' = TRUE; t2' = TRUE;
+[]
+  pc = running AND ev = START -->
+    pc' = reset;  t3' = TRUE;
+[]
+  pc = lap AND ev = LAP -->
+    pc' = running;  s1' = TRUE; t4' = TRUE;
+[]
+  pc = lap AND ev = START -->
+    pc' = lap_stop;  s3' = TRUE; t5' = TRUE;
+[]
+  pc = lap_stop AND ev = LAP -->
+    pc' = reset;  t6' = TRUE;
+[]
+  pc = lap_stop AND ev = START -->
+    pc' = lap;  s2' = TRUE; t7' = TRUE;
+[]
+  ev = TIC AND (pc = running OR pc = lap) -->
+    cent' = IF cent /= ncount THEN cent+1 ELSE 0 ENDIF;
+    t8' = IF cent' /= cent THEN TRUE ELSE t8 ENDIF;
+    sec' =  IF cent /= ncount THEN sec
+            ELSIF sec /= nsec THEN sec+1 ELSE 0 ENDIF;
+    t9' = IF sec' /= sec THEN TRUE ELSE t9 ENDIF;
+    min' =  IF cent /= ncount OR sec /= nsec THEN min
+            ELSIF min /= ncount THEN min+1 ELSE 0 ENDIF;
+    t10' = IF min' /= min THEN TRUE ELSE t10 ENDIF;
+    disp_cent' = IF pc = running THEN cent' ELSE disp_cent ENDIF;
+    disp_sec' = IF pc = running THEN sec' ELSE disp_sec ENDIF;
+    disp_min' = IF pc = running THEN min' ELSE disp_min ENDIF;
+[]
+ELSE -->
+]
+END;
+
+END

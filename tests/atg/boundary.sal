@@ -1,0 +1,36 @@
+% Synthetic sal-atg example for boundary coverage (documentation
+% section 3.1 style): a bounded accumulator with a signed input; trap
+% variables mark the lower boundary, the upper boundary, and the
+% saturation branch.
+boundary: CONTEXT =
+BEGIN
+  val: TYPE = [0..20];
+  delta: TYPE = [-3..3];
+
+  acc: MODULE =
+  BEGIN
+  INPUT
+    add: delta
+  LOCAL
+    x: val,
+    b_zero, b_max, b_clip: BOOLEAN
+  INITIALIZATION
+    x = 5;
+    b_zero = FALSE; b_max = FALSE; b_clip = FALSE
+  TRANSITION
+  [
+    x + add >= 0 AND x + add <= 20 -->
+      x' = x + add;
+      b_zero' = IF x' = 0 THEN TRUE ELSE b_zero ENDIF;
+      b_max' = IF x' = 20 THEN TRUE ELSE b_max ENDIF
+  []
+    x + add > 20 -->
+      x' = 20;
+      b_clip' = TRUE;
+      b_max' = TRUE
+  []
+  ELSE -->
+  ]
+  END;
+
+END

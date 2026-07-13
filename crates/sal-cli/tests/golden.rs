@@ -11,6 +11,7 @@ fn corpus(dir: &str) -> PathBuf {
 
 fn run(bin: &str, dir: &str, args: &[&str]) -> (i32, String) {
     let exe = match bin {
+        "sal-atg" => env!("CARGO_BIN_EXE_sal-atg"),
         "sal-smc" => env!("CARGO_BIN_EXE_sal-smc"),
         "sal-bmc" => env!("CARGO_BIN_EXE_sal-bmc"),
         "sal-inf-bmc" => env!("CARGO_BIN_EXE_sal-inf-bmc"),
@@ -119,4 +120,43 @@ fn else_negation_semantics() {
 fn infinite_state_rejected_by_smc() {
     let (_, text) = run("sal-smc", "dist/inf-bakery", &["inf_bakery", "mutex"]);
     assert!(text.contains("Error"), "expected finite-type error, got:\n{}", text);
+}
+
+#[test]
+fn atg_examples() {
+    // counts and undischarged sets must match the oracle goldens in
+    // tests/golden/atg/
+    let (_, out) = run(
+        "sal-atg",
+        "../atg",
+        &["traffic", "controller", "traffic_goals.scm", "-ed", "8", "-id", "8"],
+    );
+    assert!(out.contains("1 tests generated"), "{}", out);
+    assert!(
+        out.contains("1 undischarged test goals:(g_unreachable)"),
+        "{}",
+        out
+    );
+
+    let (_, out) = run(
+        "sal-atg",
+        "../atg",
+        &["gear", "scheduler", "gear_goals.scm", "-ed", "8", "-id", "8"],
+    );
+    assert!(out.contains("1 tests generated"), "{}", out);
+    assert!(out.contains("All test goals discharged."), "{}", out);
+
+    let (_, out) = run(
+        "sal-atg",
+        "../atg",
+        &["gear", "scheduler", "gear_goals.scm", "-ed", "0", "-id", "8"],
+    );
+    assert!(out.contains("6 tests generated"), "{}", out);
+
+    let (_, out) = run(
+        "sal-atg",
+        "../atg",
+        &["boundary", "acc", "boundary_goals.scm", "-ed", "8", "-id", "20"],
+    );
+    assert!(out.contains("All test goals discharged."), "{}", out);
 }

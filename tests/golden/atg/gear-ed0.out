@@ -1,0 +1,186 @@
+6 tests generated; total length 37
+All test goals discharged.
+========================
+Path
+========================
+Step 0:
+--- Input Variables (assignments) ---
+v = 1
+------------------------
+Step 1:
+--- Input Variables (assignments) ---
+v = 0
+------------------------
+Step 2:
+--- Input Variables (assignments) ---
+v = 1
+------------------------
+Step 3:
+--- Input Variables (assignments) ---
+v = 0
+------------------------
+Step 4:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 5:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 6:
+--- Input Variables (assignments) ---
+v = 4
+------------------------
+Step 7:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 8:
+--- Input Variables (assignments) ---
+v = 0
+========================
+Path
+========================
+Step 0:
+--- Input Variables (assignments) ---
+v = 2
+------------------------
+Step 1:
+--- Input Variables (assignments) ---
+v = 0
+------------------------
+Step 2:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 3:
+--- Input Variables (assignments) ---
+v = 2
+------------------------
+Step 4:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 5:
+--- Input Variables (assignments) ---
+v = 4
+------------------------
+Step 6:
+--- Input Variables (assignments) ---
+v = 3
+========================
+Path
+========================
+Step 0:
+--- Input Variables (assignments) ---
+v = 0
+------------------------
+Step 1:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 2:
+--- Input Variables (assignments) ---
+v = 1
+------------------------
+Step 3:
+--- Input Variables (assignments) ---
+v = 1
+------------------------
+Step 4:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 5:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 6:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 7:
+--- Input Variables (assignments) ---
+v = 2
+------------------------
+Step 8:
+--- Input Variables (assignments) ---
+v = 0
+========================
+Path
+========================
+Step 0:
+--- Input Variables (assignments) ---
+v = 1
+------------------------
+Step 1:
+--- Input Variables (assignments) ---
+v = 1
+------------------------
+Step 2:
+--- Input Variables (assignments) ---
+v = 0
+------------------------
+Step 3:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 4:
+--- Input Variables (assignments) ---
+v = 2
+------------------------
+Step 5:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 6:
+--- Input Variables (assignments) ---
+v = 4
+========================
+Path
+========================
+Step 0:
+--- Input Variables (assignments) ---
+v = 1
+------------------------
+Step 1:
+--- Input Variables (assignments) ---
+v = 0
+------------------------
+Step 2:
+--- Input Variables (assignments) ---
+v = 1
+------------------------
+Step 3:
+--- Input Variables (assignments) ---
+v = 0
+------------------------
+Step 4:
+--- Input Variables (assignments) ---
+v = 1
+------------------------
+Step 5:
+--- Input Variables (assignments) ---
+v = 3
+------------------------
+Step 6:
+--- Input Variables (assignments) ---
+v = 2
+------------------------
+Step 7:
+--- Input Variables (assignments) ---
+v = 0
+------------------------
+Step 8:
+--- Input Variables (assignments) ---
+v = 2
+========================
+Path
+========================
+Step 0:
+--- Input Variables (assignments) ---
+v = 4
+------------------------
+Step 1:
+--- Input Variables (assignments) ---
+v = 1

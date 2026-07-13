@@ -1,0 +1,62 @@
+% Synthetic sal-atg example: a pedestrian traffic-light controller.
+% Latching trap variables g_* provide state coverage; the walk_request
+% button must be pressed at the right time to reach ped_walk.
+% g_unreachable can never be set (exercises "unreached test goals").
+traffic: CONTEXT =
+BEGIN
+  phase: TYPE = {cars_green, cars_yellow, all_red, ped_walk, ped_flash};
+
+  controller: MODULE =
+  BEGIN
+  INPUT
+    walk_request: BOOLEAN
+  LOCAL
+    pc: phase,
+    timer: [0..3],
+    pending: BOOLEAN,
+    g_yellow, g_red, g_walk, g_flash, g_unreachable: BOOLEAN
+  OUTPUT
+    walk_light: BOOLEAN
+  INITIALIZATION
+    pc = cars_green;
+    timer = 0;
+    pending = FALSE;
+    walk_light = FALSE;
+    g_yellow = FALSE; g_red = FALSE; g_walk = FALSE; g_flash = FALSE;
+    g_unreachable = FALSE
+  TRANSITION
+  [
+    pc = cars_green AND (pending OR walk_request) -->
+      pc' = cars_yellow;
+      pending' = FALSE;
+      g_yellow' = TRUE
+  []
+    pc = cars_green AND NOT (pending OR walk_request) -->
+      pc' = cars_green
+  []
+    pc = cars_yellow -->
+      pc' = all_red;
+      g_red' = TRUE
+  []
+    pc = all_red -->
+      pc' = ped_walk;
+      walk_light' = TRUE;
+      timer' = 3;
+      g_walk' = TRUE
+  []
+    pc = ped_walk AND timer > 0 -->
+      timer' = timer - 1;
+      pending' = pending OR walk_request
+  []
+    pc = ped_walk AND timer = 0 -->
+      pc' = ped_flash;
+      g_flash' = TRUE
+  []
+    pc = ped_flash -->
+      pc' = cars_green;
+      walk_light' = FALSE;
+      g_unreachable' = IF timer = 3 THEN TRUE ELSE g_unreachable ENDIF
+  ]
+  END;
+
+END

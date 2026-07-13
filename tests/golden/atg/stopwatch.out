@@ -1,0 +1,132 @@
+1 tests generated; total length 31
+All test goals discharged.
+========================
+Path
+========================
+Step 0:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 1:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 2:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 3:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 4:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 5:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 6:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 7:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 8:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 9:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 10:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 11:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 12:
+--- Input Variables (assignments) ---
+ev = LAP
+------------------------
+Step 13:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 14:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 15:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 16:
+--- Input Variables (assignments) ---
+ev = LAP
+------------------------
+Step 17:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 18:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 19:
+--- Input Variables (assignments) ---
+ev = LAP
+------------------------
+Step 20:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 21:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 22:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 23:
+--- Input Variables (assignments) ---
+ev = LAP
+------------------------
+Step 24:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 25:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 26:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 27:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 28:
+--- Input Variables (assignments) ---
+ev = TIC
+------------------------
+Step 29:
+--- Input Variables (assignments) ---
+ev = START
+------------------------
+Step 30:
+--- Input Variables (assignments) ---
+ev = LAP
+------------------------
+Step 31:
+--- Input Variables (assignments) ---
+ev = START

@@ -28,7 +28,9 @@ const COMMON_FLAGS: &[&str] = &[
     "disable-traceability", "enable-ate", "disable-ate",
     "uppercase-keywords", "help", "version", "enable-dynamic-reorder",
     "disable-dynamic-reorder", "enable-slicer", "disable-slicer",
-    "solver", "lemma", "monolithic",
+    "solver", "lemma", "monolithic", "smcinit", "branch", "noprune",
+    "fullpath", "latching", "incremental", "incrinit", "incrext", "noslice",
+    "innerslice", "testpurpose", "id", "ed", "md",
 ];
 
 pub fn parse_args(value_opts: &[&str]) -> Args {
@@ -55,7 +57,7 @@ pub fn parse_args(value_opts: &[&str]) -> Args {
         } else if let Some(rest) = a.strip_prefix('-') {
             // short options with a value (-d 10, -l lemma, -s solver,
             // -io orderfile)
-            if ["d", "l", "s", "io"].contains(&rest) {
+            if ["d", "l", "s", "io", "id", "ed", "md"].contains(&rest) {
                 options.push((rest.to_string(), args.next()));
             } else if ["i", "ei", "ea", "ice"].contains(&rest) {
                 options.push((rest.to_string(), None));

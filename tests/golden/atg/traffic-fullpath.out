@@ -1,0 +1,130 @@
+1 tests generated; total length 8
+1 undischarged test goals:(g_unreachable)
+========================
+Path
+========================
+Step 0:
+--- Input Variables (assignments) ---
+walk_request = false
+--- System Variables (assignments) ---
+pc = cars_green
+timer = 0
+pending = false
+g_yellow = false
+g_red = false
+g_walk = false
+g_flash = false
+g_unreachable = false
+walk_light = false
+------------------------
+Step 1:
+--- Input Variables (assignments) ---
+walk_request = true
+--- System Variables (assignments) ---
+pc = cars_green
+timer = 0
+pending = false
+g_yellow = false
+g_red = false
+g_walk = false
+g_flash = false
+g_unreachable = false
+walk_light = false
+------------------------
+Step 2:
+--- Input Variables (assignments) ---
+walk_request = false
+--- System Variables (assignments) ---
+pc = cars_yellow
+timer = 0
+pending = false
+g_yellow = true
+g_red = false
+g_walk = false
+g_flash = false
+g_unreachable = false
+walk_light = false
+------------------------
+Step 3:
+--- Input Variables (assignments) ---
+walk_request = true
+--- System Variables (assignments) ---
+pc = all_red
+timer = 0
+pending = false
+g_yellow = true
+g_red = true
+g_walk = false
+g_flash = false
+g_unreachable = false
+walk_light = false
+------------------------
+Step 4:
+--- Input Variables (assignments) ---
+walk_request = false
+--- System Variables (assignments) ---
+pc = ped_walk
+timer = 3
+pending = false
+g_yellow = true
+g_red = true
+g_walk = true
+g_flash = false
+g_unreachable = false
+walk_light = true
+------------------------
+Step 5:
+--- Input Variables (assignments) ---
+walk_request = false
+--- System Variables (assignments) ---
+pc = ped_walk
+timer = 2
+pending = false
+g_yellow = true
+g_red = true
+g_walk = true
+g_flash = false
+g_unreachable = false
+walk_light = true
+------------------------
+Step 6:
+--- Input Variables (assignments) ---
+walk_request = false
+--- System Variables (assignments) ---
+pc = ped_walk
+timer = 1
+pending = false
+g_yellow = true
+g_red = true
+g_walk = true
+g_flash = false
+g_unreachable = false
+walk_light = true
+------------------------
+Step 7:
+--- Input Variables (assignments) ---
+walk_request = true
+--- System Variables (assignments) ---
+pc = ped_walk
+timer = 0
+pending = false
+g_yellow = true
+g_red = true
+g_walk = true
+g_flash = false
+g_unreachable = false
+walk_light = true
+------------------------
+Step 8:
+--- Input Variables (assignments) ---
+walk_request = true
+--- System Variables (assignments) ---
+pc = ped_flash
+timer = 0
+pending = false
+g_yellow = true
+g_red = true
+g_walk = true
+g_flash = true
+g_unreachable = false
+walk_light = true

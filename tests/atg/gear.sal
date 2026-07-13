@@ -1,0 +1,39 @@
+% Synthetic sal-atg example modeled after the four-speed shift
+% scheduler of the sal-atg documentation (section 2.2), reduced to its
+% skeleton: gear changes are driven by an input speed band, with
+% nonlatching trap variables u12/u23/u34 (upshifts) and d21/d32/d43
+% (downshifts) as transition-coverage goals.
+gear: CONTEXT =
+BEGIN
+  speed: TYPE = [0..4];
+
+  scheduler: MODULE =
+  BEGIN
+  INPUT
+    v: speed
+  LOCAL
+    g: [1..4],
+    u12, u23, u34, d21, d32, d43: BOOLEAN
+  INITIALIZATION
+    g = 1;
+    u12 = FALSE; u23 = FALSE; u34 = FALSE;
+    d21 = FALSE; d32 = FALSE; d43 = FALSE
+  TRANSITION
+  [
+    g = 1 AND v > 1 --> g' = 2; u12' = TRUE
+  []
+    g = 2 AND v > 2 --> g' = 3; u23' = TRUE
+  []
+    g = 3 AND v > 3 --> g' = 4; u34' = TRUE
+  []
+    g = 2 AND v <= 1 --> g' = 1; d21' = TRUE
+  []
+    g = 3 AND v <= 2 --> g' = 2; d32' = TRUE
+  []
+    g = 4 AND v <= 3 --> g' = 3; d43' = TRUE
+  []
+  ELSE -->
+  ]
+  END;
+
+END

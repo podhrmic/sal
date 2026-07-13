@@ -38,3 +38,7 @@ path = "src/bin/sal-inf-bmc.rs"
 [[bin]]
 name = "sal-path-finder"
 path = "src/bin/sal-path-finder.rs"
+
+[[bin]]
+name = "sal-atg"
+path = "src/bin/sal-atg.rs"

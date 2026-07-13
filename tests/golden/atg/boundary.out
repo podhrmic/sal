@@ -1,0 +1,80 @@
+1 tests generated; total length 18
+All test goals discharged.
+========================
+Path
+========================
+Step 0:
+--- Input Variables (assignments) ---
+add = -3
+------------------------
+Step 1:
+--- Input Variables (assignments) ---
+add = -2
+------------------------
+Step 2:
+--- Input Variables (assignments) ---
+add = 0
+------------------------
+Step 3:
+--- Input Variables (assignments) ---
+add = 2
+------------------------
+Step 4:
+--- Input Variables (assignments) ---
+add = 3
+------------------------
+Step 5:
+--- Input Variables (assignments) ---
+add = 3
+------------------------
+Step 6:
+--- Input Variables (assignments) ---
+add = 3
+------------------------
+Step 7:
+--- Input Variables (assignments) ---
+add = 3
+------------------------
+Step 8:
+--- Input Variables (assignments) ---
+add = 3
+------------------------
+Step 9:
+--- Input Variables (assignments) ---
+add = 3
+------------------------
+Step 10:
+--- Input Variables (assignments) ---
+add = 0
+------------------------
+Step 11:
+--- Input Variables (assignments) ---
+add = -3
+------------------------
+Step 12:
+--- Input Variables (assignments) ---
+add = -3
+------------------------
+Step 13:
+--- Input Variables (assignments) ---
+add = -3
+------------------------
+Step 14:
+--- Input Variables (assignments) ---
+add = 1
+------------------------
+Step 15:
+--- Input Variables (assignments) ---
+add = 3
+------------------------
+Step 16:
+--- Input Variables (assignments) ---
+add = 3
+------------------------
+Step 17:
+--- Input Variables (assignments) ---
+add = 3
+------------------------
+Step 18:
+--- Input Variables (assignments) ---
+add = 0
