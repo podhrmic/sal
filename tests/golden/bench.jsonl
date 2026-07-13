@@ -1,0 +1,740 @@
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-smc BSubSpor78ABS sporulate1", "tool": "sal-smc", "oracle_s": 0.806, "rust_s": 22.043, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-smc BSubSpor78ABS sporulate2", "tool": "sal-smc", "oracle_s": 2.909, "rust_s": 41.286, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/adder", "cmd": "sal-path-finder --module='adder{5}!Nbitadder'", "tool": "sal-path-finder", "oracle_s": 0.207, "rust_s": 0.204, "oracle_verdict": "path", "rust_verdict": "path"}
+{"cwd": "tests/corpus/dist/adder", "cmd": "sal-path-finder --depth=20 --delta-path --module='adder{3}!Nbitadder'", "tool": "sal-path-finder", "oracle_s": 0.215, "rust_s": 0.105, "oracle_verdict": "path", "rust_verdict": "path"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-smc --assertion='arbiter{10}!at_most_one_ack'", "tool": "sal-smc", "oracle_s": 0.304, "rust_s": 60.688, "oracle_verdict": "proved", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-smc --backward --assertion='arbiter{20}!at_most_one_ack'", "tool": "sal-smc", "oracle_s": 16.932, "rust_s": 60.681, "oracle_verdict": "proved", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-smc --assertion='arbiter{20}!no_ack_without_request'", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 60.792, "oracle_verdict": "proved", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-smc --backward --assertion='arbiter{20}!no_ack_without_request'", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 60.773, "oracle_verdict": "proved", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-bmc --induction --assertion='arbiter{20}!no_ack_without_request'", "tool": "sal-bmc", "oracle_s": 0.304, "rust_s": 0.204, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-bmc -i -d 1 --assertion='arbiter{20}!at_most_one_token'", "tool": "sal-bmc", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-bmc -i -d 1 -l at_most_one_token --assertion='arbiter{20}!at_most_one_ack'", "tool": "sal-bmc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-smc --assertion='arbiter{10}!every_request_is_eventually_acknowledged'", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 60.685, "oracle_verdict": "proved", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-path-finder --module='arbiter{20}!arbiter'", "tool": "sal-path-finder", "oracle_s": 0.305, "rust_s": 60.883, "oracle_verdict": "path", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-path-finder --depth=20 --module='bakery{4,15}!system'", "tool": "sal-path-finder", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "path", "rust_verdict": "path"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-path-finder --depth=20 --module='bakery{6,31}!system'", "tool": "sal-path-finder", "oracle_s": 0.506, "rust_s": 0.505, "oracle_verdict": "path", "rust_verdict": "path"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-smc --assertion='bakery{5,15}!mutex'", "tool": "sal-smc", "oracle_s": 0.706, "rust_s": 0.705, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-smc --assertion='bakery_with_bug{5,15}!mutex'", "tool": "sal-smc", "oracle_s": 0.505, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-deadlock-checker --module='bakery{5,15}!system'", "tool": "sal-deadlock-checker", "oracle_s": 0.605, "rust_s": 0.907, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-smc --assertion='bakery{3,7}!liveness_bug'", "tool": "sal-smc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-smc --assertion='bakery{5,15}!liveness_bug'", "tool": "sal-smc", "oracle_s": 2.807, "rust_s": 17.021, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-bmc --assertion='bakery{3,7}!liveness_bug'", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-bmc --iterative --assertion='bakery{5,15}!liveness_bug'", "tool": "sal-bmc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-smc --assertion=\"bakery{3,7}!liveness\"", "tool": "sal-smc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-smc --assertion=\"bakery{5,15}!liveness\"", "tool": "sal-smc", "oracle_s": 2.306, "rust_s": 20.33, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-smc --monolithic --assertion=\"bakery{5,15}!liveness\"", "tool": "sal-smc", "oracle_s": 2.106, "rust_s": 20.225, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-smc --cluster-size=8192 --assertion=\"bakery{5,15}!liveness\"", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-smc --cluster-size=8192 --disable-counter-examples --assertion=\"bakery{5,15}!liveness\"", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/dme", "cmd": "sal-smc --assertion='dme{;3}!mutex'", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/dme", "cmd": "sal-smc --assertion='dme{;5}!mutex'", "tool": "sal-smc", "oracle_s": 4.411, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc fischer mutual_exclusion", "tool": "sal-inf-bmc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc -i -d 1 fischer time_aux1", "tool": "sal-inf-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc -i -d 1 fischer time_aux2", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc -i -d 1 -l time_aux2 fischer time_aux3", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc -i -d 1 -l time_aux3 -l time_aux1 fischer logical_aux1", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc -i -d 0 -l logical_aux1 fischer mutual_exclusion", "tool": "sal-inf-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc -i -d 3 -l time_aux2 fischer logical_aux1", "tool": "sal-inf-bmc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "induction_failed", "rust_verdict": "induction_failed"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc -i -d 5 -l time_aux2 fischer mutex", "tool": "sal-inf-bmc", "oracle_s": 0.305, "rust_s": 0.105, "oracle_verdict": "induction_failed", "rust_verdict": "induction_failed"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc -i -d 0 -l mutex fischer mutual_exclusion", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-inf-bmc -i -d 9 -l time_aux2 fischer mutual_exclusion", "tool": "sal-inf-bmc", "oracle_s": 0.506, "rust_s": 0.104, "oracle_verdict": "induction_failed", "rust_verdict": "induction_failed"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-inf-bmc waterlevel prop", "tool": "sal-inf-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-inf-bmc gasburner prop3", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-inf-bmc pursuit safety", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-inf-bmc inf_bakery mutex", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.112, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-inf-bmc inf_bakery invalid", "tool": "sal-inf-bmc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-inf-bmc -d 1 -i inf_bakery aux1", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-inf-bmc -d 1 -i inf_bakery aux2", "tool": "sal-inf-bmc", "oracle_s": 0.208, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-inf-bmc -d 3 -l aux1 -l aux2 -i inf_bakery mutex", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-inf-bmc -d 7 -i inf_bakery mutex", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "induction_failed", "rust_verdict": "induction_failed"}
+{"cwd": "tests/corpus/dist/mcslock", "cmd": "sal-smc --assertion='mcslock{4}!th'", "tool": "sal-smc", "oracle_s": 17.93, "rust_s": 27.235, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/md80", "cmd": "sal-smc md80 no_surprise", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/md80", "cmd": "sal-bmc --induction md80 no_surprise", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/path-finder", "cmd": "sal-deadlock-checker pathfinder system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-path-finder tst_pcp_generic system", "tool": "sal-path-finder", "oracle_s": 0.505, "rust_s": 0.305, "oracle_verdict": "path", "rust_verdict": "path"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc --induction tst_pcp_generic deadlock_free", "tool": "sal-bmc", "oracle_s": 0.605, "rust_s": 1.806, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp_generic deadlock_free", "tool": "sal-smc", "oracle_s": 10.822, "rust_s": 1.005, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc --backward tst_pcp_generic deadlock_free", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 1.006, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc --induction tst_pcp_generic2 deadlock_free", "tool": "sal-bmc", "oracle_s": 0.606, "rust_s": 1.806, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp_generic2 deadlock_free", "tool": "sal-smc", "oracle_s": 10.923, "rust_s": 1.005, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc --backward tst_pcp_generic2 deadlock_free", "tool": "sal-smc", "oracle_s": 0.706, "rust_s": 1.005, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc --induction peterson mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc --induction sync_peterson mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc peterson invalid", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson invalid", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc peterson livenessbug1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson livenessbug1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson liveness1", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson liveness2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson liveness3", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson liveness4", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/phil", "cmd": "sal-smc --assertion='phil{8}!th1'", "tool": "sal-smc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/phil", "cmd": "sal-smc -io p40.ord --assertion='phil{8}!th1'", "tool": "sal-smc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-inf-bmc --enable-ate -d 4 pipeline equivalent", "tool": "sal-inf-bmc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/qlock", "cmd": "sal-smc --assertion='qlockX{2,2}!mutex'", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/qlock", "cmd": "sal-deadlock-checker --module='qlockX{2,2}!system'", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/qlock", "cmd": "sal-smc --assertion='qlockX{2,2}!lofree'", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-inf-bmc -d 6 --enable-ate queue th1", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-inf-bmc -d 6 --enable-ate queue th2", "tool": "sal-inf-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-inf-bmc -d 6 --enable-ate queue invalid", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/ring", "cmd": "sal-smc --assertion='ring{;10}!only_one_element_is_true'", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/ring", "cmd": "sal-bmc --induction --assertion='ring{;10}!only_one_element_is_true'", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/ring", "cmd": "sal-smc --assertion='ring{;20}!every_element_is_eventually_true'", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 19.03, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/ring", "cmd": "sal-path-finder --depth=20 --module='ring{;5}!ring'", "tool": "sal-path-finder", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "path", "rust_verdict": "path"}
+{"cwd": "tests/corpus/dist/ring", "cmd": "sal-path-finder --depth=20 --delta-path --module='ring{;5}!ring'", "tool": "sal-path-finder", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "path", "rust_verdict": "path"}
+{"cwd": "tests/corpus/dist/s_qlock", "cmd": "sal-smc --assertion='s_qlock{6}!mutex'", "tool": "sal-smc", "oracle_s": 1.406, "rust_s": 60.508, "oracle_verdict": "proved", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/short", "cmd": "sal-smc short th1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/short", "cmd": "sal-smc short th2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/short", "cmd": "sal-smc short th3", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-smc fourslot mutex", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 2.306, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-smc fourslot_bug mutex", "tool": "sal-smc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-bmc fourslot_bug mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-bmc --iterative fourslot_bug mutex", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.105, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/skdmxa", "cmd": "sal-smc --assertion='skdmxa{2,2,2}!mutex'", "tool": "sal-smc", "oracle_s": 6.111, "rust_s": 58.582, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/skdmxa", "cmd": "sal-deadlock-checker --module='skdmxa{2,2,2}!system'", "tool": "sal-deadlock-checker", "oracle_s": 2.908, "rust_s": 60.88, "oracle_verdict": "no_deadlock", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/skdmxa", "cmd": "sal-smc --assertion='skdmxa{2,2,2}!lofree'", "tool": "sal-smc", "oracle_s": 36.05, "rust_s": 60.686, "oracle_verdict": "counterexample", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/skdmxa", "cmd": "sal-inf-bmc -i -ice -d 1 -l lemma1 -l lemma2 --assertion='inf_skdmxa{2,2}!mutex'", "tool": "sal-inf-bmc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/skdmxa", "cmd": "sal-inf-bmc -i -ice -d 1 --assertion='inf_skdmxa{2,2}!lemma1'", "tool": "sal-inf-bmc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/skdmxa", "cmd": "sal-inf-bmc -i -ice -d 1 -l lemma1 --assertion='inf_skdmxa{2,2}!lemma2'", "tool": "sal-inf-bmc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-inf-bmc -d 6 --enable-ate stack th1", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.106, "oracle_verdict": "no_ce", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-inf-bmc -d 6 --enable-ate stack th2", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-inf-bmc -d 6 --enable-ate stack invalid", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup sync", "tool": "sal-smc", "oracle_s": 0.505, "rust_s": 0.906, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup noflag", "tool": "sal-smc", "oracle_s": 0.505, "rust_s": 1.005, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc startup noflag", "tool": "sal-bmc", "oracle_s": 0.404, "rust_s": 0.204, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup fast", "tool": "sal-smc", "oracle_s": 0.505, "rust_s": 0.906, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup fairlyfast", "tool": "sal-smc", "oracle_s": 0.505, "rust_s": 0.905, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup ok", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 1.306, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup fsync", "tool": "sal-smc", "oracle_s": 0.505, "rust_s": 0.905, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup fok", "tool": "sal-smc", "oracle_s": 0.906, "rust_s": 1.409, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup collision", "tool": "sal-smc", "oracle_s": 0.506, "rust_s": 1.105, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup live", "tool": "sal-smc", "oracle_s": 0.505, "rust_s": 1.205, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup optimism", "tool": "sal-smc", "oracle_s": 0.504, "rust_s": 0.805, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc --iterative startup optimism", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 0.204, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-smc startup eh", "tool": "sal-smc", "oracle_s": 0.404, "rust_s": 0.905, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc --iterative startup eh", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/swap", "cmd": "sal-smc --assertion='swap{4}!diff'", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/swap", "cmd": "sal-bmc -i -d 1 --assertion='swap{4}!all_diff'", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/swap", "cmd": "sal-bmc -i -d 1 -l all_diff --assertion='swap{4}!diff'", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/swap", "cmd": "sal-smc --backward --assertion='swap{4}!all_diff'", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/swap", "cmd": "sal-smc --assertion='swap{8}!diff'", "tool": "sal-smc", "oracle_s": 0.905, "rust_s": 0.504, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/swap", "cmd": "sal-bmc -i -d 1 --assertion='swap{8}!all_diff'", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 0.204, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/swap", "cmd": "sal-bmc -i -d 1 -l all_diff --assertion='swap{8}!diff'", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/swap", "cmd": "sal-smc --backward --assertion='swap{8}!all_diff'", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 0.504, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/util", "cmd": "sal-path-finder tst-queue system", "tool": "sal-path-finder", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "path", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/util", "cmd": "sal-path-finder tst-queue system ../../etc/pp-extra.scm", "tool": "sal-path-finder", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/util", "cmd": "sal-path-finder --depth=20 tst-queue system ../../etc/pp-extra.scm", "tool": "sal-path-finder", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc fischer mutual_exclusion", "tool": "sal-inf-bmc", "oracle_s": 0.304, "rust_s": 0.105, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -i -d 1 fischer time_aux1", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -i -d 1 fischer time_aux2", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -i -d 1 -l time_aux2 fischer time_aux3", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -i -d 1 -l time_aux3 -l time_aux1 fischer logical_aux1", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -i -d 0 -l logical_aux1 fischer mutual_exclusion", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -d 3 -l time_aux2 fischer logical_aux1", "tool": "sal-inf-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -d 0 -l logical_aux1 fischer mutual_exclusion", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -d 5 -l time_aux2 fischer mutex", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -d 0 -l mutex fischer mutual_exclusion", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-inf-bmc -d 9 -l time_aux2 fischer mutual_exclusion", "tool": "sal-inf-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-path-finder tst-pcp-generic tst-system", "tool": "sal-path-finder", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-bmc --induction tst-pcp-generic deadlock-free", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc tst-pcp-generic deadlock-free", "tool": "sal-smc", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc --backward tst-pcp-generic deadlock-free", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-bmc --induction tst-pcp-generic2 deadlock-free", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc tst-pcp-generic2 deadlock-free", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc --backward tst-pcp-generic2 deadlock-free", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/qlock", "cmd": "sal-smc --assertion='qlockX{;2,2}!mutex'", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/qlock", "cmd": "sal-deadlock-checker --module='qlockX{;2,2}!system'", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/qlock", "cmd": "sal-smc --assertion='qlockX{;2,2}!lofree'", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/simpson-sal", "cmd": "sal-smc fourslot mutex", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 2.207, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/simpson-sal", "cmd": "sal-smc fourslot_bug mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/simpson-sal", "cmd": "sal-bmc fourslot_bug mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/simpson-sal", "cmd": "sal-bmc --iterative fourslot_bug mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/skdmxa", "cmd": "sal-smc --assertion='skdmxa{;2,2,2}!mutex'", "tool": "sal-smc", "oracle_s": 6.111, "rust_s": 59.179, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/skdmxa", "cmd": "sal-deadlock-checker --module='skdmxa{;2,2,2}!system'", "tool": "sal-deadlock-checker", "oracle_s": 2.908, "rust_s": 60.775, "oracle_verdict": "no_deadlock", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/skdmxa", "cmd": "sal-smc --assertion='skdmxa{;2,2,2}!lofree'", "tool": "sal-smc", "oracle_s": 36.152, "rust_s": 60.997, "oracle_verdict": "counterexample", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/skdmxa", "cmd": "sal-inf-bmc -i -ice -d 1 -l lemma1 -l lemma2 --assertion='inf_skdmxa{;2,2}!mutex'", "tool": "sal-inf-bmc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/skdmxa", "cmd": "sal-inf-bmc -i -ice -d 1 --assertion='inf_skdmxa{;2,2}!lemma1'", "tool": "sal-inf-bmc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/skdmxa", "cmd": "sal-inf-bmc -i -ice -d 1 -l lemma1 --assertion='inf_skdmxa{;2,2}!lemma2'", "tool": "sal-inf-bmc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-wfc BSubSpor78.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78 phosphorelay", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78 SinIR", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78 AbrB", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78 Hpr", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78 SigmaH", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78 Environment", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78 Sporulation", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-wfc BSubSpor78ABS.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-smc BSubSpor78ABS sporulate0", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 21.332, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-bmc -d 10 BSubSpor78ABS sporulate0", "tool": "sal-bmc", "oracle_s": 0.605, "rust_s": 0.204, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-bmc -d 10 BSubSpor78ABS sporulate1", "tool": "sal-bmc", "oracle_s": 0.705, "rust_s": 0.204, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-bmc -d 10 BSubSpor78ABS sporulate2", "tool": "sal-bmc", "oracle_s": 0.607, "rust_s": 0.304, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78ABS Environment", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78ABS phosphorelay", "tool": "sal-deadlock-checker", "oracle_s": 0.405, "rust_s": 1.707, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78ABS SinIR", "tool": "sal-deadlock-checker", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78ABS AbrB", "tool": "sal-deadlock-checker", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78ABS Hpr", "tool": "sal-deadlock-checker", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78ABS SigmaH", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78ABS Sporulation", "tool": "sal-deadlock-checker", "oracle_s": 3.109, "rust_s": 28.449, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/BSubSpor", "cmd": "sal-deadlock-checker BSubSpor78ABS dynamicINV", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-wfc activeSuspension3.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-smc activeSuspension3 correct", "tool": "sal-smc", "oracle_s": 0.506, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-bmc -d 10 activeSuspension3 correct", "tool": "sal-bmc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-smc activeSuspension3 reachable", "tool": "sal-smc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-bmc -d 10 activeSuspension3 reachable", "tool": "sal-bmc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-smc activeSuspension3 reachable1", "tool": "sal-smc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-bmc -d 10 activeSuspension3 reachable1", "tool": "sal-bmc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-smc activeSuspension3 reachable2", "tool": "sal-smc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-bmc -d 10 activeSuspension3 reachable2", "tool": "sal-bmc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-deadlock-checker activeSuspension3 plant", "tool": "sal-deadlock-checker", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-deadlock-checker activeSuspension3 controller", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-deadlock-checker activeSuspension3 contextModel", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist", "cmd": "sal-deadlock-checker activeSuspension3 system", "tool": "sal-deadlock-checker", "oracle_s": 0.406, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/adder", "cmd": "sal-wfc adder.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/arbiter", "cmd": "sal-wfc arbiter.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-wfc bakery.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-wfc bakery_with_bug.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-wfc bakery_with_bug2.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-wfc bakery_with_bug3.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/bakery", "cmd": "sal-wfc s_bakery.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-wfc fischer.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer time_aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer time_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer time_aux2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer time_aux2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer time_aux3", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer time_aux3", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer logical_aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer logical_aux1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer mutual_exclusion", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer mutual_exclusion", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer clock", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer processes", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer system", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-wfc fischer2.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer2 time_aux0", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer2 time_aux0", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer2 time_aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer2 time_aux1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer2 time_aux2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer2 time_aux2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer2 time_aux3", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer2 time_aux3", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer2 logical_aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer2 logical_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer2 mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer2 mutex", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer2 mutual_exclusion", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer2 mutual_exclusion", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer2 clock", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer2 processes", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer2 system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-wfc fischer_revised.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_revised time_aux0", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_revised time_aux0", "tool": "sal-bmc", "oracle_s": 0.706, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_revised time_aux1", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_revised time_aux1", "tool": "sal-bmc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_revised time_aux2", "tool": "sal-smc", "oracle_s": 0.706, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_revised time_aux2", "tool": "sal-bmc", "oracle_s": 0.706, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_revised time_aux3", "tool": "sal-smc", "oracle_s": 1.005, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_revised time_aux3", "tool": "sal-bmc", "oracle_s": 0.905, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_revised logical_aux1", "tool": "sal-smc", "oracle_s": 0.805, "rust_s": 0.205, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_revised logical_aux1", "tool": "sal-bmc", "oracle_s": 0.806, "rust_s": 0.204, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_revised mutex", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_revised mutex", "tool": "sal-bmc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_revised mutual_exclusion", "tool": "sal-smc", "oracle_s": 0.805, "rust_s": 0.204, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_revised mutual_exclusion", "tool": "sal-bmc", "oracle_s": 0.805, "rust_s": 0.204, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_revised clock", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_revised processes", "tool": "sal-deadlock-checker", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_revised system", "tool": "sal-deadlock-checker", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-wfc fischer_var1.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var1 time_aux0", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var1 time_aux0", "tool": "sal-bmc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var1 time_aux1", "tool": "sal-smc", "oracle_s": 0.706, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var1 time_aux1", "tool": "sal-bmc", "oracle_s": 0.706, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var1 time_aux2", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var1 time_aux2", "tool": "sal-bmc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var1 time_aux3", "tool": "sal-smc", "oracle_s": 0.905, "rust_s": 0.106, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var1 time_aux3", "tool": "sal-bmc", "oracle_s": 0.906, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var1 logical_aux1", "tool": "sal-smc", "oracle_s": 0.81, "rust_s": 0.204, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var1 logical_aux1", "tool": "sal-bmc", "oracle_s": 0.805, "rust_s": 0.205, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var1 mutex", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var1 mutex", "tool": "sal-bmc", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var1 mutual_exclusion", "tool": "sal-smc", "oracle_s": 0.805, "rust_s": 0.204, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var1 mutual_exclusion", "tool": "sal-bmc", "oracle_s": 0.805, "rust_s": 0.205, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var1 clock", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var1 processes", "tool": "sal-deadlock-checker", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var1 system", "tool": "sal-deadlock-checker", "oracle_s": 0.705, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-wfc fischer_var2.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var2 time_aux1", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var2 time_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var2 time_aux2", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var2 time_aux2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var2 time_aux3", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var2 time_aux3", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var2 logical_aux1", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var2 logical_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var2 mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var2 mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var2 mutual_exclusion", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var2 mutual_exclusion", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var2 clock", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var2 processes", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var2 system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-wfc fischer_var3.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var3 time_aux1", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var3 time_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var3 time_aux2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var3 time_aux2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var3 time_aux3", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var3 time_aux3", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var3 logical_aux1", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var3 logical_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var3 mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var3 mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var3 mutual_exclusion", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var3 mutual_exclusion", "tool": "sal-bmc", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var3 clock", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var3 processes", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var3 system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-wfc fischer_var4.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var4 time_aux1", "tool": "sal-smc", "oracle_s": 0.207, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var4 time_aux1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.107, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var4 time_aux2", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var4 time_aux2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var4 time_aux3", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var4 time_aux3", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var4 logical_aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var4 logical_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var4 mutex", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var4 mutex", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var4 mutual_exclusion", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var4 mutual_exclusion", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var4 clock", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var4 processes", "tool": "sal-deadlock-checker", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var4 system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-wfc fischer_var5.sal", "tool": "sal-wfc", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var5 time_aux1", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var5 time_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var5 time_aux2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var5 time_aux2", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var5 time_aux3", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.107, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var5 time_aux3", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var5 logical_aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var5 logical_aux1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.103, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var5 mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var5 mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-smc fischer_var5 mutual_exclusion", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-bmc -d 10 fischer_var5 mutual_exclusion", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var5 clock", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var5 processes", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/fischer", "cmd": "sal-deadlock-checker fischer_var5 system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hanoi", "cmd": "sal-wfc hanoi.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-wfc gasburner.sal", "tool": "sal-wfc", "oracle_s": 0.208, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-smc gasburner prop3", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-bmc -d 10 gasburner prop3", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-smc gasburner prop1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-bmc -d 10 gasburner prop1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-smc gasburner prop2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-bmc -d 10 gasburner prop2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-smc gasburner prop22", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.106, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-bmc -d 10 gasburner prop22", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-smc gasburner prop21", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-bmc -d 10 gasburner prop21", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-deadlock-checker gasburner transition_module", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-deadlock-checker gasburner lgb", "tool": "sal-deadlock-checker", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-deadlock-checker gasburner system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-wfc pursuit.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-smc pursuit safety", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-bmc -d 10 pursuit safety", "tool": "sal-bmc", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-smc pursuit wrong", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-bmc -d 10 pursuit wrong", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-deadlock-checker pursuit transition_module", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-deadlock-checker pursuit game", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-deadlock-checker pursuit system", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-wfc waterlevel.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-smc waterlevel prop", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-bmc -d 10 waterlevel prop", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-deadlock-checker waterlevel transition_module", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-deadlock-checker waterlevel wlm", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/hybrid", "cmd": "sal-deadlock-checker waterlevel system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-wfc inf_bakery.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-smc inf_bakery mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-bmc -d 10 inf_bakery mutex", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-smc inf_bakery invalid", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-bmc -d 10 inf_bakery invalid", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-smc inf_bakery aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-bmc -d 10 inf_bakery aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.106, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-smc inf_bakery aux2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-bmc -d 10 inf_bakery aux2", "tool": "sal-bmc", "oracle_s": 0.206, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-deadlock-checker inf_bakery job", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/inf-bakery", "cmd": "sal-deadlock-checker inf_bakery system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/mcslock", "cmd": "sal-wfc mcslock.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/md80", "cmd": "sal-wfc md80.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/md80", "cmd": "sal-bmc -d 10 md80 no_surprise", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/md80", "cmd": "sal-deadlock-checker md80 env", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/md80", "cmd": "sal-deadlock-checker md80 md80", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/md80", "cmd": "sal-deadlock-checker md80 mental", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/md80", "cmd": "sal-deadlock-checker md80 system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/n_peterson", "cmd": "sal-wfc n_peterson.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/needham", "cmd": "sal-wfc needhamschroeder.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/needham", "cmd": "sal-smc needhamschroeder prop", "tool": "sal-smc", "oracle_s": 3.409, "rust_s": 60.497, "oracle_verdict": "counterexample", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/needham", "cmd": "sal-bmc -d 10 needhamschroeder prop", "tool": "sal-bmc", "oracle_s": 1.005, "rust_s": 5.71, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/needham", "cmd": "sal-deadlock-checker needhamschroeder system", "tool": "sal-deadlock-checker", "oracle_s": 4.71, "rust_s": 60.486, "oracle_verdict": "no_deadlock", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/needham", "cmd": "sal-wfc network.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/path-finder", "cmd": "sal-wfc pathfinder.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/path-finder", "cmd": "sal-deadlock-checker pathfinder scheduler", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/path-finder", "cmd": "sal-deadlock-checker pathfinder low_priority_process", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/path-finder", "cmd": "sal-deadlock-checker pathfinder high_priority_process", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc math.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc pcp_rsrc.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc pcp_scheduler.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-deadlock-checker pcp_scheduler scheduler", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc pcp_task.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc set.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc tst_pcp.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp deadlock_free", "tool": "sal-smc", "oracle_s": 10.818, "rust_s": 1.006, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp deadlock_free", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.006, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp ok1", "tool": "sal-smc", "oracle_s": 10.818, "rust_s": 0.906, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp ok1", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.005, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp deadline_missed", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.305, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp deadline_missed", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.106, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-deadlock-checker tst_pcp system", "tool": "sal-deadlock-checker", "oracle_s": 9.116, "rust_s": 1.006, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc tst_pcp2.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp2 deadlock_free", "tool": "sal-smc", "oracle_s": 0.806, "rust_s": 0.305, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp2 deadlock_free", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.006, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp2 ok1", "tool": "sal-smc", "oracle_s": 0.805, "rust_s": 0.305, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp2 ok1", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.005, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp2 deadline_missed", "tool": "sal-smc", "oracle_s": 0.806, "rust_s": 0.305, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp2 deadline_missed", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.005, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-deadlock-checker tst_pcp2 system", "tool": "sal-deadlock-checker", "oracle_s": 0.805, "rust_s": 0.305, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc tst_pcp3.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp3 deadlock_free", "tool": "sal-smc", "oracle_s": 60.129, "rust_s": 60.693, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp3 deadlock_free", "tool": "sal-bmc", "oracle_s": 1.006, "rust_s": 5.411, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp3 ok1", "tool": "sal-smc", "oracle_s": 60.194, "rust_s": 60.8, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp3 ok1", "tool": "sal-bmc", "oracle_s": 1.007, "rust_s": 5.418, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp3 deadline_missed", "tool": "sal-smc", "oracle_s": 2.006, "rust_s": 1.907, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp3 deadline_missed", "tool": "sal-bmc", "oracle_s": 1.006, "rust_s": 5.51, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-deadlock-checker tst_pcp3 system", "tool": "sal-deadlock-checker", "oracle_s": 60.116, "rust_s": 60.8, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc tst_pcp_generic.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp_generic deadlock_free", "tool": "sal-bmc", "oracle_s": 0.504, "rust_s": 1.005, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp_generic ok1", "tool": "sal-smc", "oracle_s": 10.825, "rust_s": 1.006, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp_generic ok1", "tool": "sal-bmc", "oracle_s": 0.506, "rust_s": 1.005, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp_generic deadline_missed", "tool": "sal-smc", "oracle_s": 0.706, "rust_s": 0.305, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp_generic deadline_missed", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.106, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-deadlock-checker tst_pcp_generic system", "tool": "sal-deadlock-checker", "oracle_s": 9.32, "rust_s": 1.005, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-wfc tst_pcp_generic2.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp_generic2 deadlock_free", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.005, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp_generic2 ok1", "tool": "sal-smc", "oracle_s": 10.916, "rust_s": 1.007, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp_generic2 ok1", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.01, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-smc tst_pcp_generic2 deadline_missed", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.305, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-bmc -d 10 tst_pcp_generic2 deadline_missed", "tool": "sal-bmc", "oracle_s": 0.507, "rust_s": 1.007, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/pcp", "cmd": "sal-deadlock-checker tst_pcp_generic2 system", "tool": "sal-deadlock-checker", "oracle_s": 9.122, "rust_s": 1.005, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-wfc peterson.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson mutex_ctl", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson mutex_ctl", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson invalid", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson livenessbug1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson livenessbug2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson livenessbug2", "tool": "sal-bmc", "oracle_s": 0.207, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson liveness1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc peterson liveness1_ctl", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson liveness1_ctl", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson liveness2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson liveness3", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 peterson liveness4", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-deadlock-checker peterson system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-wfc sync_peterson.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson mutex", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson invalid", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson invalid", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson livenessbug1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson livenessbug1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson livenessbug2", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson livenessbug2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson livenessbug3", "tool": "sal-smc", "oracle_s": 0.207, "rust_s": 0.105, "oracle_verdict": "counterexample", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson livenessbug3", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.106, "oracle_verdict": "counterexample", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson livenessbug4", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson livenessbug4", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson livenessbug5", "tool": "sal-smc", "oracle_s": 0.306, "rust_s": 0.106, "oracle_verdict": "counterexample", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson livenessbug5", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson livenessbug6", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson livenessbug6", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "counterexample", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson liveness1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.106, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson liveness1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-smc sync_peterson liveness2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-bmc -d 10 sync_peterson liveness2", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/peterson", "cmd": "sal-deadlock-checker sync_peterson system", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.106, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/phil", "cmd": "sal-wfc phil.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-wfc pipeline.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-smc pipeline equivalent", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-bmc -d 10 pipeline equivalent", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-deadlock-checker pipeline spec", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-deadlock-checker pipeline impl", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-deadlock-checker pipeline step", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-deadlock-checker pipeline part1", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-deadlock-checker pipeline part2", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/pipeline", "cmd": "sal-deadlock-checker pipeline system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/qlock", "cmd": "sal-wfc qlock1.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/qlock", "cmd": "sal-wfc qlock2.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/qlock", "cmd": "sal-wfc qlock3.sal", "tool": "sal-wfc", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-wfc queue.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-smc queue th1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-bmc -d 10 queue th1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-smc queue th2", "tool": "sal-smc", "oracle_s": 0.208, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-bmc -d 10 queue th2", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-smc queue invalid", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-bmc -d 10 queue invalid", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-deadlock-checker queue Q", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-deadlock-checker queue test_bench1", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/queue", "cmd": "sal-deadlock-checker queue system1", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/ring", "cmd": "sal-wfc ring.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/s_qlock", "cmd": "sal-wfc s_qlock.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-wfc sats.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.106, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness", "tool": "sal-smc", "oracle_s": 60.129, "rust_s": 60.577, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness", "tool": "sal-bmc", "oracle_s": 60.144, "rust_s": 60.197, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness1", "tool": "sal-smc", "oracle_s": 60.27, "rust_s": 60.571, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness1", "tool": "sal-bmc", "oracle_s": 60.192, "rust_s": 60.186, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness2", "tool": "sal-smc", "oracle_s": 60.164, "rust_s": 60.598, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness2", "tool": "sal-bmc", "oracle_s": 60.198, "rust_s": 60.169, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness3", "tool": "sal-smc", "oracle_s": 60.305, "rust_s": 60.567, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness3", "tool": "sal-bmc", "oracle_s": 60.122, "rust_s": 60.116, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness4", "tool": "sal-smc", "oracle_s": 60.217, "rust_s": 60.521, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness4", "tool": "sal-bmc", "oracle_s": 60.194, "rust_s": 18.227, "oracle_verdict": "timeout", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness5", "tool": "sal-smc", "oracle_s": 60.294, "rust_s": 60.519, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness5", "tool": "sal-bmc", "oracle_s": 60.129, "rust_s": 19.725, "oracle_verdict": "timeout", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness6", "tool": "sal-smc", "oracle_s": 60.166, "rust_s": 60.574, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness6", "tool": "sal-bmc", "oracle_s": 60.186, "rust_s": 60.187, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness7", "tool": "sal-smc", "oracle_s": 60.173, "rust_s": 60.774, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness7", "tool": "sal-bmc", "oracle_s": 60.179, "rust_s": 60.178, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness8", "tool": "sal-smc", "oracle_s": 60.181, "rust_s": 60.576, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness8", "tool": "sal-bmc", "oracle_s": 60.18, "rust_s": 36.347, "oracle_verdict": "timeout", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness9", "tool": "sal-smc", "oracle_s": 60.174, "rust_s": 60.571, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness9", "tool": "sal-bmc", "oracle_s": 5.612, "rust_s": 2.907, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness10", "tool": "sal-smc", "oracle_s": 60.171, "rust_s": 60.582, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness10", "tool": "sal-bmc", "oracle_s": 14.123, "rust_s": 9.216, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-smc sats correctness11", "tool": "sal-smc", "oracle_s": 60.267, "rust_s": 60.586, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-bmc -d 10 sats correctness11", "tool": "sal-bmc", "oracle_s": 11.92, "rust_s": 7.914, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-deadlock-checker sats InitialTransition", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-deadlock-checker sats RightTransition", "tool": "sal-deadlock-checker", "oracle_s": 60.266, "rust_s": 60.69, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-deadlock-checker sats LeftTransition", "tool": "sal-deadlock-checker", "oracle_s": 60.272, "rust_s": 60.574, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-deadlock-checker sats FinalTransition", "tool": "sal-deadlock-checker", "oracle_s": 15.821, "rust_s": 60.566, "oracle_verdict": "deadlock", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-deadlock-checker sats main", "tool": "sal-deadlock-checker", "oracle_s": 60.183, "rust_s": 60.577, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-wfc satsdefs.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/sats", "cmd": "sal-wfc satsprops.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/short", "cmd": "sal-wfc short.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-wfc fourslot.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-bmc -d 10 fourslot mutex", "tool": "sal-bmc", "oracle_s": 0.304, "rust_s": 0.105, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-deadlock-checker fourslot reader", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-deadlock-checker fourslot writer", "tool": "sal-deadlock-checker", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-deadlock-checker fourslot system", "tool": "sal-deadlock-checker", "oracle_s": 0.505, "rust_s": 2.308, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-wfc fourslot_bug.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-bmc -d 10 fourslot_bug mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-deadlock-checker fourslot_bug reader", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-deadlock-checker fourslot_bug writer", "tool": "sal-deadlock-checker", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/simpson", "cmd": "sal-deadlock-checker fourslot_bug system", "tool": "sal-deadlock-checker", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/skdmxa", "cmd": "sal-wfc fix_skdmxa.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/skdmxa", "cmd": "sal-wfc inf_skdmxa.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/skdmxa", "cmd": "sal-wfc skdmxa.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-wfc stack.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-smc stack th1", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-bmc -d 10 stack th1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-smc stack th2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-bmc -d 10 stack th2", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-smc stack invalid", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-bmc -d 10 stack invalid", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-deadlock-checker stack S", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-deadlock-checker stack test_bench1", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/stack", "cmd": "sal-deadlock-checker stack system1", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-wfc startup.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup sync", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 0.304, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup noflag", "tool": "sal-bmc", "oracle_s": 0.404, "rust_s": 0.204, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup fast", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 0.204, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup fairlyfast", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 0.204, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup ok", "tool": "sal-bmc", "oracle_s": 0.506, "rust_s": 0.305, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup fsync", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 0.204, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup fok", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 0.305, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup optimism", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup collision", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup live", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 0.205, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-bmc -d 10 startup eh", "tool": "sal-bmc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-deadlock-checker startup hub", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/startup", "cmd": "sal-deadlock-checker startup system", "tool": "sal-deadlock-checker", "oracle_s": 0.404, "rust_s": 1.306, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/dist/swap", "cmd": "sal-wfc swap.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/tta-startup/faulty-hub", "cmd": "sal-wfc startup-faulty-guardian.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/tta-startup/faulty-node", "cmd": "sal-wfc startup-skel.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-wfc ultralog.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog prop_1", "tool": "sal-smc", "oracle_s": 60.169, "rust_s": 60.263, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog prop_1", "tool": "sal-bmc", "oracle_s": 2.006, "rust_s": 60.178, "oracle_verdict": "no_ce", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog prop_2", "tool": "sal-smc", "oracle_s": 16.128, "rust_s": 60.274, "oracle_verdict": "counterexample", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog prop_2", "tool": "sal-bmc", "oracle_s": 1.209, "rust_s": 60.179, "oracle_verdict": "counterexample", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-deadlock-checker ultralog MThreat", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-deadlock-checker ultralog Robustness", "tool": "sal-deadlock-checker", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-deadlock-checker ultralog society", "tool": "sal-deadlock-checker", "oracle_s": 60.173, "rust_s": 60.276, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-wfc ultralog_light.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog_light prop_0", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_0", "tool": "sal-bmc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog_light prop_1", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_1", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog_light prop_3", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.304, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_3", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog_light prop_4", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_4", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog_light prop_5", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_5", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog_light prop_6", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_6", "tool": "sal-bmc", "oracle_s": 0.304, "rust_s": 0.105, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog_light prop_7", "tool": "sal-smc", "oracle_s": 0.407, "rust_s": 0.105, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_7", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog_light prop_8", "tool": "sal-smc", "oracle_s": 16.123, "rust_s": 4.609, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_8", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-smc ultralog_light prop_9", "tool": "sal-smc", "oracle_s": 34.148, "rust_s": 20.126, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_9", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-deadlock-checker ultralog_light MThreat", "tool": "sal-deadlock-checker", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/dist/ultralog", "cmd": "sal-deadlock-checker ultralog_light society", "tool": "sal-deadlock-checker", "oracle_s": 12.021, "rust_s": 0.505, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/web/arbiter-sal", "cmd": "sal-wfc arbiter.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/bakery-sal", "cmd": "sal-wfc bakery.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-wfc fischer.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-smc fischer time_aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-bmc -d 10 fischer time_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-smc fischer time_aux2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-bmc -d 10 fischer time_aux2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-smc fischer time_aux3", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-bmc -d 10 fischer time_aux3", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-smc fischer logical_aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-bmc -d 10 fischer logical_aux1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-smc fischer mutex", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-bmc -d 10 fischer mutex", "tool": "sal-bmc", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-smc fischer mutual_exclusion", "tool": "sal-smc", "oracle_s": 0.206, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-bmc -d 10 fischer mutual_exclusion", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-deadlock-checker fischer clock", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-deadlock-checker fischer processes", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/fischer-sal", "cmd": "sal-deadlock-checker fischer system", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-wfc inf_bakery.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-smc inf_bakery mutex", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-bmc -d 10 inf_bakery mutex", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-smc inf_bakery invalid", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-bmc -d 10 inf_bakery invalid", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-smc inf_bakery aux1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-bmc -d 10 inf_bakery aux1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-smc inf_bakery aux2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-bmc -d 10 inf_bakery aux2", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-deadlock-checker inf_bakery job", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/inf-bakery-sal", "cmd": "sal-deadlock-checker inf_bakery system", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/needham", "cmd": "sal-wfc needhamschroeder.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/needham", "cmd": "sal-smc needhamschroeder prop", "tool": "sal-smc", "oracle_s": 1.708, "rust_s": 36.947, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/needham", "cmd": "sal-bmc -d 10 needhamschroeder prop", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 7.214, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/needham", "cmd": "sal-smc needhamschroeder test", "tool": "sal-smc", "oracle_s": 0.605, "rust_s": 36.147, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/needham", "cmd": "sal-bmc -d 10 needhamschroeder test", "tool": "sal-bmc", "oracle_s": 0.405, "rust_s": 5.91, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/needham", "cmd": "sal-smc needhamschroeder test2", "tool": "sal-smc", "oracle_s": 2.008, "rust_s": 60.476, "oracle_verdict": "proved", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/needham", "cmd": "sal-bmc -d 10 needhamschroeder test2", "tool": "sal-bmc", "oracle_s": 0.806, "rust_s": 60.176, "oracle_verdict": "no_ce", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/needham", "cmd": "sal-deadlock-checker needhamschroeder system", "tool": "sal-deadlock-checker", "oracle_s": 2.207, "rust_s": 60.479, "oracle_verdict": "no_deadlock", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/needham", "cmd": "sal-wfc network.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-wfc math.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-wfc pcp_generic.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-deadlock-checker pcp_generic system", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-wfc pcp_rsrc.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-wfc pcp_scheduler.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-deadlock-checker pcp_scheduler scheduler", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-wfc pcp_task.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-wfc set.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.106, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-wfc tst_pcp_generic.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc tst_pcp_generic deadlock_free", "tool": "sal-smc", "oracle_s": 10.717, "rust_s": 0.905, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-bmc -d 10 tst_pcp_generic deadlock_free", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.006, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc tst_pcp_generic ok1", "tool": "sal-smc", "oracle_s": 10.717, "rust_s": 1.005, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-bmc -d 10 tst_pcp_generic ok1", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.105, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc tst_pcp_generic deadline_missed", "tool": "sal-smc", "oracle_s": 0.706, "rust_s": 0.305, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-bmc -d 10 tst_pcp_generic deadline_missed", "tool": "sal-bmc", "oracle_s": 0.505, "rust_s": 1.005, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-deadlock-checker tst_pcp_generic system", "tool": "sal-deadlock-checker", "oracle_s": 9.217, "rust_s": 1.006, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-wfc tst_pcp_generic2.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc tst_pcp_generic2 deadlock_free", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-bmc -d 10 tst_pcp_generic2 deadlock_free", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc tst_pcp_generic2 ok1", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-bmc -d 10 tst_pcp_generic2 ok1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-smc tst_pcp_generic2 deadline_missed", "tool": "sal-smc", "oracle_s": 0.206, "rust_s": 0.107, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-bmc -d 10 tst_pcp_generic2 deadline_missed", "tool": "sal-bmc", "oracle_s": 0.206, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/pcp-sal", "cmd": "sal-deadlock-checker tst_pcp_generic2 system", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-wfc peterson.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-smc peterson mutex", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-bmc -d 10 peterson mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-smc peterson invalid", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-bmc -d 10 peterson invalid", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-smc peterson livenessbug1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-bmc -d 10 peterson livenessbug1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-smc peterson livenessbug2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-bmc -d 10 peterson livenessbug2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-smc peterson liveness1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-bmc -d 10 peterson liveness1", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-smc peterson liveness2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-bmc -d 10 peterson liveness2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-smc peterson liveness3", "tool": "sal-smc", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-bmc -d 10 peterson liveness3", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-smc peterson liveness4", "tool": "sal-smc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-bmc -d 10 peterson liveness4", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/peterson-sal", "cmd": "sal-deadlock-checker peterson system", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/web/qlock", "cmd": "sal-wfc qlock1.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/qlock", "cmd": "sal-wfc qlock2.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.106, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/qlock", "cmd": "sal-wfc qlock3.sal", "tool": "sal-wfc", "oracle_s": 0.206, "rust_s": 0.106, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/short-sal", "cmd": "sal-wfc short.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/short-sal", "cmd": "sal-smc short th1", "tool": "sal-smc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/short-sal", "cmd": "sal-bmc -d 10 short th1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/short-sal", "cmd": "sal-smc short th2", "tool": "sal-smc", "oracle_s": 0.207, "rust_s": 0.105, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/short-sal", "cmd": "sal-bmc -d 10 short th2", "tool": "sal-bmc", "oracle_s": 0.206, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/short-sal", "cmd": "sal-smc short th3", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/short-sal", "cmd": "sal-bmc -d 10 short th3", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/short-sal", "cmd": "sal-deadlock-checker short main", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/web/simpson-sal", "cmd": "sal-wfc fourslot.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/simpson-sal", "cmd": "sal-bmc -d 10 fourslot mutex", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/simpson-sal", "cmd": "sal-deadlock-checker fourslot reader", "tool": "sal-deadlock-checker", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/web/simpson-sal", "cmd": "sal-deadlock-checker fourslot writer", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/web/simpson-sal", "cmd": "sal-deadlock-checker fourslot system", "tool": "sal-deadlock-checker", "oracle_s": 0.505, "rust_s": 2.207, "oracle_verdict": "no_deadlock", "rust_verdict": "no_deadlock"}
+{"cwd": "tests/corpus/web/skdmxa", "cmd": "sal-wfc fix_skdmxa.sal", "tool": "sal-wfc", "oracle_s": 0.205, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/skdmxa", "cmd": "sal-wfc inf_skdmxa.sal", "tool": "sal-wfc", "oracle_s": 0.208, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/skdmxa", "cmd": "sal-wfc skdmxa.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-wfc stack.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-smc stack th1", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-bmc -d 10 stack th1", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-smc stack th2", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-bmc -d 10 stack th2", "tool": "sal-bmc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-smc stack invalid", "tool": "sal-smc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-bmc -d 10 stack invalid", "tool": "sal-bmc", "oracle_s": 0.205, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-deadlock-checker stack S", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-deadlock-checker stack test_bench1", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/stack-sal", "cmd": "sal-deadlock-checker stack system1", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "error", "rust_verdict": "error"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-wfc ultralog.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog prop_1", "tool": "sal-smc", "oracle_s": 60.168, "rust_s": 60.282, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog prop_1", "tool": "sal-bmc", "oracle_s": 2.208, "rust_s": 60.173, "oracle_verdict": "no_ce", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog prop_2", "tool": "sal-smc", "oracle_s": 16.025, "rust_s": 60.273, "oracle_verdict": "counterexample", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog prop_2", "tool": "sal-bmc", "oracle_s": 1.106, "rust_s": 60.172, "oracle_verdict": "counterexample", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-deadlock-checker ultralog MThreat", "tool": "sal-deadlock-checker", "oracle_s": 0.204, "rust_s": 0.105, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-deadlock-checker ultralog Robustness", "tool": "sal-deadlock-checker", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-deadlock-checker ultralog society", "tool": "sal-deadlock-checker", "oracle_s": 60.173, "rust_s": 60.275, "oracle_verdict": "timeout", "rust_verdict": "timeout"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-wfc ultralog_light.sal", "tool": "sal-wfc", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "ok", "rust_verdict": "ok"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog_light prop_0", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_0", "tool": "sal-bmc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog_light prop_1", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_1", "tool": "sal-bmc", "oracle_s": 0.304, "rust_s": 0.105, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog_light prop_3", "tool": "sal-smc", "oracle_s": 0.705, "rust_s": 0.304, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_3", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog_light prop_4", "tool": "sal-smc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_4", "tool": "sal-bmc", "oracle_s": 0.304, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog_light prop_5", "tool": "sal-smc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_5", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog_light prop_6", "tool": "sal-smc", "oracle_s": 0.405, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_6", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog_light prop_7", "tool": "sal-smc", "oracle_s": 0.404, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_7", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.105, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog_light prop_8", "tool": "sal-smc", "oracle_s": 16.021, "rust_s": 4.61, "oracle_verdict": "proved", "rust_verdict": "proved"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_8", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.105, "oracle_verdict": "no_ce", "rust_verdict": "no_ce"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-smc ultralog_light prop_9", "tool": "sal-smc", "oracle_s": 33.844, "rust_s": 19.626, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-bmc -d 10 ultralog_light prop_9", "tool": "sal-bmc", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "counterexample", "rust_verdict": "counterexample"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-deadlock-checker ultralog_light MThreat", "tool": "sal-deadlock-checker", "oracle_s": 0.305, "rust_s": 0.105, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/corpus/web/ultralog", "cmd": "sal-deadlock-checker ultralog_light society", "tool": "sal-deadlock-checker", "oracle_s": 11.516, "rust_s": 0.505, "oracle_verdict": "deadlock", "rust_verdict": "deadlock"}
+{"cwd": "tests/atg", "cmd": "sal-atg stopwatch clock stopwatch_goals.scm -ed 5 -id 101 --latching", "tool": "sal-atg", "oracle_s": 1.706, "rust_s": 60.667, "oracle_verdict": "tests", "rust_verdict": "timeout"}
+{"cwd": "tests/atg", "cmd": "sal-atg traffic controller traffic_goals.scm -ed 8 -id 8", "tool": "sal-atg", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "tests", "rust_verdict": "tests"}
+{"cwd": "tests/atg", "cmd": "sal-atg gear scheduler gear_goals.scm -ed 8 -id 8", "tool": "sal-atg", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "tests", "rust_verdict": "tests"}
+{"cwd": "tests/atg", "cmd": "sal-atg gear scheduler gear_goals.scm -ed 0 -id 8", "tool": "sal-atg", "oracle_s": 0.305, "rust_s": 0.104, "oracle_verdict": "tests", "rust_verdict": "tests"}
+{"cwd": "tests/atg", "cmd": "sal-atg boundary acc boundary_goals.scm -ed 8 -id 20", "tool": "sal-atg", "oracle_s": 0.204, "rust_s": 0.104, "oracle_verdict": "tests", "rust_verdict": "tests"}
