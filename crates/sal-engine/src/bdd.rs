@@ -5,7 +5,7 @@
 //! so priming/unpriming is the structural map `v ↔ v±1`, which preserves
 //! level order.
 
-use std::collections::HashMap;
+use rustc_hash::FxHashMap as HashMap;
 
 pub type NodeId = u32;
 pub const F: NodeId = 0;
@@ -35,10 +35,10 @@ impl Mgr {
     pub fn new() -> Self {
         let mut m = Mgr {
             nodes: Vec::new(),
-            unique: HashMap::new(),
-            ite_cache: HashMap::new(),
-            exists_cache: HashMap::new(),
-            shift_cache: HashMap::new(),
+            unique: HashMap::default(),
+            ite_cache: HashMap::default(),
+            exists_cache: HashMap::default(),
+            shift_cache: HashMap::default(),
             num_vars: 0,
         };
         // 0 = false, 1 = true
@@ -221,7 +221,7 @@ impl Mgr {
         if n == F {
             return None;
         }
-        let mut out = HashMap::new();
+        let mut out = HashMap::default();
         let mut cur = n;
         while cur > T {
             let node = self.nodes[cur as usize];

@@ -1498,10 +1498,11 @@ impl<'e> Flattener<'e> {
         for c in cmds {
             self.expand_command(sctx, e, c, prov, is_trans, &mut flat, &mut else_cmds)?;
         }
-        // ELSE commands: always enabled in SAL 3.3 (the implementation
-        // treats ELSE as `true -->`, verified against the oracle).
+        // ELSE guard: negation of the other guards (as in the oracle's
+        // sal-else-command/flat-modules-core).
         if !else_cmds.is_empty() {
-            let neg = FExpr::tt();
+            let others: Vec<FExpr> = flat.iter().map(|c| c.guard.clone()).collect();
+            let neg = FExpr::not(FExpr::or(others));
             for (g, prov2) in else_cmds {
                 let mut constraint = Vec::new();
                 for a in &g.assignments {

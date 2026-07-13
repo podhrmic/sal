@@ -41,6 +41,9 @@ def classify(tool: str, rc: int, out: str) -> dict:
         v["verdict"] = "no_deadlock"
     elif "deadlock states" in low:
         v["verdict"] = "deadlock"
+    elif tool.startswith("sal-path") and re.search(r"^Step \d+:", out, re.MULTILINE):
+        v["verdict"] = "path"
+        v["path_steps"] = len(re.findall(r"^Step \d+:", out, re.MULTILINE))
     elif rc != 0 or "error" in low:
         v["verdict"] = "error"
     else:

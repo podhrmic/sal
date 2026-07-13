@@ -54,6 +54,14 @@ fn main() -> ExitCode {
     };
 
     // lemmas (-l name): invariant bodies of other assertions
+    let has_lemmas = args.options.iter().any(|(k, _)| k == "l" || k == "lemma");
+    if has_lemmas && !induction {
+        eprintln!(
+            "Error: Lemmas can be used only in proofs by induction (i.e., option --induction \
+             is used)."
+        );
+        return ExitCode::from(255);
+    }
     let mut lemmas: Vec<FExpr> = Vec::new();
     for (k, v) in &args.options {
         if k == "l" || k == "lemma" {

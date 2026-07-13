@@ -2,7 +2,7 @@
 //! BDDs and provides reachability, invariant checking, deadlock detection
 //! and counterexample extraction.
 
-use std::collections::HashMap;
+use rustc_hash::FxHashMap as HashMap;
 
 use sal_flat::fexpr::{FExpr, LeafId};
 use sal_flat::flatten::{FlatModule, TransNode};
@@ -28,7 +28,10 @@ pub struct Symbolic<'m> {
     /// Domain constraint (valid encodings), current vars.
     domain: NodeId,
     pub init: NodeId,
-    pub trans: NodeId,
+    /// Disjunctive partition of the transition relation (each part
+    /// includes the global conjuncts). `image`/`preimage` iterate the
+    /// parts, avoiding one monolithic BDD.
+    pub parts: Vec<NodeId>,
     /// Per-command relations for trace labeling: (provenance, relation).
     pub cmd_relations: Vec<(String, NodeId)>,
 }
@@ -64,7 +67,7 @@ impl<'m> Symbolic<'m> {
             leaves,
             domain: T,
             init: F,
-            trans: F,
+            parts: Vec::new(),
             cmd_relations: Vec::new(),
         };
         s.build()?;
@@ -400,19 +403,64 @@ impl<'m> Symbolic<'m> {
         }
         self.init = init;
 
-        // transition relation
-        let node = self.flat.trans.clone();
-        let mut trans = self.enc_trans(&node)?;
+        // transition relation: global conjuncts applied to every
+        // disjunctive part
+        let mut global = self.mgr.and(dom_cur, dom_next);
+        global = self.mgr.and(global, inv);
+        global = self.mgr.and(global, inv_next);
         for d in &self.flat.trans_defs.clone() {
             let b = self.enc_bool(d)?;
-            trans = self.mgr.and(trans, b);
+            global = self.mgr.and(global, b);
         }
-        trans = self.mgr.and(trans, dom_cur);
-        trans = self.mgr.and(trans, dom_next);
-        trans = self.mgr.and(trans, inv);
-        trans = self.mgr.and(trans, inv_next);
-        self.trans = trans;
+        let node = self.flat.trans.clone();
+        let mut parts = Vec::new();
+        self.enc_trans_parts(&node, global, &mut parts)?;
+        self.parts = parts;
         Ok(())
+    }
+
+    /// Split the top-level choice structure into disjuncts, conjoining
+    /// `pre` (accumulated global/frame constraints) into each.
+    fn enc_trans_parts(
+        &mut self,
+        node: &TransNode,
+        pre: NodeId,
+        out: &mut Vec<NodeId>,
+    ) -> EResult<()> {
+        match node {
+            TransNode::Interleave(branches) => {
+                for (n, frame) in branches {
+                    let f = self.enc_bool(frame)?;
+                    let pre2 = self.mgr.and(pre, f);
+                    if pre2 != F {
+                        self.enc_trans_parts(n, pre2, out)?;
+                    }
+                }
+                Ok(())
+            }
+            TransNode::Cmds(cmds) => {
+                for cmd in cmds {
+                    let g = self.enc_bool(&cmd.guard)?;
+                    let c = self.enc_bool(&cmd.constraint)?;
+                    let gc = self.mgr.and(g, c);
+                    self.cmd_relations
+                        .push((cmd.label.clone().unwrap_or_default(), gc));
+                    let part = self.mgr.and(pre, gc);
+                    if part != F {
+                        out.push(part);
+                    }
+                }
+                Ok(())
+            }
+            other => {
+                let t = self.enc_trans(other)?;
+                let part = self.mgr.and(pre, t);
+                if part != F {
+                    out.push(part);
+                }
+                Ok(())
+            }
+        }
     }
 
     fn enc_trans(&mut self, node: &TransNode) -> EResult<NodeId> {
@@ -471,16 +519,34 @@ impl<'m> Symbolic<'m> {
 
     /// Image: successor states of `s` (over current vars).
     pub fn image(&mut self, s: NodeId) -> NodeId {
-        let step = self.mgr.and(self.trans, s);
-        let next = self.exists_cur(step);
-        self.unprime(next)
+        let parts = self.parts.clone();
+        let mut out = F;
+        for p in parts {
+            let step = self.mgr.and(p, s);
+            if step == F {
+                continue;
+            }
+            let next = self.exists_cur(step);
+            let img = self.unprime(next);
+            out = self.mgr.or(out, img);
+        }
+        out
     }
 
     /// Preimage of `s'` (given over current vars).
     pub fn preimage(&mut self, s: NodeId) -> NodeId {
         let sp = self.prime(s);
-        let step = self.mgr.and(self.trans, sp);
-        self.exists_next(step)
+        let parts = self.parts.clone();
+        let mut out = F;
+        for p in parts {
+            let step = self.mgr.and(p, sp);
+            if step == F {
+                continue;
+            }
+            let pre = self.exists_next(step);
+            out = self.mgr.or(out, pre);
+        }
+        out
     }
 
     /// Forward reachability; returns (reach set, onion rings).
@@ -565,8 +631,13 @@ impl<'m> Symbolic<'m> {
     /// Check for reachable deadlock states.
     pub fn check_deadlock(&mut self) -> EResult<Option<Vec<Vec<Value>>>> {
         let has_succ = {
-            let e = self.exists_next(self.trans);
-            e
+            let parts = self.parts.clone();
+            let mut acc = F;
+            for p in parts {
+                let e = self.exists_next(p);
+                acc = self.mgr.or(acc, e);
+            }
+            acc
         };
         let dead = self.mgr.not(has_succ);
         let dead = self.mgr.and(dead, self.domain);
@@ -594,7 +665,7 @@ impl<'m> Symbolic<'m> {
     /// (which must intersect the last ring).
     fn extract_path(&mut self, rings: &[NodeId], target: NodeId) -> Vec<Vec<Value>> {
         let k = rings.len() - 1;
-        let mut states: Vec<HashMap<u32, bool>> = vec![HashMap::new(); k + 1];
+        let mut states: Vec<HashMap<u32, bool>> = vec![HashMap::default(); k + 1];
         let hit = self.mgr.and(rings[k], target);
         let cube = self.state_cube(hit);
         states[k] = cube;
@@ -874,7 +945,7 @@ impl<'m> Symbolic<'m> {
                 ptrans = self.mgr.or(ptrans, t);
             }
         }
-        ptrans = self.mgr.and(ptrans, self.trans);
+        // (product parts assembled below)
 
         // fairness sets as product-state predicates
         let mut fair = Vec::new();
@@ -888,8 +959,13 @@ impl<'m> Symbolic<'m> {
         }
 
         // reachable product states
-        let saved_trans = self.trans;
-        self.trans = ptrans;
+        let saved_parts = self.parts.clone();
+        let new_parts: Vec<NodeId> = saved_parts
+            .iter()
+            .map(|&p| self.mgr.and(p, ptrans))
+            .filter(|&p| p != F)
+            .collect();
+        self.parts = new_parts;
         let (reach, rings) = {
             let mut rings = vec![pinit];
             let mut reach = pinit;
@@ -927,7 +1003,7 @@ impl<'m> Symbolic<'m> {
 
         let witness = self.mgr.and(hull, reach);
         if witness == F {
-            self.trans = saved_trans;
+            self.parts = saved_parts;
             return Ok(None);
         }
 
@@ -1001,7 +1077,7 @@ impl<'m> Symbolic<'m> {
                 cur = path_states.last().unwrap().clone();
             }
         }
-        self.trans = saved_trans;
+        self.parts = saved_parts;
         Ok(Some(
             path_states.iter().map(|a| self.decode_state(a)).collect(),
         ))

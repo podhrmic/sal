@@ -28,7 +28,7 @@ const COMMON_FLAGS: &[&str] = &[
     "disable-traceability", "enable-ate", "disable-ate",
     "uppercase-keywords", "help", "version", "enable-dynamic-reorder",
     "disable-dynamic-reorder", "enable-slicer", "disable-slicer",
-    "solver", "lemma",
+    "solver", "lemma", "monolithic",
 ];
 
 pub fn parse_args(value_opts: &[&str]) -> Args {
@@ -57,7 +57,7 @@ pub fn parse_args(value_opts: &[&str]) -> Args {
             // -io orderfile)
             if ["d", "l", "s", "io"].contains(&rest) {
                 options.push((rest.to_string(), args.next()));
-            } else if ["i", "ei", "ea"].contains(&rest) {
+            } else if ["i", "ei", "ea", "ice"].contains(&rest) {
                 options.push((rest.to_string(), None));
             } else {
                 reject_option(&a);
