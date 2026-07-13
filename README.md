@@ -9,13 +9,28 @@ concrete-syntax facts extracted from the original implementation.
 
 | Tool | Backend | Status |
 |------|---------|--------|
-| `sal-wfc` | name resolution + type checker | 91/91 golden verdicts, 150 mutants: 0 divergences |
-| `sal-smc` | BDD engine: invariants (shortest CEs), CTL fixpoints, LTL via Büchi product + Emerson-Lei | implemented |
-| `sal-deadlock-checker` | BDD reachability | implemented |
-| `sal-bmc` | SAT (varisat), bounded LTL lasso semantics, k-induction with `-l` lemmas | implemented |
-| `sal-inf-bmc` | SMT-LIB2 → yices-smt2 / z3 / cvc5, same bounded semantics | implemented |
-| `sal-path-finder` | BDD image walk | implemented |
-| `sal-sim`, `sal-atg`, `sal-wmc`, `sal-emc`, lsal front-end | — | not yet implemented (P1/P2 in PLAN.md) |
+| `sal-wfc` | name resolution + type checker | 91/91 golden verdicts; 150 mutants: 0 divergences |
+| `sal-smc` | BDD engine: invariants (shortest CEs), CTL fixpoints, LTL via Büchi product + Emerson-Lei | golden parity except perf timeouts |
+| `sal-deadlock-checker` | BDD reachability | golden parity except perf timeouts |
+| `sal-bmc` | SAT (varisat), bounded LTL lasso semantics, k-induction with `-l` lemmas | golden parity |
+| `sal-inf-bmc` | SMT-LIB2 → yices-smt2 / z3 / cvc5, same bounded semantics | golden parity except `--enable-ate` |
+| `sal-path-finder` | BDD image walk | golden parity |
+| `sal-sim`, `sal-atg`, `sal-wmc`, `sal-emc`, lsal front-end | — | not implemented (P1/P2 in PLAN.md) |
+
+**Overall: 687/735 (93.5%) of the golden verdict manifest matches** (lsal-syntax
+cases excluded as out of scope). The 48 remaining mismatches:
+
+- 12 — `sync_peterson` livenessbug1–6 (×2 engines): a genuine **oracle bug**;
+  SAL 3.3 mis-substitutes module parameters inside ELSE guards, producing
+  spurious counterexamples. Our verdicts follow the language semantics and
+  the oracle's own else-flattening code (`ELSE = ¬(∨ guards)`, verified with
+  probe models).
+- ~26 — BDD performance timeouts on the largest models (arbiter{20},
+  skdmxa, needham, ultralog, sats, s_qlock{6}, BSubSpor): our BDD manager
+  has no dynamic variable reordering yet.
+- ~10 — out of scope: `.lsal` (Lisp syntax) inputs (dme, ring, util) and
+  `--enable-ate` abstraction for infinite-index arrays (stack, queue,
+  pipeline).
 
 ## Layout
 
