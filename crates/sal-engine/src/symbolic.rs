@@ -210,6 +210,41 @@ impl<'m> Symbolic<'m> {
                 }
             }
             Eq(a, b) => {
+                // fast paths: bitwise equality instead of the quadratic
+                // one-hot partition product
+                if let (Var(l1, p1), Var(l2, p2)) = (a.as_ref(), b.as_ref()) {
+                    let (i1, i2) = (*l1 as usize, *l2 as usize);
+                    if self.leaves[i1].bits == self.leaves[i2].bits
+                        && self.leaves[i1].values == self.leaves[i2].values
+                    {
+                        let bits = self.leaves[i1].bits;
+                        let (b1, b2) = (self.leaves[i1].base, self.leaves[i2].base);
+                        let (o1, o2) =
+                            (if *p1 { 1 } else { 0 }, if *p2 { 1 } else { 0 });
+                        let mut r = T;
+                        for k in 0..bits {
+                            let v1 = self.mgr.var(b1 + 2 * k + o1);
+                            let v2 = self.mgr.var(b2 + 2 * k + o2);
+                            let eqk = self.mgr.iff(v1, v2);
+                            r = self.mgr.and(r, eqk);
+                        }
+                        return Ok(Enc::B(r));
+                    }
+                }
+                {
+                    let vc = match (a.as_ref(), b.as_ref()) {
+                        (Var(l, p), Const(v)) | (Const(v), Var(l, p)) => {
+                            Some((*l as usize, *p, v.clone()))
+                        }
+                        _ => None,
+                    };
+                    if let Some((idx, primed, v)) = vc {
+                        return Ok(match self.leaves[idx].values.iter().position(|x| *x == v) {
+                            Some(i) => Enc::B(self.leaf_eq_index(idx, primed, i)),
+                            None => Enc::B(F),
+                        });
+                    }
+                }
                 let ea = self.enc(a)?;
                 let eb = self.enc(b)?;
                 match (ea, eb) {
@@ -440,7 +475,9 @@ impl<'m> Symbolic<'m> {
         }
         let node = self.flat.trans.clone();
         let mut parts = Vec::new();
-        self.enc_trans_parts(&node, global, &mut parts)?;
+        let ctx_roots = vec![dom_cur, dom_next, inv, inv_next, global, self.init];
+        let mut pending = Vec::new();
+        self.enc_trans_parts(&node, global, &mut parts, &mut pending, &ctx_roots)?;
         self.parts = parts;
         Ok(())
     }
@@ -452,20 +489,32 @@ impl<'m> Symbolic<'m> {
         node: &TransNode,
         pre: NodeId,
         out: &mut Vec<NodeId>,
+        pending: &mut Vec<NodeId>,
+        ctx_roots: &[NodeId],
     ) -> EResult<()> {
         match node {
             TransNode::Interleave(branches) => {
+                pending.push(pre);
                 for (n, frame) in branches {
                     let f = self.enc_bool(frame)?;
                     let pre2 = self.mgr.and(pre, f);
                     if pre2 != F {
-                        self.enc_trans_parts(n, pre2, out)?;
+                        self.enc_trans_parts(n, pre2, out, pending, ctx_roots)?;
                     }
                 }
+                pending.pop();
                 Ok(())
             }
             TransNode::Cmds(cmds) => {
                 for cmd in cmds {
+                    // build-time reordering safe point: everything under
+                    // construction is enumerated
+                    let mut roots = ctx_roots.to_vec();
+                    roots.extend_from_slice(pending);
+                    roots.extend_from_slice(out);
+                    roots.push(pre);
+                    roots.extend(self.cmd_relations.iter().map(|(_, b)| *b));
+                    self.mgr.reorder_if_needed(&roots);
                     let g = self.enc_bool(&cmd.guard)?;
                     let c = self.enc_bool(&cmd.constraint)?;
                     let gc = self.mgr.and(g, c);
@@ -527,6 +576,22 @@ impl<'m> Symbolic<'m> {
         })
     }
 
+    /// All persistently stored BDDs of the engine (roots for GC).
+    fn base_roots(&self) -> Vec<NodeId> {
+        let mut r = vec![self.init, self.domain];
+        r.extend(self.parts.iter().cloned());
+        r.extend(self.cmd_relations.iter().map(|(_, b)| *b));
+        r
+    }
+
+    /// Reordering safe point: callers pass every additional BDD they
+    /// still hold.
+    fn reorder_point(&mut self, extras: &[NodeId]) {
+        let mut roots = self.base_roots();
+        roots.extend_from_slice(extras);
+        self.mgr.reorder_if_needed(&roots);
+    }
+
     fn prime(&mut self, n: NodeId) -> NodeId {
         self.mgr.shift(n, 1)
     }
@@ -581,9 +646,12 @@ impl<'m> Symbolic<'m> {
         let mut reach = self.init;
         let mut frontier = self.init;
         loop {
+            let mut extras = vec![reach, frontier];
+            extras.extend(rings.iter().cloned());
+            self.reorder_point(&extras);
             let img = self.image(frontier);
             let nreach = self.mgr.or(reach, img);
-            if nreach == reach {
+            if self.mgr.same(nreach, reach) {
                 break;
             }
             let not_reach = self.mgr.not(reach);
@@ -603,13 +671,16 @@ impl<'m> Symbolic<'m> {
         let mut reach = self.init;
         let mut frontier = self.init;
         loop {
+            let mut extras = vec![reach, frontier, bad];
+            extras.extend(rings.iter().cloned());
+            self.reorder_point(&extras);
             let hit = self.mgr.and(frontier, bad);
             if hit != F {
                 return Ok(Some(self.extract_path(&rings, hit)));
             }
             let img = self.image(frontier);
             let nreach = self.mgr.or(reach, img);
-            if nreach == reach {
+            if self.mgr.same(nreach, reach) {
                 return Ok(None);
             }
             let not_reach = self.mgr.not(reach);
@@ -662,7 +733,7 @@ impl<'m> Symbolic<'m> {
             }
             let img = self.image(frontier);
             let nreach = self.mgr.or(reach, img);
-            if nreach == reach {
+            if self.mgr.same(nreach, reach) {
                 return None;
             }
             let nr = self.mgr.not(reach);
@@ -730,13 +801,16 @@ impl<'m> Symbolic<'m> {
         let mut reach = self.init;
         let mut frontier = self.init;
         loop {
+            let mut extras = vec![reach, frontier, dead];
+            extras.extend(rings.iter().cloned());
+            self.reorder_point(&extras);
             let hit = self.mgr.and(frontier, dead);
             if hit != F {
                 return Ok(Some(self.extract_path(&rings, hit)));
             }
             let img = self.image(frontier);
             let nreach = self.mgr.or(reach, img);
-            if nreach == reach {
+            if self.mgr.same(nreach, reach) {
                 return Ok(None);
             }
             let not_reach = self.mgr.not(reach);
@@ -947,7 +1021,7 @@ impl<'m> Symbolic<'m> {
             let pre = self.preimage(z);
             let fpre = self.mgr.and(f, pre);
             let nz = self.mgr.or(z, fpre);
-            if nz == z {
+            if self.mgr.same(nz, z) {
                 return z;
             }
             z = nz;
@@ -959,7 +1033,7 @@ impl<'m> Symbolic<'m> {
         loop {
             let pre = self.preimage(z);
             let nz = self.mgr.and(f, pre);
-            if nz == z {
+            if self.mgr.same(nz, z) {
                 return z;
             }
             z = nz;
@@ -1056,9 +1130,14 @@ impl<'m> Symbolic<'m> {
             let mut reach = pinit;
             let mut frontier = pinit;
             loop {
+                let mut extras = vec![pinit, reach, frontier];
+                extras.extend(rings.iter().cloned());
+                extras.extend(saved_parts.iter().cloned());
+                extras.extend(fair.iter().cloned());
+                self.reorder_point(&extras);
                 let img = self.image(frontier);
                 let nreach = self.mgr.or(reach, img);
-                if nreach == reach {
+                if self.mgr.same(nreach, reach) {
                     break;
                 }
                 let nr = self.mgr.not(reach);
@@ -1072,6 +1151,11 @@ impl<'m> Symbolic<'m> {
         // Emerson-Lei: states with a fair path
         let mut hull = reach;
         loop {
+            let mut extras = vec![pinit, reach, hull];
+            extras.extend(rings.iter().cloned());
+            extras.extend(saved_parts.iter().cloned());
+            extras.extend(fair.iter().cloned());
+            self.reorder_point(&extras);
             let mut nhull = hull;
             for fset in &fair {
                 let target = self.mgr.and(nhull, *fset);
@@ -1080,7 +1164,7 @@ impl<'m> Symbolic<'m> {
                 let pre = self.preimage(reach_f);
                 nhull = self.mgr.and(nhull, pre);
             }
-            if nhull == hull {
+            if self.mgr.same(nhull, hull) {
                 break;
             }
             hull = nhull;
@@ -1130,7 +1214,7 @@ impl<'m> Symbolic<'m> {
                 let img0 = self.image(frontier);
                 let img = self.mgr.and(img0, hull);
                 let ns = self.mgr.or(seen, img);
-                if ns == seen {
+                if self.mgr.same(ns, seen) {
                     break;
                 }
                 let nseen = self.mgr.not(seen);

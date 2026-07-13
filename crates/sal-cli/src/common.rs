@@ -230,5 +230,13 @@ pub fn build_symbolic<'m>(
         };
         ordering::compute_order(flat, strategy)
     };
-    sal_engine::symbolic::Symbolic::with_order(flat, &order).map_err(|e| e.to_string())
+    let mut engine =
+        sal_engine::symbolic::Symbolic::with_order(flat, &order).map_err(|e| e.to_string())?;
+    // dynamic variable reordering (group sifting): opt-in via
+    // --enable-dynamic-reorder, matching the oracle's default. The
+    // min-supp static order is usually better than what budgeted sifting
+    // finds; reordering pays on models where the static heuristics fail.
+    let enable = args.flag("enable-dynamic-reorder") && !args.flag("disable-dynamic-reorder");
+    engine.mgr.set_reorder(enable);
+    Ok(engine)
 }
