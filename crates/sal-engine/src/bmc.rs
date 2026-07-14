@@ -10,7 +10,6 @@ use sal_flat::value::Value;
 
 use crate::bounded::{BoolAlg, BoundedLtl};
 use crate::explicit::EngineError;
-use crate::ltl::Ltl;
 
 type EResult<T> = Result<T, EngineError>;
 
@@ -521,7 +520,7 @@ impl<'m> BmcEnc<'m> {
     }
 }
 
-fn as_parts(cnf: &mut Cnf, p: PartsOrLit) -> Vec<(Value, Lit)> {
+fn as_parts(_cnf: &mut Cnf, p: PartsOrLit) -> Vec<(Value, Lit)> {
     match p {
         PartsOrLit::P(p) => p,
         PartsOrLit::L(l) => vec![(Value::Bool(true), l), (Value::Bool(false), -l)],

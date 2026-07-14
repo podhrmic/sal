@@ -1,5 +1,29 @@
 //! The flattening evaluator: resolves concrete types and partially
 //! evaluates SAL expressions into symbolic values over leaf variables.
+//!
+//! # Orientation
+//!
+//! `eval()` is a normalization-by-evaluation interpreter over `SVal`
+//! (see `sval.rs`). Every SAL expression reduces to one of:
+//!
+//! - `SVal::Ground(Value)`     — a compile-time constant
+//! - `SVal::Sym(FExpr, ty)`    — a scalar-typed expression over leaves
+//! - `Tuple`/`Record`/`Array`  — aggregates of the above (decomposed)
+//! - `SVal::Fun`/`SVal::Set`   — closures, applied on demand
+//! - `SVal::Formula(TFormula)` — only while lowering assertion formulas
+//!   (temporal operators lift boolean connectives into formula space)
+//!
+//! File layout:
+//! 1. concrete type resolution (`resolve_ctype*`) — Type AST → `CType`
+//!    with all constants evaluated
+//! 2. `eval`/`eval_name` — the interpreter core; note the
+//!    declaration-order visibility rule and prelude-shadowing order
+//! 3. structural operations — `apply`, `select`, `update`, quantifier
+//!    expansion, and the normalization helpers `eq_vals`/`ite_vals`
+//!    (closure tabulation, ground-aggregate lifting, datatype→scalar
+//!    mapping); use these instead of raw `SVal::eq_sval`/`SVal::ite`
+//!    whenever operands may be closures or datatype values
+//! 4. operator evaluation + prelude builtins (`apply_builtin`)
 
 use std::cell::{Cell, RefCell};
 use std::collections::HashMap;
@@ -188,7 +212,7 @@ impl<'e> Flattener<'e> {
                     }
                 };
                 let elems =
-                    Rc::new((0..n).map(|i| format!("{}_{}", n_name(&tid), i)).collect::<Vec<_>>());
+                    Rc::new((0..n).map(|i| format!("{}_{}", tid.name, i)).collect::<Vec<_>>());
                 self.scalars
                     .borrow_mut()
                     .insert(tid.clone(), (elems.clone(), is_ring));
@@ -1727,10 +1751,6 @@ impl<'e> Flattener<'e> {
             )),
         }
     }
-}
-
-fn n_name(tid: &TypeId) -> String {
-    tid.name.clone()
 }
 
 /// Euclidean division: quotient/remainder with 0 <= r < |b|.

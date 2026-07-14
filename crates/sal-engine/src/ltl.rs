@@ -1,7 +1,7 @@
 //! LTL to (state-labeled, generalized) Büchi automata via the classic
 //! GPVW tableau construction.
 
-use std::collections::{BTreeSet, HashMap};
+use std::collections::BTreeSet;
 use std::rc::Rc;
 
 use sal_flat::fexpr::FExpr;
@@ -289,7 +289,52 @@ pub fn label_expr(l: &[Ltl]) -> FExpr {
     FExpr::and(cs)
 }
 
-/// Map used by tests.
-pub fn _unused() -> HashMap<u32, u32> {
-    HashMap::new()
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use sal_flat::fexpr::FExpr;
+    use sal_flat::value::Value;
+
+    fn p() -> TFormula {
+        TFormula::Atom(FExpr::Var(0, false))
+    }
+
+    #[test]
+    fn nnf_of_negated_g_is_until() {
+        // ¬G p  =  true U ¬p
+        let f = TFormula::G(Rc::new(p()));
+        let n = to_nnf(&f, true).unwrap();
+        match n {
+            Ltl::U(l, r) => {
+                assert_eq!(*l, Ltl::True);
+                assert!(matches!(*r, Ltl::NAtom(_)));
+            }
+            other => panic!("expected U, got {:?}", other),
+        }
+    }
+
+    #[test]
+    fn nnf_rejects_ctl() {
+        let f = TFormula::AG(Rc::new(p()));
+        assert!(to_nnf(&f, false).is_err());
+    }
+
+    #[test]
+    fn translate_g_not_p_accepts_only_not_p_states() {
+        // automaton for G ¬p: every node's label must include ¬p
+        let g = Ltl::R(
+            Rc::new(Ltl::False),
+            Rc::new(Ltl::NAtom(FExpr::Var(0, false))),
+        );
+        let aut = translate(&g);
+        assert!(!aut.initial.is_empty());
+        for l in &aut.labels {
+            assert!(
+                l.iter().any(|f| matches!(f, Ltl::NAtom(_))),
+                "node label without ¬p: {:?}",
+                l
+            );
+        }
+        let _ = Value::Bool(true); // silence unused-import lints on old rustc
+    }
 }

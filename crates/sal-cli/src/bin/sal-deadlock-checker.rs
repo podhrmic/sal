@@ -6,7 +6,6 @@ use sal_cli::common::{parse_args, print_states, resolve_context, resolve_qualifi
 use sal_core::env::Entry;
 use sal_core::wfc::Checker;
 use sal_core::SalEnv;
-use sal_engine::symbolic::Symbolic;
 use sal_flat::sval::EvalCtx;
 use sal_flat::Flattener;
 use sal_syntax::ast::{Module, ModuleKind, Name};

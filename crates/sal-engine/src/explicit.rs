@@ -9,7 +9,7 @@ use std::rc::Rc;
 
 use num_traits::Zero;
 
-use sal_flat::fexpr::{FExpr, LeafId};
+use sal_flat::fexpr::FExpr;
 use sal_flat::flatten::{FlatCmd, FlatModule, TransNode};
 use sal_flat::value::Value;
 

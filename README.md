@@ -2,7 +2,10 @@
 
 A reimplementation of SRI's SAL 3.3 model-checking suite in Rust, developed
 against the official binary distribution as a differential-testing oracle.
-See `PLAN.md` for the full project plan and `docs/grammar-notes.md` for the
+
+**Start with [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)** — it maps the
+pipeline, the crates, the two central data structures, and the semantics
+gotchas. `PLAN.md` has the full project plan and `docs/grammar-notes.md` the
 concrete-syntax facts extracted from the original implementation.
 
 ## Tools
@@ -18,17 +21,20 @@ concrete-syntax facts extracted from the original implementation.
 | `sal-atg` | BDD segment search over trap variables (tests/atg examples + oracle goldens) | matches oracle test counts & goal sets; shorter tests (shortest-segment search) |
 | `sal-sim`, `sal-wmc`, `sal-emc`, lsal front-end | — | not implemented (P1/P2 in PLAN.md) |
 
-**Overall: 687/735 (93.5%) of the golden verdict manifest matches** (lsal-syntax
-cases excluded as out of scope). The 48 remaining mismatches:
+**Overall: 696/735 (94.7%) of the golden verdict manifest matches** (lsal-syntax
+cases excluded as out of scope). The 39 remaining mismatches:
 
 - 12 — `sync_peterson` livenessbug1–6 (×2 engines): a genuine **oracle bug**;
   SAL 3.3 mis-substitutes module parameters inside ELSE guards, producing
   spurious counterexamples. Our verdicts follow the language semantics and
   the oracle's own else-flattening code (`ELSE = ¬(∨ guards)`, verified with
   probe models).
-- ~26 — BDD performance timeouts on the largest models (arbiter{20},
-  skdmxa, needham, ultralog, sats, s_qlock{6}, BSubSpor): our BDD manager
-  has no dynamic variable reordering yet.
+- ~17 — BDD performance timeouts on the largest models (needham, ultralog,
+  sats, BSubSpor class): the bottleneck is datatype partition merges in the
+  encoder, not variable order. Static ordering (`--static-order`, on by
+  default, ported from the oracle's `ordering.scm`) and opt-in dynamic
+  reordering (`--enable-dynamic-reorder`, Rudell group sifting) already
+  cover the order-bound cases (arbiter{20}, phil{8}, s_qlock).
 - ~10 — out of scope: `.lsal` (Lisp syntax) inputs (dme, ring, util) and
   `--enable-ate` abstraction for infinite-index arrays (stack, queue,
   pipeline).

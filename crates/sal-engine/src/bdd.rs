@@ -852,6 +852,25 @@ mod tests {
     }
 
     #[test]
+    fn gc_keeps_roots_and_frees_garbage() {
+        let mut m = Mgr::new();
+        let a = m.var(0);
+        let b = m.var(2);
+        let keep = m.and(a, b);
+        // create garbage
+        for v in [4u32, 6, 8] {
+            let x = m.var(v);
+            let _garbage = m.xor(keep, x);
+        }
+        let before = m.node_count();
+        m.gc(&[keep]);
+        assert!(m.node_count() < before, "gc freed nothing");
+        // the kept function still works
+        assert!(eval(&m, keep, &|v| v == 0 || v == 2));
+        assert!(!eval(&m, keep, &|v| v == 0));
+    }
+
+    #[test]
     fn sift_preserves_functions() {
         // pseudo-random functions over 8 vars (4 groups), checked against
         // brute-force evaluation across repeated reorderings

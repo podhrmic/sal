@@ -1,4 +1,26 @@
 //! Elaboration of module expressions into flat transition systems.
+//!
+//! # Orientation
+//!
+//! `elab()` walks the module expression bottom-up producing an `Elab`
+//! per node; composition operators merge child `Elab`s:
+//!
+//! - base modules (`elab_base`) allocate leaf skeletons for their
+//!   variables (or adopt them from `ambient` when shared with a
+//!   sibling), lower sections into constraints, add per-command frame
+//!   conditions, and register themselves as a `FlatComponent`
+//! - `Sync`/`Async` merge interfaces (`merge_binary`): same-named
+//!   locals pair into tuples; async adds per-branch frames
+//! - multi-composition unrolls over the (finite) index domain
+//!   (`merge_multi`): locals become arrays
+//! - `RENAME` redirects a child variable to an ambient skeleton slice;
+//!   `WITH`/`LOCAL`/`OUTPUT`/`OBSERVE` adjust interfaces
+//!
+//! Key invariants: every state variable is a tree of *leaves* (see
+//! `alloc_skel`); an assignment constrains exactly the leaves of its
+//! LHS slice (symbolic indices fall back to WITH-update semantics in
+//! `elab_symbolic_lhs`); ELSE guards are the negated disjunction of the
+//! sibling guards; a base module without a TRANSITION section stutters.
 
 use std::collections::{BTreeSet, HashMap};
 use std::rc::Rc;
@@ -747,7 +769,7 @@ impl<'e> Flattener<'e> {
         Ok(cur)
     }
 
-    fn merge_binary(&self, ctx: &EvalCtx, ea: Elab, eb: Elab, sync: bool) -> FResult<Elab> {
+    fn merge_binary(&self, _ctx: &EvalCtx, ea: Elab, eb: Elab, sync: bool) -> FResult<Elab> {
         let mut vars: Vec<(String, VarEntry)> = Vec::new();
         let mut b_vars: Vec<(String, VarEntry)> = eb.vars;
         for (n, va) in ea.vars {

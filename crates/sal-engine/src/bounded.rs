@@ -18,14 +18,6 @@ pub trait BoolAlg {
     fn atom(&mut self, e: &sal_flat::fexpr::FExpr, t: usize) -> Self::B;
 }
 
-#[derive(PartialEq, Eq, Hash)]
-struct Key {
-    f: *const Ltl,
-    t: usize,
-    /// usize::MAX = no-loop case; otherwise the loop-back position l.
-    l: usize,
-}
-
 /// Bounded-semantics expansion of an NNF LTL formula.
 pub struct BoundedLtl<'a, A: BoolAlg> {
     pub alg: &'a mut A,

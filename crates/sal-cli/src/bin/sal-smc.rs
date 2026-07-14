@@ -8,7 +8,6 @@ use std::process::ExitCode;
 use sal_cli::common::{parse_args, print_states, resolve_context, resolve_qualified};
 use sal_core::wfc::Checker;
 use sal_core::SalEnv;
-use sal_engine::symbolic::Symbolic;
 use sal_flat::formula::TFormula;
 use sal_flat::Flattener;
 

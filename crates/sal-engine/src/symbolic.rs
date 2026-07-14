@@ -1,10 +1,27 @@
 //! BDD-based symbolic engine: encodes the flat transition system into
-//! BDDs and provides reachability, invariant checking, deadlock detection
-//! and counterexample extraction.
+//! BDDs and provides reachability, invariant checking, deadlock detection,
+//! CTL fixpoints, LTL via Büchi product, and counterexample extraction.
+//!
+//! # Encoding
+//!
+//! Each leaf gets `ceil(log2(card))` BDD variable *pairs*; bit `b` of
+//! leaf `l` uses variable `base(l) + 2b` (current) and `+2b+1` (next).
+//! Non-boolean expressions are encoded as partitions
+//! `Vec<(Value, condition-BDD)>` (`Enc::P`), with bitwise fast paths for
+//! `Var = Var` and `Var = Const`. The transition relation is kept as a
+//! *disjunctive partition* (`parts`) — one BDD per interleaving branch
+//! or command — and `image`/`preimage` iterate the parts.
+//!
+//! # Reordering discipline
+//!
+//! When dynamic reordering is enabled, stored `NodeId`s may become
+//! forwards: compare stored ids with `mgr.same(a, b)` (never `==`) and
+//! call `reorder_point(extras)` only where `extras` lists *every* BDD
+//! the current algorithm still holds — see docs/ARCHITECTURE.md.
 
 use rustc_hash::FxHashMap as HashMap;
 
-use sal_flat::fexpr::{FExpr, LeafId};
+use sal_flat::fexpr::FExpr;
 use sal_flat::flatten::{FlatModule, TransNode};
 use sal_flat::value::Value;
 
@@ -54,7 +71,7 @@ impl<'m> Symbolic<'m> {
 
     /// Build with an explicit leaf order (a permutation of the leaf ids).
     pub fn with_order(flat: &'m FlatModule, order: &[u32]) -> EResult<Self> {
-        let mut mgr = Mgr::new();
+        let mgr = Mgr::new();
         // position of each leaf in the order
         let mut pos = vec![0usize; flat.leaves.len()];
         for (p, &l) in order.iter().enumerate() {
@@ -86,7 +103,6 @@ impl<'m> Symbolic<'m> {
                 values,
             });
         }
-        let _ = pos;
         let mut s = Symbolic {
             flat,
             mgr,

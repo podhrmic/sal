@@ -11,14 +11,7 @@ use sal_syntax::ast::{Ident, SalContext};
 use sal_syntax::span::Span;
 
 use crate::env::{Entry, Instance};
-use crate::types::{SemType, TypeId};
-
-fn tid(name: &str) -> TypeId {
-    TypeId {
-        ctx: "prelude".into(),
-        name: name.into(),
-    }
-}
+use crate::types::SemType;
 
 fn fun1(a: SemType, r: SemType) -> SemType {
     SemType::Fun(Box::new(a), Box::new(r))
@@ -33,7 +26,7 @@ pub fn build() -> Rc<Instance> {
     let mut sym: HashMap<String, Entry> = HashMap::new();
     let mut order: Vec<String> = Vec::new();
 
-    let mut add_type = |sym: &mut HashMap<String, Entry>,
+    let add_type = |sym: &mut HashMap<String, Entry>,
                         order: &mut Vec<String>,
                         name: &str,
                         sem: SemType| {
@@ -48,7 +41,7 @@ pub fn build() -> Rc<Instance> {
         );
         order.push(name.to_string());
     };
-    let mut add_const = |sym: &mut HashMap<String, Entry>,
+    let add_const = |sym: &mut HashMap<String, Entry>,
                          order: &mut Vec<String>,
                          name: &str,
                          sem: SemType| {
@@ -144,8 +137,3 @@ pub fn build() -> Rc<Instance> {
     })
 }
 
-/// Element type ids of the built-in `char` type etc. (unused for now, kept
-/// for completeness).
-pub fn _reserved() -> TypeId {
-    tid("bool")
-}

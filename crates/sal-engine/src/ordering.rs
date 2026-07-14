@@ -458,3 +458,59 @@ pub fn order_from_file(flat: &FlatModule, text: &str) -> Result<Vec<LeafId>, Str
     }
     Ok(order)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use sal_flat::fexpr::{LeafInfo, LeafType};
+    use sal_flat::flatten::{FlatModule, TransNode};
+    use sal_syntax::ast::VarClass;
+
+    fn leaf(name: &str) -> LeafInfo {
+        LeafInfo {
+            name: name.into(),
+            ty: LeafType::Bool,
+            class: VarClass::Local,
+        }
+    }
+
+    fn module(names: &[&str]) -> FlatModule {
+        FlatModule {
+            leaves: names.iter().map(|n| leaf(n)).collect(),
+            vars: vec![],
+            invariants: vec![],
+            init_defs: vec![],
+            init_choices: vec![],
+            trans_defs: vec![],
+            trans: TransNode::True,
+            controlled: Default::default(),
+            components: vec![],
+        }
+    }
+
+    #[test]
+    fn order_file_positional_bang_syntax() {
+        // pc!2 = second element group of pc[...]
+        let m = module(&["pc[a]", "pc[b]", "forks[a]", "forks[b]"]);
+        let order = order_from_file(&m, "(\npc!2\nforks!1\n)").unwrap();
+        assert_eq!(order[0], 1); // pc[b]
+        assert_eq!(order[1], 2); // forks[a]
+        assert_eq!(order.len(), 4); // rest appended
+    }
+
+    #[test]
+    fn order_file_ignores_unknown_names() {
+        let m = module(&["x"]);
+        let order = order_from_file(&m, "(zz x)").unwrap();
+        assert_eq!(order, vec![0]);
+    }
+
+    #[test]
+    fn compute_order_is_a_permutation() {
+        let m = module(&["a", "b", "c"]);
+        let order = compute_order(&m, StaticOrder::MinSupp);
+        let mut sorted = order.clone();
+        sorted.sort();
+        assert_eq!(sorted, vec![0, 1, 2]);
+    }
+}
