@@ -12,6 +12,8 @@ stages:
 
 default:
   image: rust:1.92
+  tags:
+    - linux
   before_script:
     - rustc --version && cargo --version
   # Keep the cargo registry and build artifacts between pipelines.
