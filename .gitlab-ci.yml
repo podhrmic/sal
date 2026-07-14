@@ -1,0 +1,44 @@
+# GitLab CI for sal-rs: build the workspace and run the test suite.
+#
+# The test suite is self-contained except for one SMT solver: the
+# sal-inf-bmc golden test (`inf_bakery_smt`) needs yices-smt2, z3, or
+# cvc5 on PATH — Debian's `z3` package satisfies it. The full 735-case
+# parity sweep (tools/check-parity.py) needs the SAL 3.3 oracle binaries
+# and is NOT run here; `cargo test` covers the curated golden subset.
+
+stages:
+  - build
+  - test
+
+default:
+  image: rust:1.92
+  before_script:
+    - rustc --version && cargo --version
+  # Keep the cargo registry and build artifacts between pipelines.
+  cache:
+    key:
+      files:
+        - Cargo.lock
+    paths:
+      - .cargo/
+      - target/
+
+variables:
+  # Cache the registry inside the project dir so GitLab can persist it.
+  CARGO_HOME: $CI_PROJECT_DIR/.cargo
+
+build:
+  stage: build
+  script:
+    - cargo build --release --workspace --locked
+
+test:
+  stage: test
+  before_script:
+    - rustc --version && cargo --version
+    # SMT solver for the sal-inf-bmc golden test.
+    - apt-get update -qq && apt-get install -y -qq z3
+  script:
+    # Release mode: the golden-subset tests run the model checkers on
+    # real corpus models and are impractically slow in debug builds.
+    - cargo test --release --workspace --locked
