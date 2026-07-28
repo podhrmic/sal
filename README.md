@@ -3,6 +3,8 @@
 A reimplementation of SRI's SAL 3.3 model-checking suite in Rust, developed
 against the official binary distribution as a differential-testing oracle.
 
+**Implemented with Fable 5, not human reviewed so YMMV.**
+
 **Start with [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)** — it maps the
 pipeline, the crates, the two central data structures, and the semantics
 gotchas. `PLAN.md` has the full project plan and `docs/grammar-notes.md` the
